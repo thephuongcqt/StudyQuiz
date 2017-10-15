@@ -12,13 +12,14 @@ namespace StudyQuizAPI.Models.Entities
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class StudyQuizEntities : DbContext
     {
         public StudyQuizEntities()
             : base("name=StudyQuizEntities")
         {
-            Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -33,5 +34,39 @@ namespace StudyQuizAPI.Models.Entities
         public virtual DbSet<StudiedQuestion> StudiedQuestions { get; set; }
         public virtual DbSet<Subject> Subjects { get; set; }
         public virtual DbSet<User> Users { get; set; }
+    
+        public virtual ObjectResult<GET_QUESTIONS_ALREADY_STDUY_Result> GET_QUESTIONS_ALREADY_STDUY(Nullable<int> number, Nullable<long> userId, Nullable<long> chapterId)
+        {
+            var numberParameter = number.HasValue ?
+                new ObjectParameter("Number", number) :
+                new ObjectParameter("Number", typeof(int));
+    
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(long));
+    
+            var chapterIdParameter = chapterId.HasValue ?
+                new ObjectParameter("ChapterId", chapterId) :
+                new ObjectParameter("ChapterId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GET_QUESTIONS_ALREADY_STDUY_Result>("GET_QUESTIONS_ALREADY_STDUY", numberParameter, userIdParameter, chapterIdParameter);
+        }
+    
+        public virtual ObjectResult<GET_QUESTIONS_NOT_STUDY_YET_Result> GET_QUESTIONS_NOT_STUDY_YET(Nullable<int> number, Nullable<long> userId, Nullable<long> chapterId)
+        {
+            var numberParameter = number.HasValue ?
+                new ObjectParameter("Number", number) :
+                new ObjectParameter("Number", typeof(int));
+    
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(long));
+    
+            var chapterIdParameter = chapterId.HasValue ?
+                new ObjectParameter("ChapterId", chapterId) :
+                new ObjectParameter("ChapterId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GET_QUESTIONS_NOT_STUDY_YET_Result>("GET_QUESTIONS_NOT_STUDY_YET", numberParameter, userIdParameter, chapterIdParameter);
+        }
     }
 }

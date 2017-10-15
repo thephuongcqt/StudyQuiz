@@ -4,13 +4,13 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="StudyQuizModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="StudyQuizModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Chapter">
           <Key>
             <PropertyRef Name="ChapterId" />
           </Key>
           <Property Name="ChapterId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="1" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="SubjectId" Type="bigint" />
         </EntityType>
@@ -62,7 +62,7 @@
             <PropertyRef Name="SubjectId" />
           </Key>
           <Property Name="SubjectId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="1" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
           <Property Name="CreatedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="User">
@@ -160,6 +160,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="GET_QUESTIONS_ALREADY_STDUY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Number" Type="int" Mode="In" />
+          <Parameter Name="UserId" Type="bigint" Mode="In" />
+          <Parameter Name="ChapterId" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="GET_QUESTIONS_NOT_STUDY_YET" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Number" Type="int" Mode="In" />
+          <Parameter Name="UserId" Type="bigint" Mode="In" />
+          <Parameter Name="ChapterId" Type="bigint" Mode="In" />
+        </Function>
         <EntityContainer Name="StudyQuizModelStoreContainer">
           <EntitySet Name="Chapter" EntityType="Self.Chapter" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Feedback" EntityType="Self.Feedback" Schema="dbo" store:Type="Tables" />
@@ -197,8 +207,7 @@
             <End Role="StudiedQuestions" EntitySet="StudiedQuestions" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="StudyQuizModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -207,7 +216,7 @@
             <PropertyRef Name="ChapterId" />
           </Key>
           <Property Name="ChapterId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="SubjectId" Type="Int64" />
           <NavigationProperty Name="Subject" Relationship="Self.FK_Chapter_Subject" FromRole="Chapter" ToRole="Subject" />
@@ -269,7 +278,7 @@
             <PropertyRef Name="SubjectId" />
           </Key>
           <Property Name="SubjectId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Chapters" Relationship="Self.FK_Chapter_Subject" FromRole="Subject" ToRole="Chapter" />
         </EntityType>
@@ -407,7 +416,33 @@
             <End Role="User" EntitySet="Users" />
             <End Role="StudiedQuestions" EntitySet="StudiedQuestions" />
           </AssociationSet>
+          <FunctionImport Name="GET_QUESTIONS_ALREADY_STDUY" ReturnType="Collection(StudyQuizModel.GET_QUESTIONS_ALREADY_STDUY_Result)">
+            <Parameter Name="Number" Mode="In" Type="Int32" />
+            <Parameter Name="UserId" Mode="In" Type="Int64" />
+            <Parameter Name="ChapterId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="GET_QUESTIONS_NOT_STUDY_YET" ReturnType="Collection(StudyQuizModel.GET_QUESTIONS_NOT_STUDY_YET_Result)">
+            <Parameter Name="Number" Mode="In" Type="Int32" />
+            <Parameter Name="UserId" Mode="In" Type="Int64" />
+            <Parameter Name="ChapterId" Mode="In" Type="Int64" />
+          </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="GET_QUESTIONS_ALREADY_STDUY_Result">
+          <Property Type="Int64" Name="QuestionId" Nullable="false" />
+          <Property Type="Int64" Name="TypeId" Nullable="true" />
+          <Property Type="String" Name="Term" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="Definition" Nullable="true" MaxLength="Max" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
+          <Property Type="Int64" Name="ChapterId" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GET_QUESTIONS_NOT_STUDY_YET_Result">
+          <Property Type="Int64" Name="QuestionId" Nullable="false" />
+          <Property Type="Int64" Name="TypeId" Nullable="true" />
+          <Property Type="String" Name="Term" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="Definition" Nullable="true" MaxLength="Max" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
+          <Property Type="Int64" Name="ChapterId" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -491,6 +526,30 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GET_QUESTIONS_ALREADY_STDUY" FunctionName="StudyQuizModel.Store.GET_QUESTIONS_ALREADY_STDUY">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="StudyQuizModel.GET_QUESTIONS_ALREADY_STDUY_Result">
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="Term" ColumnName="Term" />
+                <ScalarProperty Name="Definition" ColumnName="Definition" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ChapterId" ColumnName="ChapterId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GET_QUESTIONS_NOT_STUDY_YET" FunctionName="StudyQuizModel.Store.GET_QUESTIONS_NOT_STUDY_YET">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="StudyQuizModel.GET_QUESTIONS_NOT_STUDY_YET_Result">
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="Term" ColumnName="Term" />
+                <ScalarProperty Name="Definition" ColumnName="Definition" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ChapterId" ColumnName="ChapterId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

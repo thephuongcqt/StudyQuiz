@@ -48,3 +48,5 @@ D:\Study\Semester7\Software Architecture\Group_Project\Git_Source\StudyQuizAPI\S
 D:\Study\Semester7\Software Architecture\Group_Project\Git_Source\StudyQuizAPI\StudyQuizAPI\obj\Release\StudyQuizAPI.csprojResolveAssemblyReference.cache
 D:\Study\Semester7\Software Architecture\Group_Project\Git_Source\StudyQuizAPI\StudyQuizAPI\obj\Release\StudyQuizAPI.dll
 D:\Study\Semester7\Software Architecture\Group_Project\Git_Source\StudyQuizAPI\StudyQuizAPI\obj\Release\StudyQuizAPI.pdb
+D:\Study\Semester7\Software Architecture\Group_Project\Git_Source\StudyQuizAPI\StudyQuizAPI\bin\AutoMapper.dll
+D:\Study\Semester7\Software Architecture\Group_Project\Git_Source\StudyQuizAPI\StudyQuizAPI\bin\AutoMapper.xml
