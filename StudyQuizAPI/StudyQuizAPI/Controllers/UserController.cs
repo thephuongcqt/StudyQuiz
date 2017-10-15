@@ -17,8 +17,12 @@ namespace StudyQuizAPI.Controllers
             var username = json.GetValue(MyRequest.PARAM_USERNAME).ToString();           
             var password = json.GetValue(MyRequest.PARAM_PASSWORD).ToString();
             var user = new UserDAO().Login(username, password);
-            user.Password = "";
-            var result = new Response(true, user);
+            Response result = new Response(false, user);
+            if (user != null)
+            {
+                user.Password = "";
+                result.success = true;              
+            }                  
             return result;
         }
     }
