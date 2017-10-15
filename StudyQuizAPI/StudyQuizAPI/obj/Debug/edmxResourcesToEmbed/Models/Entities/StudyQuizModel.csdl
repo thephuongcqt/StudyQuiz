@@ -71,16 +71,6 @@
     <Property Name="CreatedDate" Type="DateTime" Precision="3" />
     <NavigationProperty Name="Chapters" Relationship="Self.FK_Chapter_Subject" FromRole="Subject" ToRole="Chapter" />
   </EntityType>
-  <EntityType Name="sysdiagram">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-  </EntityType>
   <EntityType Name="User">
     <Key>
       <PropertyRef Name="UserId" />
@@ -186,7 +176,6 @@
     <EntitySet Name="Questions" EntityType="Self.Question" />
     <EntitySet Name="StudiedQuestions" EntityType="Self.StudiedQuestion" />
     <EntitySet Name="Subjects" EntityType="Self.Subject" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <EntitySet Name="Users" EntityType="Self.User" />
     <AssociationSet Name="FK_Chapter_Subject" Association="Self.FK_Chapter_Subject">
       <End Role="Subject" EntitySet="Subjects" />

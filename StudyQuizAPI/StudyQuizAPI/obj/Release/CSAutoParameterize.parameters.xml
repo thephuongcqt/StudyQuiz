@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="StudyQuizEntities-Web.config Connection String" description="StudyQuizEntities Connection String used in web.config by the application to access the database." defaultValue="metadata=res://*/Models.Entities.StudyQuizModel.csdl|res://*/Models.Entities.StudyQuizModel.ssdl|res://*/Models.Entities.StudyQuizModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=phuongntse62087.database.windows.net;initial catalog=StudyQuiz;persist security info=True;user id=phuongnt;password=Studyquiz123;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\Study\\Semester7\\Software\ Architecture\\Group_Project\\Git_Source\\StudyQuizAPI\\StudyQuizAPI\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='StudyQuizEntities']/@connectionString" />
+  </parameter>
+</parameters>

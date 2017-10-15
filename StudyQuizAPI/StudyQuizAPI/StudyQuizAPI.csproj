@@ -208,9 +208,6 @@
     <Compile Include="Models\Entities\Subject.cs">
       <DependentUpon>StudyQuizModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\sysdiagram.cs">
-      <DependentUpon>StudyQuizModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Entities\User.cs">
       <DependentUpon>StudyQuizModel.tt</DependentUpon>
     </Compile>
@@ -223,16 +220,6 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Models\Entities\StudyQuizModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>StudyQuizModel.edmx</DependentUpon>
-      <LastGenOutput>StudyQuizModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Entities\StudyQuizModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>StudyQuizModel.edmx</DependentUpon>
-      <LastGenOutput>StudyQuizModel.cs</LastGenOutput>
-    </Content>
     <Content Include="Areas\HelpPage\Views\Web.config" />
     <Content Include="Areas\HelpPage\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\ResourceModel.cshtml" />
@@ -252,14 +239,19 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <EntityDeploy Include="Models\Entities\StudyQuizModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>StudyQuizModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Entities\StudyQuizModel.edmx.diagram">
+    <Content Include="Models\Entities\StudyQuizModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>StudyQuizModel.edmx</DependentUpon>
+      <LastGenOutput>StudyQuizModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Web.config" />
+    <Content Include="Models\Entities\StudyQuizModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>StudyQuizModel.edmx</DependentUpon>
+      <LastGenOutput>StudyQuizModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -281,7 +273,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
+    <EntityDeploy Include="Models\Entities\StudyQuizModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>StudyQuizModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Entities\StudyQuizModel.edmx.diagram">
+      <DependentUpon>StudyQuizModel.edmx</DependentUpon>
+    </Content>
     <None Include="Project_Readme.html" />
+    <None Include="Properties\PublishProfiles\10b1ffd8-0ee0-4-231-b9ee - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\10b1ffd8-0ee0-4-231-b9ee - Web Deploy.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
