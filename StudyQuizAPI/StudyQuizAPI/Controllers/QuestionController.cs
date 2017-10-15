@@ -17,8 +17,13 @@ namespace StudyQuizAPI.Controllers
                 long longChapterId = long.Parse(chapterId);
                 long longUserId = long.Parse(userId);
                 int intNumber = int.Parse(number);
-                var result = new QuestionDAO().GetQuestionForChapterTest(intNumber, longUserId, longChapterId);
-                return result;
+                var list = new QuestionDAO().GetQuestionForChapterTest(intNumber, longUserId, longChapterId);
+                var tmp = new
+                {
+                    count = list.Count,
+                    questions = list
+                };
+                return new Response(true, tmp);
             } catch(Exception e)
             {                
                 return new Response(false, null);

@@ -9,5 +9,9 @@ namespace StudyQuizAPI.Models
     {
         public static string PARAM_USERNAME = "username";
         public static string PARAM_PASSWORD = "password";
+        public static string PARAM_FEEDBACK_USERID = "UserId";
+        public static string PARAM_FEEDBACK_QUESTIONID = "QuestionId";
+        public static string PARAM_FEEDBACK_ERRORID = "ErrorId";
+        public static string PARAM_FEEDBACK_COMMENT = "Comment";
     }
 }
