@@ -15,9 +15,15 @@ namespace StudyQuizAPI.Controllers
     {
         public object PostNewFeedback(JObject json)
         {
-            var feedback = json.ToObject<Feedback>();
-            var result = new FeedbackDAO().InsertFeedback(feedback);
-            return new Response(result, null);
+            try
+            {
+                var feedback = json.ToObject<Feedback>();
+                var result = new FeedbackDAO().InsertFeedback(feedback);
+                return new Response(result, null);
+            } catch(Exception e)
+            {
+                return new Response(false, null);
+            }            
         }
     }
 }

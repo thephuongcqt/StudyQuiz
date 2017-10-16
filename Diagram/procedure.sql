@@ -33,13 +33,15 @@ CREATE PROCEDURE GET_QUESTIONS_ALREADY_STDUY
 	@UserId bigint,
 	@ChapterId bigint
 AS
-	SELECT TOP (@Number) * 
-	FROM Question 
-	WHERE QuestionId IN (
-		SELECT QuestionId
-		FROM StudiedQuestions
-		WHERE UserId = @UserId
-	) AND ChapterId = @ChapterId AND TypeId != 0
+	SELECT a.*
+	FROM Question a, 
+		(SELECT TOP (@Number) *
+		FROM	
+			(SELECT * FROM Question WHERE ChapterId = @ChapterId AND TypeId != 0) a,
+			(SELECT * FROM StudiedQuestions) b
+		WHERE a.QuestionId = b.QuestionId
+		ORDER BY b.Count ASC, b.WrongAnswer DESC) c
+	WHERE a.QuestionId = c.QuestionId
 GO
 
 EXEC GET_QUESTIONS_ALREADY_STDUY
