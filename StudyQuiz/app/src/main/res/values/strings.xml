@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Study Quiz</string>
+    <string name="username">Username</string>
+    <string name="username_placeholder">Enter your username</string>
+    <string name="password">Password</string>
+    <string name="password_placeholder">Enter your password</string>
+</resources>
