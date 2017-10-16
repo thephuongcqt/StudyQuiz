@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using StudyQuizAPI.Models;
 using StudyQuizAPI.Models.DAO;
+using StudyQuizAPI.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,9 +29,23 @@ namespace StudyQuizAPI.Controllers
                 return result;
             } catch(Exception e)
             {
+                Console.WriteLine(e.Message);
                 return new Response(false, null);
-            }    
-            
+            }                
+        }
+
+        public object PostRegister(JObject json)
+        {
+            try
+            {
+                var user = json.ToObject<User>();
+                var result = new UserDAO().Register(user);
+                return new Response(true, result);
+            } catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return new Response(false, null, e.Message);
+            }
         }
     }
 }
