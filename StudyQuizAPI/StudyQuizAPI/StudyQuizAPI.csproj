@@ -175,14 +175,17 @@
     <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DAO\ChapterDAO.cs" />
     <Compile Include="Models\DAO\FeedbackDAO.cs" />
     <Compile Include="Models\DAO\QuestionDAO.cs" />
+    <Compile Include="Models\DAO\SubjectDAO.cs" />
     <Compile Include="Models\DAO\UserDAO.cs" />
     <Compile Include="Models\Entities\Chapter.cs">
       <DependentUpon>StudyQuizModel.tt</DependentUpon>
