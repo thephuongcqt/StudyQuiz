@@ -12,25 +12,20 @@ public class MyProgressBar {
     private MyProgressBar(){
 
     }
-    public synchronized static ProgressDialog getInstance(Context context){
-        if(_instance == null){
-            _instance = new ProgressDialog(context);
-        }
-        _instance.setIndeterminate(false);
-        _instance.setCancelable(true);
-        return _instance;
-    }
     public synchronized static void show(Context context){
         if(_instance == null){
             _instance = new ProgressDialog(context);
         }
         _instance.setIndeterminate(false);
         _instance.setCancelable(true);
+        _instance.setMessage("Loading...");
         _instance.show();
     }
 
     public synchronized static void dismiss(){
-        _instance.dismiss();
-        _instance = null;
+        if(_instance != null){
+            _instance.dismiss();
+            _instance = null;
+        }
     }
 }
