@@ -1,5 +1,6 @@
 package com.phuongnt.studyquiz.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -7,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.phuongnt.studyquiz.R;
+import com.phuongnt.studyquiz.activity.LoginActivity;
+import com.phuongnt.studyquiz.activity.MenuActivity;
 
 public class FirstFragment extends Fragment {
 
