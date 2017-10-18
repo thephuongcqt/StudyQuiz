@@ -18,6 +18,7 @@
     <Property Name="QuestionId" Type="bigint" />
     <Property Name="ErrorId" Type="bigint" />
     <Property Name="Comment" Type="ntext" />
+    <Property Name="Accepted" Type="bit" />
   </EntityType>
   <EntityType Name="MonthlyReport">
     <Key>

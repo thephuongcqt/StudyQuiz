@@ -22,6 +22,7 @@ namespace StudyQuizAPI.Controllers
                 return new Response(result, null);
             } catch(Exception e)
             {
+                Console.WriteLine(e.Message);
                 return new Response(false, null);
             }            
         }

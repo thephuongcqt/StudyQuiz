@@ -19,6 +19,7 @@ namespace StudyQuizAPI.Models.Entities
         public Nullable<long> QuestionId { get; set; }
         public Nullable<long> ErrorId { get; set; }
         public string Comment { get; set; }
+        public Nullable<bool> Accepted { get; set; }
     
         public virtual Question Question { get; set; }
         public virtual User User { get; set; }

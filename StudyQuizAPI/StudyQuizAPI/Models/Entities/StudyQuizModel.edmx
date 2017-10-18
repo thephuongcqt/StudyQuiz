@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="StudyQuizModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="StudyQuizModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Chapter">
           <Key>
             <PropertyRef Name="ChapterId" />
@@ -23,6 +23,7 @@
           <Property Name="QuestionId" Type="bigint" />
           <Property Name="ErrorId" Type="bigint" />
           <Property Name="Comment" Type="ntext" />
+          <Property Name="Accepted" Type="bit" />
         </EntityType>
         <EntityType Name="MonthlyReport">
           <Key>
@@ -207,8 +208,7 @@
             <End Role="StudiedQuestions" EntitySet="StudiedQuestions" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="StudyQuizModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -234,6 +234,7 @@
           <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Question" Relationship="Self.FK_Feedback_Question" FromRole="Feedback" ToRole="Question" />
           <NavigationProperty Name="User" Relationship="Self.FK_Feedback_User" FromRole="Feedback" ToRole="User" />
+          <Property Name="Accepted" Type="Boolean" />
         </EntityType>
         <EntityType Name="MonthlyReport">
           <Key>
@@ -463,6 +464,7 @@
           <EntitySetMapping Name="Feedbacks">
             <EntityTypeMapping TypeName="StudyQuizModel.Feedback">
               <MappingFragment StoreEntitySet="Feedback">
+                <ScalarProperty Name="Accepted" ColumnName="Accepted" />
                 <ScalarProperty Name="FeedbackId" ColumnName="FeedbackId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />

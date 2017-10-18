@@ -20,7 +20,6 @@ namespace StudyQuizAPI.Models.Entities
         public StudyQuizEntities()
             : base("name=StudyQuizEntities")
         {
-            Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

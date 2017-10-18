@@ -14,6 +14,7 @@
     <EntitySetMapping Name="Feedbacks">
       <EntityTypeMapping TypeName="StudyQuizModel.Feedback">
         <MappingFragment StoreEntitySet="Feedback">
+          <ScalarProperty Name="Accepted" ColumnName="Accepted" />
           <ScalarProperty Name="FeedbackId" ColumnName="FeedbackId" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />

@@ -22,6 +22,7 @@
     <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Question" Relationship="Self.FK_Feedback_Question" FromRole="Feedback" ToRole="Question" />
     <NavigationProperty Name="User" Relationship="Self.FK_Feedback_User" FromRole="Feedback" ToRole="User" />
+    <Property Name="Accepted" Type="Boolean" />
   </EntityType>
   <EntityType Name="MonthlyReport">
     <Key>
