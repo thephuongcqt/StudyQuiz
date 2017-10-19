@@ -1,5 +1,7 @@
 package com.phuongnt.studyquiz.service;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.phuongnt.studyquiz.AppConst;
 
 import okhttp3.OkHttpClient;
@@ -18,9 +20,13 @@ public class APIManager {
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+
         retrofit = new Retrofit.Builder()
                 .baseUrl(AppConst.API_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .build();
         return retrofit;

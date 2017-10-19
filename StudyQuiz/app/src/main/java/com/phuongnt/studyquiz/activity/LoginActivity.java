@@ -48,13 +48,16 @@ public class LoginActivity extends AppCompatActivity {
             call.enqueue(new Callback<CommonResponse<LoginResponse>>() {
                 @Override
                 public void onResponse(Call<CommonResponse<LoginResponse>> call, Response<CommonResponse<LoginResponse>> response) {
-                    int code = response.code();
-                    CommonResponse<LoginResponse> commonResponse = response.body();
-                    LoginResponse loginResponse = commonResponse.getValue();
-                    if(commonResponse.isSuccess()){
-                        onSuccess(loginResponse);
+                    if(response.isSuccessful()){
+                        CommonResponse<LoginResponse> commonResponse = response.body();
+                        LoginResponse loginResponse = commonResponse.getValue();
+                        if(commonResponse.isSuccess()){
+                            onSuccess(loginResponse);
+                        } else{
+                            onError(commonResponse.getError());
+                        }
                     } else{
-                        onError(commonResponse.getError());
+                        onError("Connection error");
                     }
                 }
                 @Override
