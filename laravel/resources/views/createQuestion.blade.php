@@ -1,5 +1,5 @@
 @extends('adminlte.layout')
-@section('title', 'Create QA')
+@section('title', 'Create Question')
 @section('content')
 <div class="wrapper-content">
     <section class="content-header">
@@ -7,7 +7,7 @@
     </section>
     <section class="content container-fluid">
      <div class="container">
-             <form method ="post" class="form-horizontal" action="/createQ" id="createQForm">
+             <form method ="post" class="form-horizontal" action="/createQuestion" id="createQForm">
                  <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                  <div class="table1"> 
                  <table class="table table-bordered">
@@ -83,40 +83,32 @@
                      <div class="col-md-12" id="field_name">
                      </div>
                   </div>
-                 <!-- answer -->
-                  <!-- 
-
-                  <div class="col-md-5" id="FinalQuestionB">B </div>
-                  <div class="col-md-5" id="FinalQuestionC">C  </div>
-                  <div class="col-md-5" id="FinalQuestionD">D  </div>
-                  <div class="col-md-5" id="FinalQuestionE">E  </div>
-                  <div class="col-md-5" id="FinalQuestionF">F </div> 
-                   <div class="question" style="padding-top: : 50px"> -->
+            
                 <div class="input-group col-md-5 tf" id='TrueFalse'  >
                     <fieldset id="resultTF" >
-                        <div >
-                <input type="radio" value="0" name="group1" checked="checked" style="float: left"><div class="col-md-5" id="FinalQuestionA"></div> 
+                        <div class="row">
+                <input type="radio" value="0" name="Definition" checked="checked" style="float: left"><div class="col-md-5" id="FinalQuestionA"></div> 
                         </div>
-                        <div >
-                <input type="radio" value="1" name="group1" checked="checked" style="float: left"><div class="col-md-5" id="FinalQuestionB"></div> 
+                        <div class="row">
+                <input type="radio" value="1" name="Definition"   style="float: left"><div class="col-md-5" id="FinalQuestionB"></div> 
                         </div>
-                        <div >
-                <input type="radio" value="2" name="group1" checked="checked" style="float: left"><div class="col-md-5" id="FinalQuestionC"></div> 
+                        <div class="row">
+                <input type="radio" value="2" name="Definition"  style="float: left"><div class="col-md-5" id="FinalQuestionC"></div> 
                         </div>
-                        <div >
-                <input type="radio" value="3" name="group1" checked="checked" style="float: left"><div class="col-md-5" id="FinalQuestionD"></div> 
+                        <div class="row">
+                <input type="radio" value="3" name="Definition"   style="float: left"><div class="col-md-5" id="FinalQuestionD"></div> 
                         </div>
-                        <div >
-                <input type="radio" value="4" name="group1" checked="checked" style="float: left"><div class="col-md-5" id="FinalQuestionE"></div> 
+                        <div class="row">
+                <input type="radio" value="4" name="Definition"  style="float: left"><div class="col-md-5" id="FinalQuestionE"></div> 
                         </div>
-                        <div >
-                <input type="radio" value="5" name="group1" checked="checked" style="float: left"><div class="col-md-5" id="FinalQuestionF"></div> 
+                        <div class="row">
+                <input type="radio" value="5" name="Definition"   style="float: left"><div class="col-md-5" id="FinalQuestionF"></div> 
                         </div>
                     </fieldset>
                     </div>
                 </div> 
                  <div class="box-footer">
-                        <button type="submit" class="col-md-3 btn btn-default btn-md" style="margin-right: 10px"  >Create Question</button>
+                        <button type="button" class="col-md-3 btn btn-default btn-md" style="margin-right: 10px" onclick="validateQuestionBeforeCreate(event,this)"  >Create Question</button>
                          
                     </div>       
                 </div>
@@ -181,7 +173,19 @@ function validateQuestion(evt,abc){
         }
     }
 }
-
+function validateQuestionBeforeCreate(evt,sel){
+        var XXX = document.getElementById('term').value;
+        var result = XXX.split("|");
+        var countResult = result.length -1 ;
+        var RadioChoose = $("input:radio[name='Definition']:checked").val();
+        var RadioChooseNumber = parseInt(RadioChoose) +1;
+        if(RadioChooseNumber>countResult){
+          alert("Definition is false.Please choose again");
+        }else{
+           document.getElementById('createQForm').submit();
+        }
+       
+}
 function choice1() {
      if (document.getElementById('TypeQA').value==1) { 
         document.getElementById('TrueFalse').style.display = 'none';

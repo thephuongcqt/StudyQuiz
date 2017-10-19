@@ -1,7 +1,7 @@
 <header class="main-header">
-    <a href="" class="logo">
-        <span class="logo-mini">FP</span>
-        <span class="logo-lg">FitsPlus</span>
+    <a href="/" class="logo">
+        <span class="logo-mini">PP</span>
+        <span class="logo-lg">PP QUiz</span>
     </a>
       <nav class="navbar navbar-static-top">
       <div class="container">
@@ -33,19 +33,7 @@
                   </p>
                 </li>
                 <!-- Menu Body -->
-                <!-- <li class="user-body">
-                  <div class="row">
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Followers</a>
-                    </div>
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Sales</a>
-                    </div>
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Friends</a>
-                    </div>
-                  </div>
-                  <!-- /.row -->
+                
                 </li>  
                 <!-- Menu Footer-->
                 <li class="user-footer">

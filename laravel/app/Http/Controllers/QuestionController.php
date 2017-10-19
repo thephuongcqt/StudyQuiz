@@ -12,6 +12,7 @@ class QuestionController extends Controller
         $subject = Subject::all();
         $chapter = Chapter::all();
         $id=1;
+
        return view('createQuestion',['subject'=>$subject,'chapter'=>$chapter,'dkm'=>$id]);
     }
     function loadChapter(Request $request){
@@ -38,8 +39,15 @@ class QuestionController extends Controller
         return view('confirmQuestion',['term'=>$term,'TermArray'=>$totalResult,'result'=>$definition,'TFoption'=>$truefalse]);
     }
     function createQuestion(Request $request){
-        echo "HERE";
-        exit();
+       $input=$request->all();
+       $Question = new Question;
+       $Question->TypeId = $input['type'];
+       $Question->Term = $input['term'];
+       $Question->Definition = $input['Definition'];
+       $Question->ChapterId= 1;
+       $Question->CreatedUser= 1;
+       $Question->save();
+       return view('welcome'); 
     }
      
 }
