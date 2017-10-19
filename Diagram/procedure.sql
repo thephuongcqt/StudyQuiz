@@ -49,3 +49,25 @@ EXEC GET_QUESTIONS_ALREADY_STDUY
 	@UserId = 1,
 	@ChapterId = 13
 
+
+IF OBJECT_ID('GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET', 'P') IS NOT NULL
+	DROP PROCEDURE GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET
+GO
+CREATE PROCEDURE GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET
+	@Number INT,
+	@UserId bigint,
+	@ChapterId bigint
+AS
+	SELECT TOP (@Number) * 
+	FROM Question 
+	WHERE QuestionId NOT IN (
+		SELECT QuestionId
+		FROM StudiedQuestions
+		WHERE UserId = @UserId
+	) AND ChapterId = @ChapterId
+GO
+
+EXEC GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET
+	@Number = 100,
+	@UserId = 1,
+	@ChapterId = 13

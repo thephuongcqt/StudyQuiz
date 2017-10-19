@@ -49,6 +49,7 @@
     <NavigationProperty Name="Chapter" Relationship="Self.FK_Question_Chapter" FromRole="Question" ToRole="Chapter" />
     <NavigationProperty Name="Feedbacks" Relationship="Self.FK_Feedback_Question" FromRole="Question" ToRole="Feedback" />
     <NavigationProperty Name="StudiedQuestions" Relationship="Self.FK_StudiedQuestions_Question" FromRole="Question" ToRole="StudiedQuestions" />
+    <Property Name="CreatedUser" Type="Int64" />
   </EntityType>
   <EntityType Name="StudiedQuestion">
     <Key>
@@ -216,6 +217,16 @@
       <Parameter Name="UserId" Mode="In" Type="Int64" />
       <Parameter Name="ChapterId" Mode="In" Type="Int64" />
     </FunctionImport>
+    <FunctionImport Name="GET_FLASH_CARD_QUESTIONS_ALREADY_STDUY" ReturnType="Collection(StudyQuizModel.GET_FLASH_CARD_QUESTIONS_ALREADY_STDUY_Result)">
+      <Parameter Name="Number" Mode="In" Type="Int32" />
+      <Parameter Name="UserId" Mode="In" Type="Int64" />
+      <Parameter Name="ChapterId" Mode="In" Type="Int64" />
+    </FunctionImport>
+    <FunctionImport Name="GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET" ReturnType="Collection(StudyQuizModel.GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET_Result)">
+      <Parameter Name="Number" Mode="In" Type="Int32" />
+      <Parameter Name="UserId" Mode="In" Type="Int64" />
+      <Parameter Name="ChapterId" Mode="In" Type="Int64" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="GET_QUESTIONS_ALREADY_STDUY_Result">
     <Property Type="Int64" Name="QuestionId" Nullable="false" />
@@ -232,5 +243,23 @@
     <Property Type="String" Name="Definition" Nullable="true" MaxLength="Max" />
     <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
     <Property Type="Int64" Name="ChapterId" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="GET_FLASH_CARD_QUESTIONS_ALREADY_STDUY_Result">
+    <Property Type="Int64" Name="QuestionId" Nullable="false" />
+    <Property Type="Int64" Name="TypeId" Nullable="true" />
+    <Property Type="String" Name="Term" Nullable="true" MaxLength="Max" />
+    <Property Type="String" Name="Definition" Nullable="true" MaxLength="Max" />
+    <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
+    <Property Type="Int64" Name="ChapterId" Nullable="true" />
+    <Property Type="Int64" Name="CreatedUser" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET_Result">
+    <Property Type="Int64" Name="QuestionId" Nullable="false" />
+    <Property Type="Int64" Name="TypeId" Nullable="true" />
+    <Property Type="String" Name="Term" Nullable="true" MaxLength="Max" />
+    <Property Type="String" Name="Definition" Nullable="true" MaxLength="Max" />
+    <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
+    <Property Type="Int64" Name="ChapterId" Nullable="true" />
+    <Property Type="Int64" Name="CreatedUser" Nullable="true" />
   </ComplexType>
 </Schema>

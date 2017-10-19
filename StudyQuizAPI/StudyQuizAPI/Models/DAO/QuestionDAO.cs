@@ -10,7 +10,7 @@ namespace StudyQuizAPI.Models.DAO
 {
     public class QuestionDAO
     {
-        public List<Question> GetQuestionForChapterTest(int number, long userId, long chapterId)
+        public List<Question> GetQuestionsForChapterTest(int number, long userId, long chapterId)
         {
             using (var db = new StudyQuizEntities())
             {
@@ -31,6 +31,34 @@ namespace StudyQuizAPI.Models.DAO
                 Mapper.Initialize(x =>
                 {
                     x.CreateMap<GET_QUESTIONS_NOT_STUDY_YET_Result, Question>();
+                });
+                var list = Mapper.Map<List<Question>>(result);
+                return list;
+            }
+        }
+
+        public List<Question> GetQuestionsForChapterFlashCard(int number, long userId, long chapterId)
+        {
+            using (var db = new StudyQuizEntities())
+            {
+                var result = db.GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET(number, userId, chapterId).ToList();
+                if(result != null && result.Count < number)
+                {
+                    var tmp = db.GET_FLASH_CARD_QUESTIONS_ALREADY_STDUY(number - result.Count, userId, chapterId);
+                    if(tmp != null)
+                    {
+                        Mapper.Initialize(x =>
+                        {
+                            x.CreateMap<GET_FLASH_CARD_QUESTIONS_ALREADY_STDUY_Result, GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET_Result>();
+                        });
+                        var tmp2 = Mapper.Map<List<GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET_Result>>(tmp);
+                        result.AddRange(tmp2);
+                    }
+                }
+
+                Mapper.Initialize(x =>
+                {
+                    x.CreateMap<GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET_Result, Question>();
                 });
                 var list = Mapper.Map<List<Question>>(result);
                 return list;

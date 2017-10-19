@@ -41,6 +41,7 @@
     <Property Name="Definition" Type="ntext" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="ChapterId" Type="bigint" />
+    <Property Name="CreatedUser" Type="bigint" />
   </EntityType>
   <EntityType Name="StudiedQuestions">
     <Key>
@@ -156,6 +157,16 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="GET_FLASH_CARD_QUESTIONS_ALREADY_STDUY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Number" Type="int" Mode="In" />
+    <Parameter Name="UserId" Type="bigint" Mode="In" />
+    <Parameter Name="ChapterId" Type="bigint" Mode="In" />
+  </Function>
+  <Function Name="GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Number" Type="int" Mode="In" />
+    <Parameter Name="UserId" Type="bigint" Mode="In" />
+    <Parameter Name="ChapterId" Type="bigint" Mode="In" />
+  </Function>
   <Function Name="GET_QUESTIONS_ALREADY_STDUY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Number" Type="int" Mode="In" />
     <Parameter Name="UserId" Type="bigint" Mode="In" />

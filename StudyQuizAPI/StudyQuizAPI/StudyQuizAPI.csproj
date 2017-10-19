@@ -193,6 +193,12 @@
     <Compile Include="Models\Entities\Feedback.cs">
       <DependentUpon>StudyQuizModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\GET_FLASH_CARD_QUESTIONS_ALREADY_STDUY_Result.cs">
+      <DependentUpon>StudyQuizModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET_Result.cs">
+      <DependentUpon>StudyQuizModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entities\GET_QUESTIONS_ALREADY_STDUY_Result.cs">
       <DependentUpon>StudyQuizModel.tt</DependentUpon>
     </Compile>

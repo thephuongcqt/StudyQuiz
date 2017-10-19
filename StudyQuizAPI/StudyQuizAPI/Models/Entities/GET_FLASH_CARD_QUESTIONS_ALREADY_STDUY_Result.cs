@@ -10,17 +10,9 @@
 namespace StudyQuizAPI.Models.Entities
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Question
+    public partial class GET_FLASH_CARD_QUESTIONS_ALREADY_STDUY_Result
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Question()
-        {
-            this.Feedbacks = new HashSet<Feedback>();
-            this.StudiedQuestions = new HashSet<StudiedQuestion>();
-        }
-    
         public long QuestionId { get; set; }
         public Nullable<long> TypeId { get; set; }
         public string Term { get; set; }
@@ -28,11 +20,5 @@ namespace StudyQuizAPI.Models.Entities
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<long> ChapterId { get; set; }
         public Nullable<long> CreatedUser { get; set; }
-    
-        public virtual Chapter Chapter { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Feedback> Feedbacks { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StudiedQuestion> StudiedQuestions { get; set; }
     }
 }

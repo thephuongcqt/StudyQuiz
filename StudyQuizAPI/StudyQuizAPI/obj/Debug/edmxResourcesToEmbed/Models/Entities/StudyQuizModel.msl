@@ -38,6 +38,7 @@
     <EntitySetMapping Name="Questions">
       <EntityTypeMapping TypeName="StudyQuizModel.Question">
         <MappingFragment StoreEntitySet="Question">
+          <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
           <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
           <ScalarProperty Name="TypeId" ColumnName="TypeId" />
           <ScalarProperty Name="Term" ColumnName="Term" />
@@ -100,6 +101,32 @@
           <ScalarProperty Name="Definition" ColumnName="Definition" />
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="ChapterId" ColumnName="ChapterId" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GET_FLASH_CARD_QUESTIONS_ALREADY_STDUY" FunctionName="StudyQuizModel.Store.GET_FLASH_CARD_QUESTIONS_ALREADY_STDUY">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="StudyQuizModel.GET_FLASH_CARD_QUESTIONS_ALREADY_STDUY_Result">
+          <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+          <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+          <ScalarProperty Name="Term" ColumnName="Term" />
+          <ScalarProperty Name="Definition" ColumnName="Definition" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ChapterId" ColumnName="ChapterId" />
+          <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET" FunctionName="StudyQuizModel.Store.GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="StudyQuizModel.GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET_Result">
+          <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+          <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+          <ScalarProperty Name="Term" ColumnName="Term" />
+          <ScalarProperty Name="Definition" ColumnName="Definition" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ChapterId" ColumnName="ChapterId" />
+          <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>

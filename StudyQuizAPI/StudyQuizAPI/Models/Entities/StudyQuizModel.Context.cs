@@ -69,5 +69,39 @@ namespace StudyQuizAPI.Models.Entities
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GET_QUESTIONS_NOT_STUDY_YET_Result>("GET_QUESTIONS_NOT_STUDY_YET", numberParameter, userIdParameter, chapterIdParameter);
         }
+    
+        public virtual ObjectResult<GET_FLASH_CARD_QUESTIONS_ALREADY_STDUY_Result> GET_FLASH_CARD_QUESTIONS_ALREADY_STDUY(Nullable<int> number, Nullable<long> userId, Nullable<long> chapterId)
+        {
+            var numberParameter = number.HasValue ?
+                new ObjectParameter("Number", number) :
+                new ObjectParameter("Number", typeof(int));
+    
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(long));
+    
+            var chapterIdParameter = chapterId.HasValue ?
+                new ObjectParameter("ChapterId", chapterId) :
+                new ObjectParameter("ChapterId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GET_FLASH_CARD_QUESTIONS_ALREADY_STDUY_Result>("GET_FLASH_CARD_QUESTIONS_ALREADY_STDUY", numberParameter, userIdParameter, chapterIdParameter);
+        }
+    
+        public virtual ObjectResult<GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET_Result> GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET(Nullable<int> number, Nullable<long> userId, Nullable<long> chapterId)
+        {
+            var numberParameter = number.HasValue ?
+                new ObjectParameter("Number", number) :
+                new ObjectParameter("Number", typeof(int));
+    
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(long));
+    
+            var chapterIdParameter = chapterId.HasValue ?
+                new ObjectParameter("ChapterId", chapterId) :
+                new ObjectParameter("ChapterId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET_Result>("GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET", numberParameter, userIdParameter, chapterIdParameter);
+        }
     }
 }

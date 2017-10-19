@@ -17,7 +17,7 @@ namespace StudyQuizAPI.Controllers
                 long longChapterId = long.Parse(chapterId);
                 long longUserId = long.Parse(userId);
                 int intNumber = int.Parse(number);
-                var list = new QuestionDAO().GetQuestionForChapterTest(intNumber, longUserId, longChapterId);
+                var list = new QuestionDAO().GetQuestionsForChapterTest(intNumber, longUserId, longChapterId);
                 //var tmp = new
                 //{
                 //    count = list.Count,
@@ -27,8 +27,25 @@ namespace StudyQuizAPI.Controllers
             } catch(Exception e)
             {
                 Console.WriteLine(e.Message);
-                return new Response(false, null);
+                return new Response(false, null, "Get data fail");
             }                
+        }
+
+        public object GetQuestionForChapterFlashCard(string chapterId, string number, string userId)
+        {
+            try
+            {
+                long longChapterId = long.Parse(chapterId);
+                long longUserId = long.Parse(userId);
+                int intNumber = int.Parse(number);
+                var list = new QuestionDAO().GetQuestionsForChapterFlashCard(intNumber, longUserId, longChapterId);
+                return new Response(true, list);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return new Response(false, null, "Get data fail");
+            }
         }
     }
 }
