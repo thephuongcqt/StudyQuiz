@@ -35,7 +35,7 @@ CREATE PROCEDURE GET_QUESTIONS_ALREADY_STDUY
 AS
 	SELECT a.*
 	FROM Question a, 
-		(SELECT TOP (@Number) *
+		(SELECT TOP (@Number) a.*, b.Count, b.WrongAnswer
 		FROM	
 			(SELECT * FROM Question WHERE ChapterId = @ChapterId AND TypeId != 0) a,
 			(SELECT * FROM StudiedQuestions) b
@@ -68,6 +68,30 @@ AS
 GO
 
 EXEC GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET
+	@Number = 100,
+	@UserId = 1,
+	@ChapterId = 13
+
+IF OBJECT_ID('GET_FLASH_CARD_QUESTIONS_ALREADY_STDUY', 'P') IS NOT NULL
+	DROP PROCEDURE GET_FLASH_CARD_QUESTIONS_ALREADY_STDUY
+GO
+CREATE PROCEDURE GET_FLASH_CARD_QUESTIONS_ALREADY_STDUY
+	@Number INT,
+	@UserId bigint,
+	@ChapterId bigint
+AS
+	SELECT a.*
+	FROM Question a, 
+		(SELECT TOP (@Number) a.*, b.Count, b.WrongAnswer
+		FROM	
+			(SELECT * FROM Question WHERE ChapterId = @ChapterId AND TypeId != 0) a,
+			(SELECT * FROM StudiedQuestions) b
+		WHERE a.QuestionId = b.QuestionId
+		ORDER BY b.Count ASC, b.WrongAnswer DESC) c
+	WHERE a.QuestionId = c.QuestionId
+GO
+
+EXEC GET_FLASH_CARD_QUESTIONS_ALREADY_STDUY
 	@Number = 100,
 	@UserId = 1,
 	@ChapterId = 13
