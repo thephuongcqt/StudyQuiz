@@ -13,5 +13,9 @@ namespace StudyQuizAPI.Models
         public static string PARAM_FEEDBACK_QUESTIONID = "QuestionId";
         public static string PARAM_FEEDBACK_ERRORID = "ErrorId";
         public static string PARAM_FEEDBACK_COMMENT = "Comment";
+
+        public static string PARAM_SEARCH_VALUE = "searchValue";
+        public static string PARAM_OFFSET = "offset";
+        public static string PARAM_SEARCH_NUMBER = "number";
     }
 }

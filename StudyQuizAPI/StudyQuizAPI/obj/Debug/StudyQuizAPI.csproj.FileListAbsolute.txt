@@ -47,6 +47,6 @@ D:\Study\Semester7\Software Architecture\Group_Project\Git_Source\StudyQuizAPI\S
 D:\Study\Semester7\Software Architecture\Group_Project\Git_Source\StudyQuizAPI\StudyQuizAPI\bin\System.Web.WebPages.Deployment.xml
 D:\Study\Semester7\Software Architecture\Group_Project\Git_Source\StudyQuizAPI\StudyQuizAPI\bin\System.Web.WebPages.Razor.xml
 D:\Study\Semester7\Software Architecture\Group_Project\Git_Source\StudyQuizAPI\StudyQuizAPI\bin\Antlr3.Runtime.pdb
-D:\Study\Semester7\Software Architecture\Group_Project\Git_Source\StudyQuizAPI\StudyQuizAPI\obj\Debug\StudyQuizAPI.csprojResolveAssemblyReference.cache
 D:\Study\Semester7\Software Architecture\Group_Project\Git_Source\StudyQuizAPI\StudyQuizAPI\obj\Debug\StudyQuizAPI.dll
 D:\Study\Semester7\Software Architecture\Group_Project\Git_Source\StudyQuizAPI\StudyQuizAPI\obj\Debug\StudyQuizAPI.pdb
+D:\Study\Semester7\Software Architecture\Group_Project\Git_Source\StudyQuizAPI\StudyQuizAPI\obj\Debug\StudyQuizAPI.csprojResolveAssemblyReference.cache
