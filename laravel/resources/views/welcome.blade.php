@@ -9,9 +9,10 @@
      <div class="container">
  
        <?php 
-        // $users = DB::select('select * from Question where QuestionId = 1');
-       $user = DB::insert('insert into dbo.Question (TypeId,Term,Definition,ChapterId) values (?,?,?,?)', 
-        [1,'insert form laravel', 'definition php',13]);
+     // $users = DB::select("select * from [User] where UserId = 1")->first();
+      
+             // $user = DB::insert('insert into dbo.Question (TypeId,Term,Definition,ChapterId) values (?,?,?,?)', 
+       //  [1,'insert form laravel', 'definition php',13]);
 		   
       
        ?>  

@@ -18,14 +18,20 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
+ 
 Route::post('createQ', 'QuestionController@confirmQuestion');
 
+
 Route::post('createQuestionAfterConfirm', 'QuestionController@createQuestion');
-Route::get('/createQuestion', function () {
-    return view('createQuestion');
+Route::get('/createQuestion', 'QuestionController@loadDetailQuestion');
+// Route::get('/createQuestion', function () {
+//     return view('createQuestion');
+// });
+Route::get('/admin', function () {
+    return view('auth.loginPage');
 });
-Route::get('/ks411', function () {
-    return view('KS411');
-});
+Route::post('login', 'LoginController@checkLogin');
+
+Route::post('/loadChapter', 'QuestionController@loadChapter');
+
 

@@ -4,17 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Question;
+use App\Subject;
+use App\Chapter;
 class QuestionController extends Controller
 {
+    function loadDetailQuestion(Request $request){
+        $subject = Subject::all();
+        $chapter = Chapter::all();
+        $id=1;
+       return view('createQuestion',['subject'=>$subject,'chapter'=>$chapter,'dkm'=>$id]);
+    }
+    function loadChapter(Request $request){
+        $chapter = Chapter::all();
+        
+         return response()->json($chapter);
+    }
     function confirmQuestion(Request $request){
     	$input = $request->all();
-          $truefalse = $input['group1'];
-          if($truefalse=="1"){
-            echo "DKM";
-          }else{
-            echo "DEO";
-          }
-         exit();
+        $truefalse = $input['group1'];
     	$type = $input['type'];
         $term = $input['term'];
         $definition = $input['Defination'];
@@ -26,17 +33,9 @@ class QuestionController extends Controller
             $totalResult[$i]=$tags[$i];
             }
         }
-        if($type==2){
-       
-
-  
-        }
-       
-        exit();
-    	
-     //    $id=1;
+        //    $id=1;
     	// $Questions = Question::where('QuestionId',$id)->first();
-            	return view('confirmQuestion',['term'=>$term,'TermArray'=>$totalResult,'result'=>$definition]);
+        return view('confirmQuestion',['term'=>$term,'TermArray'=>$totalResult,'result'=>$definition,'TFoption'=>$truefalse]);
     }
     function createQuestion(Request $request){
         echo "HERE";
