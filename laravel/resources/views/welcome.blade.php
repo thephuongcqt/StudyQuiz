@@ -1,5 +1,5 @@
 @extends('adminlte.layout')
-@section('title', 'Trang Chu')
+@section('title', 'Dashboard')
 @section('content')
 <div class="wrapper-content">
     <section class="content-header">

@@ -32,6 +32,8 @@ Route::get('/logout','LogoutController@logout');
 Route::get('/admin', function () {
     return view('auth.loginPage');
 });
+//Profile
+Route::get('/profile','LoginController@getProfile');
 // Route::post('/loadChapter', 'QuestionController@loadChapter');
 
 

@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use App\User;
 use DB;
 use Session;
+use StudiedQuestions;
+use Chapter;
+use Question;
+use Subject;
 class LoginController extends Controller
 {
      
@@ -32,6 +36,24 @@ class LoginController extends Controller
         }
          return view('error');
 
+    }
+    function getProfile(Request $request){
+         if(Session::get("Username")==null){
+          return redirect('/admin');
+        }else{
+          $UserId = Session::get("UserId");
+           $id = (int)$UserId;
+                $SubjectLearnedByUser = DB::table('User')
+                ->join('StudiedQuestions','StudiedQuestions.UserId','=','User.UserId')
+                ->join('Question', 'Question.QuestionId', '=', 'StudiedQuestions.QuestionId')
+                ->join('Chapter', 'Chapter.ChapterId', '=', 'Question.ChapterId')
+                ->join('Subject', 'Subject.SubjectId', '=', 'Chapter.SubjectId')
+                ->where(array('User.UserId' => $id))
+                 ->select('Subject.SubjectId','Subject.Name')
+                ->get();
+ 
+            return view('profile');
+        }
     }
      
 }
