@@ -8,6 +8,7 @@ use App\Subject;
 use App\Chapter;
 class QuestionController extends Controller
 {
+    
     function loadDetailQuestion(Request $request){
         $subject = Subject::all();
         $chapter = Chapter::all();
@@ -39,6 +40,7 @@ class QuestionController extends Controller
         return view('confirmQuestion',['term'=>$term,'TermArray'=>$totalResult,'result'=>$definition,'TFoption'=>$truefalse]);
     }
     function createQuestion(Request $request){
+      session_start();
        $input=$request->all();
        $Question = new Question;
        $Question->TypeId = $input['type'];
@@ -46,6 +48,8 @@ class QuestionController extends Controller
        $Question->Definition = $input['Definition'];
        $Question->ChapterId= 1;
        $Question->CreatedUser= 1;
+        
+
        $Question->save();
        return view('welcome'); 
     }

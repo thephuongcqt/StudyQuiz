@@ -1,6 +1,7 @@
 @extends('adminlte.layout')
 @section('title', 'Create Question')
 @section('content')
+{{session_start()}}
 <div class="wrapper-content">
     <section class="content-header">
         <h1>Create Question</h1>

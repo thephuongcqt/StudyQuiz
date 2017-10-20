@@ -8,7 +8,9 @@ use DB;
 use Session;
 class LoginController extends Controller
 {
-    use AuthenticatesUsers;
+    function logout(Request $request){
+        unset($_SESSION["user"]);
+    } 
     function checkLogin(Request $request){
         $input = $request->all();
         $username = $input['username'];
@@ -20,11 +22,12 @@ class LoginController extends Controller
         }else{
             $RealPass = $users->Password;
             if($RealPass===$password){
-                $_SESSION["xxx"] = $users;                                                                                                                              
+                // $_SESSION["user"] = $users;                                                                                                                              
                return view('welcome');
             }
         }
          return view('error');
+
     }
      
 }

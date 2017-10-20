@@ -28,7 +28,7 @@ Route::post('/createQuestion', 'QuestionController@createQuestion');
 Route::get('/admin', function () {
     return view('auth.loginPage');
 });
-Route::post('login', 'LoginController@checkLogin');
+Route::post('admin', 'LoginController@checkLogin');
 
 Route::post('/loadChapter', 'QuestionController@loadChapter');
 
