@@ -7,18 +7,19 @@ use App\Question;
 use App\Subject;
 use App\Chapter;
 use Session;
+use Carbon\Carbon;
 class QuestionController extends Controller
 {
    
     function loadDetailQuestion(Request $request){
-        if(Session::get("Username")==null){
-          return redirect('/admin');
+        if(Session::get("Username")!=null &&  Session::get("Role")==0){
+          $subject = Subject::all();
+          $chapter = Chapter::all();
+         return view('createQuestion',['subject'=>$subject,'chapter'=>$chapter]);
+        }else{
+           return redirect('/admin');
         }
-        $subject = Subject::all();
-        $chapter = Chapter::all();
-        $id=1;
-
-       return view('createQuestion',['subject'=>$subject,'chapter'=>$chapter,'dkm'=>$id]);
+       
     }
     function loadChapter(Request $request){
         $chapter = Chapter::all();
@@ -44,19 +45,21 @@ class QuestionController extends Controller
         return view('confirmQuestion',['term'=>$term,'TermArray'=>$totalResult,'result'=>$definition,'TFoption'=>$truefalse]);
     }
     function createQuestion(Request $request){
-      session_start();
+        if(Session::get("Username")==null){
+          return redirect('/admin');
+        }
        $input=$request->all();
        $Question = new Question;
        $Question->TypeId = $input['type'];
        $Question->Term = $input['term'];
-       $Question->Definition = $input['Definition'];
+       $tags = explode('|' , $input['term']);
+       $Question->Definition = $tags[$input['Definition']];;
        $Question->ChapterId= 1;
-       $Question->CreatedUser= 1;
-        
-
+       $Question->CreatedUser= Session::get("UserId");
+       $Question->CreatedDate = Carbon::now();
        $Question->save();
-       return view('welcome'); 
+        return redirect('/');
     }
-    
+
      
 }
