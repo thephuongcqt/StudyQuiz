@@ -6,10 +6,14 @@ use Illuminate\Http\Request;
 use App\Question;
 use App\Subject;
 use App\Chapter;
+use Session;
 class QuestionController extends Controller
 {
-    
+   
     function loadDetailQuestion(Request $request){
+        if(Session::get("Username")==null){
+          return redirect('/admin');
+        }
         $subject = Subject::all();
         $chapter = Chapter::all();
         $id=1;
@@ -53,5 +57,6 @@ class QuestionController extends Controller
        $Question->save();
        return view('welcome'); 
     }
+    
      
 }

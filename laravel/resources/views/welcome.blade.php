@@ -7,7 +7,9 @@
     </section>
     <section class="content container-fluid">
      <div class="container">
- 
+     sessio ne :  {{ Session::get('Username')}} - {{ Session::get('UserId')}} - {{ Session::get('NameOfUser')}} - {{ Session::get('Email')}} - {{ Session::get('Role')}} 
+ 	 
+ 		 
            
      </div>   
          

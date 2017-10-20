@@ -10,10 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/','ValidationController@loadWelcome');
+ 
 
 Auth::routes();
 
@@ -28,8 +26,8 @@ Route::post('/createQuestion', 'QuestionController@createQuestion');
 Route::get('/admin', function () {
     return view('auth.loginPage');
 });
-Route::post('admin', 'LoginController@checkLogin');
-
+Route::post('Login', 'LoginController@checkLogin');
+Route::get('/logout','LogoutController@logout');
 Route::post('/loadChapter', 'QuestionController@loadChapter');
 
 
