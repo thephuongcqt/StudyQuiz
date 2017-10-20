@@ -8,6 +8,7 @@ use App\Subject;
 use App\Chapter;
 use Session;
 use Carbon\Carbon;
+use DB;
 class QuestionController extends Controller
 {
    
@@ -21,10 +22,10 @@ class QuestionController extends Controller
         }
        
     }
-    function loadChapter(Request $request){
-        $chapter = Chapter::all();
-        
-         return response()->json($chapter);
+    function loadChapter($id){
+        $chapter =  Chapter::where('SubjectId',$id)->pluck('ChapterId', 'Name');
+          //return json_encode($chapter);
+        return response($chapter);
     }
     function confirmQuestion(Request $request){
     	$input = $request->all();
@@ -49,16 +50,32 @@ class QuestionController extends Controller
           return redirect('/admin');
         }
        $input=$request->all();
+       $TYPE = $input['type'];
+       if($TYPE==1){
        $Question = new Question;
        $Question->TypeId = $input['type'];
        $Question->Term = $input['term'];
        $tags = explode('|' , $input['term']);
        $Question->Definition = $tags[$input['Definition']];;
-       $Question->ChapterId= 1;
+       $Question->ChapterId= $input['MyChapter'];
        $Question->CreatedUser= Session::get("UserId");
        $Question->CreatedDate = Carbon::now();
        $Question->save();
         return redirect('/');
+       }
+       if($TYPE==2){
+      $Question= new Question;
+      $Question->TypeId = $input['type'];
+      $Question->Term = $input['term'];
+      
+      $Question->Definition = $input['DefinitionT'];
+      $Question->ChapterId= $input['MyChapter'];
+      $Question->CreatedUser= Session::get("UserId");
+      $Question->CreatedDate = Carbon::now();
+      $Question->save();
+        return redirect('/');
+       }
+       
     }
 
      

@@ -28,7 +28,7 @@
     <div class="content-wrapper">
 
         @yield('content')
-
+    
     </div>
 
     @include('adminlte.footer')

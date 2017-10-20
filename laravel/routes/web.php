@@ -20,14 +20,18 @@ Route::get('/home', 'HomeController@index')->name('home');
  
 
 // Route::post('createQuestionAfterConfirm', 'QuestionController@createQuestion');
-Route::get('/createQuestion', 'QuestionController@loadDetailQuestion');
+
 Route::post('/createQuestion', 'QuestionController@createQuestion');
- 
+//Create Question
+Route::get('/createQuestion', 'QuestionController@loadDetailQuestion');
+Route::get('createQuestion/ajax/{id}', 'QuestionController@loadChapter');
+
+//Login
+Route::post('Login', 'LoginController@checkLogin');
+Route::get('/logout','LogoutController@logout');
 Route::get('/admin', function () {
     return view('auth.loginPage');
 });
-Route::post('Login', 'LoginController@checkLogin');
-Route::get('/logout','LogoutController@logout');
-Route::post('/loadChapter', 'QuestionController@loadChapter');
+// Route::post('/loadChapter', 'QuestionController@loadChapter');
 
 
