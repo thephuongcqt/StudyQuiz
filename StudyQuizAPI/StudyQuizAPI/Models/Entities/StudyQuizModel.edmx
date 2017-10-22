@@ -14,6 +14,15 @@
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="SubjectId" Type="bigint" />
         </EntityType>
+        <EntityType Name="countries">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="updated_at" Type="datetime" />
+        </EntityType>
         <EntityType Name="Feedback">
           <Key>
             <PropertyRef Name="FeedbackId" />
@@ -24,6 +33,14 @@
           <Property Name="ErrorId" Type="bigint" />
           <Property Name="Comment" Type="ntext" />
           <Property Name="Accepted" Type="bit" />
+        </EntityType>
+        <EntityType Name="migrations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="migration" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="batch" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="MonthlyReport">
           <Key>
@@ -47,6 +64,7 @@
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ChapterId" Type="bigint" />
           <Property Name="CreatedUser" Type="bigint" />
+          <Property Name="IsEnable" Type="bit" />
         </EntityType>
         <EntityType Name="StudiedQuestions">
           <Key>
@@ -66,6 +84,13 @@
           <Property Name="SubjectId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="250" />
           <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tags">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -184,11 +209,14 @@
         </Function>
         <EntityContainer Name="StudyQuizModelStoreContainer">
           <EntitySet Name="Chapter" EntityType="Self.Chapter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="countries" EntityType="Self.countries" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Feedback" EntityType="Self.Feedback" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="migrations" EntityType="Self.migrations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MonthlyReport" EntityType="Self.MonthlyReport" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Question" EntityType="Self.Question" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StudiedQuestions" EntityType="Self.StudiedQuestions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Subject" EntityType="Self.Subject" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tags" EntityType="Self.tags" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Chapter_Subject" Association="Self.FK_Chapter_Subject">
             <End Role="Subject" EntitySet="Subject" />
@@ -273,6 +301,7 @@
           <NavigationProperty Name="Feedbacks" Relationship="Self.FK_Feedback_Question" FromRole="Question" ToRole="Feedback" />
           <NavigationProperty Name="StudiedQuestions" Relationship="Self.FK_StudiedQuestions_Question" FromRole="Question" ToRole="StudiedQuestions" />
           <Property Name="CreatedUser" Type="Int64" />
+          <Property Name="IsEnable" Type="Boolean" />
         </EntityType>
         <EntityType Name="StudiedQuestion">
           <Key>
@@ -450,6 +479,9 @@
             <Parameter Name="UserId" Mode="In" Type="Int64" />
             <Parameter Name="ChapterId" Mode="In" Type="Int64" />
           </FunctionImport>
+          <EntitySet Name="countries" EntityType="StudyQuizModel.country" />
+          <EntitySet Name="migrations" EntityType="StudyQuizModel.migration" />
+          <EntitySet Name="tags" EntityType="StudyQuizModel.tag" />
         </EntityContainer>
         <ComplexType Name="GET_QUESTIONS_ALREADY_STDUY_Result">
           <Property Type="Int64" Name="QuestionId" Nullable="false" />
@@ -475,6 +507,7 @@
           <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
           <Property Type="Int64" Name="ChapterId" Nullable="true" />
           <Property Type="Int64" Name="CreatedUser" Nullable="true" />
+          <Property Type="Boolean" Name="IsEnable" Nullable="true" />
         </ComplexType>
         <ComplexType Name="GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET_Result">
           <Property Type="Int64" Name="QuestionId" Nullable="false" />
@@ -485,6 +518,30 @@
           <Property Type="Int64" Name="ChapterId" Nullable="true" />
           <Property Type="Int64" Name="CreatedUser" Nullable="true" />
         </ComplexType>
+        <EntityType Name="country">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="migration">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="migration1" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="batch" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tag">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -528,6 +585,7 @@
           <EntitySetMapping Name="Questions">
             <EntityTypeMapping TypeName="StudyQuizModel.Question">
               <MappingFragment StoreEntitySet="Question">
+                <ScalarProperty Name="IsEnable" ColumnName="IsEnable" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
                 <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
                 <ScalarProperty Name="TypeId" ColumnName="TypeId" />
@@ -604,6 +662,7 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ChapterId" ColumnName="ChapterId" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="IsEnable" ColumnName="IsEnable" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -620,6 +679,33 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="countries">
+            <EntityTypeMapping TypeName="StudyQuizModel.country">
+              <MappingFragment StoreEntitySet="countries">
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="migrations">
+            <EntityTypeMapping TypeName="StudyQuizModel.migration">
+              <MappingFragment StoreEntitySet="migrations">
+                <ScalarProperty Name="batch" ColumnName="batch" />
+                <ScalarProperty Name="migration1" ColumnName="migration" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tags">
+            <EntityTypeMapping TypeName="StudyQuizModel.tag">
+              <MappingFragment StoreEntitySet="tags">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

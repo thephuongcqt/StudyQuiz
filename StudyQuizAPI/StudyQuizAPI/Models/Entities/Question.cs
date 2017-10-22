@@ -28,6 +28,7 @@ namespace StudyQuizAPI.Models.Entities
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<long> ChapterId { get; set; }
         public Nullable<long> CreatedUser { get; set; }
+        public Nullable<bool> IsEnable { get; set; }
     
         public virtual Chapter Chapter { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

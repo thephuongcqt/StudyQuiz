@@ -19,6 +19,9 @@
         <AssociationConnector Association="StudyQuizModel.FK_MonthlyReport_User" ManuallyRouted="false" />
         <AssociationConnector Association="StudyQuizModel.FK_StudiedQuestions_Question" ManuallyRouted="false" />
         <AssociationConnector Association="StudyQuizModel.FK_StudiedQuestions_User" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="StudyQuizModel.country" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="StudyQuizModel.migration" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="StudyQuizModel.tag" Width="1.5" PointX="7.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

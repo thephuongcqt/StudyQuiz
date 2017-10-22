@@ -22,7 +22,7 @@ namespace StudyQuizAPI.Models.DAO
         {
             string sql = "SELECT * FROM Subject"
                 + " WHERE Name LIKE '%' + @name + '%'"
-                + " ORDER BY NEWID()"
+                + " ORDER BY SubjectId"
                 + " OFFSET @offset ROWS"
                 + " FETCH NEXT @number ROWS ONLY";
             var nameParam = new SqlParameter("@name", name);
@@ -31,10 +31,10 @@ namespace StudyQuizAPI.Models.DAO
             using (var db = new StudyQuizEntities())
             {
                 var list = db.Subjects.SqlQuery(sql, nameParam, offsetParam, numberParam).ToList();
-                foreach(var item in list)
-                {
-                    item.Chapters = db.Chapters.Where(i => i.SubjectId == item.SubjectId).ToList<Chapter>();
-                }
+                //foreach(var item in list)
+                //{
+                //    item.Chapters = db.Chapters.Where(i => i.SubjectId == item.SubjectId).ToList<Chapter>();
+                //}
                 return list;
             }
         }

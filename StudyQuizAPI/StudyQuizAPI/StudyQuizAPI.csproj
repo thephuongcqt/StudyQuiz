@@ -141,6 +141,16 @@
     <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\ChapterController.cs" />
+    <Compile Include="Models\Entities\country.cs">
+      <DependentUpon>StudyQuizModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\migration.cs">
+      <DependentUpon>StudyQuizModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\tag.cs">
+      <DependentUpon>StudyQuizModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Service\Errors.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
