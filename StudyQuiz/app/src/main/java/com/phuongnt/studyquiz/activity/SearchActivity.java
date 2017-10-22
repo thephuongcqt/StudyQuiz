@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.phuongnt.studyquiz.AppConst;
 import com.phuongnt.studyquiz.R;
+import com.phuongnt.studyquiz.adapter.SearchAdapter;
 import com.phuongnt.studyquiz.adapter.ViewPagerAdapter;
 import com.phuongnt.studyquiz.fragment.SearchChapterFragment;
 import com.phuongnt.studyquiz.fragment.SearchSubjectFragment;
@@ -40,8 +41,6 @@ public class SearchActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private List<SearchChapterResponse> chapters = null;
     private List<SearchSubjectResponse> subjects = null;
-    private List<String> lvChapters = null;
-    private List<String> lvSubjects = null;
     private SearchChapterFragment chapterFragment = null;
     private SearchSubjectFragment subjectFragment = null;
     private String searchValue = null;
@@ -88,6 +87,8 @@ public class SearchActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         chapterFragment = new SearchChapterFragment();
         subjectFragment = new SearchSubjectFragment();
+        chapterFragment.setButtonClickListener(buttonChapterListener);
+        subjectFragment.setButtonClickListener(buttonSubjectListener);
         adapter.addFragment(subjectFragment, "Subject");
         adapter.addFragment(chapterFragment, "Chapter");
         viewPager.setAdapter(adapter);
@@ -112,8 +113,6 @@ public class SearchActivity extends AppCompatActivity {
 
     public void imageSearchSelected(View v){
         dismissKeyboard();
-        lvChapters = null;
-        lvSubjects = null;
         searchValue = ((EditText) findViewById(R.id.edt_search)).getText().toString().trim();
         if(searchValue.isEmpty()){
             return;
@@ -226,37 +225,33 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 
-//    private void onSuccess(){
-//        if(chapters != null && lvChapters == null){
-//            lvChapters = new ArrayList<>();
-//            for (SearchChapterResponse item : chapters) {
-//                lvChapters.add(item.getName());
-//            }
-//            chapterFragment.setupListView(lvChapters);
-//        }
-//        if(subjects != null && lvSubjects == null){
-//            lvSubjects = new ArrayList<>();
-//            for(SearchSubjectResponse item : subjects){
-//                lvSubjects.add(item.getName());
-//            }
-//            subjectFragment.setupListView(lvSubjects);
-//        }
-//        MyProgressBar.dismiss();
-//    }
-//
-//    private void onError(String error){
-//        MyProgressBar.dismiss();
-//        Toast.makeText(this, error, Toast.LENGTH_LONG).show();
-//    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         onBackPressed();
         return super.onOptionsItemSelected(item);
     }
 
-    public void onClick(View v) {
-        InputMethodManager im = ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE));
-        im.showSoftInput(null, 0);
-    }
+    private SearchAdapter.IButtonClickListener buttonChapterListener = new SearchAdapter.IButtonClickListener() {
+        @Override
+        public void buttonClickAt(int position) {
+            SearchChapterResponse item = chapters.get(position);
+            if(item.getSubject() != null){
+
+            }
+        }
+    };
+
+    private SearchAdapter.IButtonClickListener buttonSubjectListener = new SearchAdapter.IButtonClickListener() {
+        @Override
+        public void buttonClickAt(int position) {
+            SearchSubjectResponse item = subjects.get(position);
+            chapters = item.getChapters();
+            for(SearchChapterResponse i : chapters){
+                i.setSubject(item);
+            }
+            chapterFragment.setupListView(chapters);
+            TabLayout.Tab tab = tabLayout.getTabAt(1);
+            tab.select();
+        }
+    };
 }

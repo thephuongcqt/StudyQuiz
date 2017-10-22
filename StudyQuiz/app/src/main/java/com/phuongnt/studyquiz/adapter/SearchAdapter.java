@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,10 +26,12 @@ public class SearchAdapter<T> extends BaseAdapter {
     private List<T> srcList;
     private LayoutInflater layoutInflater;
     private Context context;
+    private IButtonClickListener buttonClickListener;
 
-    public SearchAdapter(List<T> srcList, Context context) {
+    public SearchAdapter(List<T> srcList, Context context, IButtonClickListener buttonClickListener) {
         this.srcList = srcList;
         this.context = context;
+        this.buttonClickListener = buttonClickListener;
         layoutInflater = LayoutInflater.from(context);
     }
 
@@ -56,34 +60,30 @@ public class SearchAdapter<T> extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
-        final T item = getItem(position);
         if(convertView == null){
             convertView = layoutInflater.inflate(R.layout.search_item, null);
             holder = new ViewHolder();
             holder.tvTitle = (TextView)convertView.findViewById(R.id.tv_title);
             holder.tvSubItem = (TextView)convertView.findViewById(R.id.tv_sub_item);
             Button button = (Button)convertView.findViewById(R.id.btn_sub_item);
+            button.setTag(position);
             holder.btnSubitem = button;
             button.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(item instanceof SearchChapterResponse){
-
-                    }
-
-                }
-            });
-            convertView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
+//                    View parentRow = (View) v.getParent();
+//                    LinearLayout linearLayout = (LinearLayout) parentRow.getParent();
+//                    ListView listView = (ListView) linearLayout.getParent();
+//                    final int positionOther = listView.getPositionForView(parentRow);
+                    int position = (int)v.getTag();
+                    buttonClickListener.buttonClickAt(position);
                 }
             });
             convertView.setTag(holder);
         } else{
             holder = (ViewHolder) convertView.getTag();
         }
-
+        final T item = getItem(position);
         if(item instanceof SearchChapterResponse){
             SearchChapterResponse chapter = (SearchChapterResponse) item;
             holder.tvTitle.setText("Chapter: " + chapter.getName());
@@ -102,5 +102,9 @@ public class SearchAdapter<T> extends BaseAdapter {
         TextView tvTitle;
         TextView tvSubItem;
         Button btnSubitem;
+    }
+
+    public interface IButtonClickListener{
+        void buttonClickAt(int position);
     }
 }

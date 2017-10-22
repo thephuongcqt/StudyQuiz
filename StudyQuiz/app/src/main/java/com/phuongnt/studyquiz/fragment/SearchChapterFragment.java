@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -22,10 +23,15 @@ public class SearchChapterFragment extends Fragment{
     private ListView listView = null;
     private List<SearchChapterResponse> srcList;
 
+    private SearchAdapter.IButtonClickListener buttonClickListener;
+
+    public void setButtonClickListener(SearchAdapter.IButtonClickListener buttonClickListener) {
+        this.buttonClickListener = buttonClickListener;
+    }
+
     public SearchChapterFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,9 +43,14 @@ public class SearchChapterFragment extends Fragment{
     }
 
     public void setupListView(List<SearchChapterResponse> list){
-//        ArrayAdapter adapter = new ArrayAdapter(getActivity(), R.layout.search_item, list);
-        SearchAdapter<SearchChapterResponse> adapter = new SearchAdapter<>(list, getActivity());
+        SearchAdapter<SearchChapterResponse> adapter = new SearchAdapter<>(list, getActivity(), buttonClickListener);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                SearchChapterResponse item = srcList.get(position);
+            }
+        });
     }
 
     public void onButtonClick(SearchChapterResponse chapter){

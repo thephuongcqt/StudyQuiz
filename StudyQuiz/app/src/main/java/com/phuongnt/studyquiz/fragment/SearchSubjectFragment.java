@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -15,6 +16,7 @@ import com.phuongnt.studyquiz.adapter.SearchAdapter;
 import com.phuongnt.studyquiz.model.apimodel.searchservice.SearchSubjectResponse;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +25,12 @@ public class SearchSubjectFragment extends Fragment {
     private ListView listView = null;
     private List<SearchSubjectResponse> srcList;
     private  Button btnLoadMore = null;
+
+    private SearchAdapter.IButtonClickListener buttonClickListener;
+
+    public void setButtonClickListener(SearchAdapter.IButtonClickListener buttonClickListener) {
+        this.buttonClickListener = buttonClickListener;
+    }
 
     public SearchSubjectFragment() {
         // Required empty public constructor
@@ -35,13 +43,19 @@ public class SearchSubjectFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView =  inflater.inflate(R.layout.fragment_search_subject, container, false);
         listView = (ListView) rootView.findViewById(R.id.lv_subject);
-        btnLoadMore = (Button) rootView.findViewById(R.id.btn_load_more);
+//        btnLoadMore = (Button) rootView.findViewById(R.id.btn_load_more);
         return rootView;
     }
 
     public void setupListView(List<SearchSubjectResponse> list){
         srcList = list;
-        SearchAdapter<SearchSubjectResponse> adapter = new SearchAdapter<>(list, getActivity());
+        SearchAdapter<SearchSubjectResponse> adapter = new SearchAdapter<>(list, getActivity(), buttonClickListener);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                SearchSubjectResponse item = srcList.get(position);
+            }
+        });
     }
 }
