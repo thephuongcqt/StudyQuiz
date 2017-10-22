@@ -10,14 +10,17 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.phuongnt.studyquiz.R;
+import com.phuongnt.studyquiz.adapter.SearchAdapter;
+import com.phuongnt.studyquiz.model.apimodel.searchservice.SearchChapterResponse;
 
 import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SearchChapterFragment extends Fragment {
+public class SearchChapterFragment extends Fragment{
     private ListView listView = null;
+    private List<SearchChapterResponse> srcList;
 
     public SearchChapterFragment() {
         // Required empty public constructor
@@ -33,8 +36,16 @@ public class SearchChapterFragment extends Fragment {
         return rootView;
     }
 
-    public void setupListView(List<String> list){
-        ArrayAdapter adapter = new ArrayAdapter(getActivity(), R.layout.search_item, list);
+    public void setupListView(List<SearchChapterResponse> list){
+//        ArrayAdapter adapter = new ArrayAdapter(getActivity(), R.layout.search_item, list);
+        SearchAdapter<SearchChapterResponse> adapter = new SearchAdapter<>(list, getActivity());
         listView.setAdapter(adapter);
+    }
+
+    public void onButtonClick(SearchChapterResponse chapter){
+
+    }
+    public void onItemClick(SearchChapterResponse chapter){
+
     }
 }

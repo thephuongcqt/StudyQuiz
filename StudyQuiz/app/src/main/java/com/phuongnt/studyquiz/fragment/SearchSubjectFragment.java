@@ -7,9 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.phuongnt.studyquiz.R;
+import com.phuongnt.studyquiz.adapter.SearchAdapter;
+import com.phuongnt.studyquiz.model.apimodel.searchservice.SearchSubjectResponse;
 
 import java.util.List;
 
@@ -18,6 +21,8 @@ import java.util.List;
  */
 public class SearchSubjectFragment extends Fragment {
     private ListView listView = null;
+    private List<SearchSubjectResponse> srcList;
+    private  Button btnLoadMore = null;
 
     public SearchSubjectFragment() {
         // Required empty public constructor
@@ -30,10 +35,13 @@ public class SearchSubjectFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView =  inflater.inflate(R.layout.fragment_search_subject, container, false);
         listView = (ListView) rootView.findViewById(R.id.lv_subject);
+        btnLoadMore = (Button) rootView.findViewById(R.id.btn_load_more);
         return rootView;
     }
-    public void setupListView(List<String> list){
-        ArrayAdapter adapter = new ArrayAdapter(getActivity(), R.layout.search_item, list);
+
+    public void setupListView(List<SearchSubjectResponse> list){
+        srcList = list;
+        SearchAdapter<SearchSubjectResponse> adapter = new SearchAdapter<>(list, getActivity());
         listView.setAdapter(adapter);
     }
 }
