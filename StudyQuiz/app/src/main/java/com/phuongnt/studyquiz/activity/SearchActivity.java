@@ -123,12 +123,12 @@ public class SearchActivity extends AppCompatActivity {
 
     private void searchChapter(){
         try{
-            Map<String, String> request = new HashMap<>();
-            request.put(RequestParam.SEARCH_SEARCH_VALUE, searchValue);
-            request.put(RequestParam.SEARCH_OFFSET, chapterOffset + "");
-            request.put(RequestParam.SEARCH_NUMBER, AppConst.SEARCH_ITEMS_NUMBER + "");
+            Map<String, String> params = new HashMap<>();
+            params.put(RequestParam.SEARCH_SEARCH_VALUE, searchValue);
+            params.put(RequestParam.SEARCH_OFFSET, chapterOffset + "");
+            params.put(RequestParam.SEARCH_NUMBER, AppConst.SEARCH_ITEMS_NUMBER + "");
             IAPIHelper iapiHelper = APIManager.getAPIManager().create(IAPIHelper.class);
-            Call<CommonResponse<List<SearchChapterResponse>>> call = iapiHelper.searchChapter(request);
+            Call<CommonResponse<List<SearchChapterResponse>>> call = iapiHelper.searchChapter(params);
             call.enqueue(new Callback<CommonResponse<List<SearchChapterResponse>>>() {
                 @Override
                 public void onResponse(Call<CommonResponse<List<SearchChapterResponse>>> call, Response<CommonResponse<List<SearchChapterResponse>>> response) {
@@ -140,7 +140,7 @@ public class SearchActivity extends AppCompatActivity {
                             onChapterError(commonResponse.getError());
                         }
                     } else{
-                        onChapterError("Connection error");
+                        onChapterError(AppConst.ERROR_CONNECTION);
                     }
                 }
 
@@ -156,25 +156,25 @@ public class SearchActivity extends AppCompatActivity {
 
     private void searchSubject(){
         try{
-            Map<String, String> request = new HashMap<>();
-            request.put(RequestParam.SEARCH_SEARCH_VALUE, searchValue);
-            request.put(RequestParam.SEARCH_OFFSET, subjectOffset + "");
-            request.put(RequestParam.SEARCH_NUMBER, AppConst.SEARCH_ITEMS_NUMBER + "");
+            Map<String, String> params = new HashMap<>();
+            params.put(RequestParam.SEARCH_SEARCH_VALUE, searchValue);
+            params.put(RequestParam.SEARCH_OFFSET, subjectOffset + "");
+            params.put(RequestParam.SEARCH_NUMBER, AppConst.SEARCH_ITEMS_NUMBER + "");
 
             IAPIHelper iapiHelper = APIManager.getAPIManager().create(IAPIHelper.class);
-            Call<CommonResponse<List<SearchSubjectResponse>>> call = iapiHelper.searchSubject(request);
+            Call<CommonResponse<List<SearchSubjectResponse>>> call = iapiHelper.searchSubject(params);
             call.enqueue(new Callback<CommonResponse<List<SearchSubjectResponse>>>() {
                 @Override
                 public void onResponse(Call<CommonResponse<List<SearchSubjectResponse>>> call, Response<CommonResponse<List<SearchSubjectResponse>>> response) {
                     if(response.isSuccessful()){
                         CommonResponse<List<SearchSubjectResponse>> commonResponse= response.body();
                         if(commonResponse.isSuccess()){
-                            onSubjectSuccess(subjects = commonResponse.getValue());
+                            onSubjectSuccess(commonResponse.getValue());
                         } else {
                             onSubjectError(commonResponse.getError());
                         }
                     } else{
-                        onSubjectError("Connection error");
+                        onSubjectError(AppConst.ERROR_CONNECTION);
                     }
                 }
 

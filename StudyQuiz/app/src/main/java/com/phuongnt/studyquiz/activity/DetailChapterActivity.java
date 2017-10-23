@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -21,8 +22,6 @@ public class DetailChapterActivity extends AppCompatActivity {
     private SearchChapterResponse chapter = null;
     private TextView tvSubjectTitle = null;
     private TextView tvChapterTitle = null;
-    private Button btnStudyCard = null;
-    private Button btnStartTest = null;
     private Spinner spinnerNumber = null;
     private ArrayAdapter<String> adapter = null;
     private Toolbar toolbar;
@@ -47,15 +46,21 @@ public class DetailChapterActivity extends AppCompatActivity {
 
         tvSubjectTitle = (TextView) findViewById(R.id.tv_subject_title);
         tvChapterTitle = (TextView) findViewById(R.id.tv_chapter_title);
-        btnStudyCard = (Button) findViewById(R.id.btn_study_card);
-        btnStartTest = (Button) findViewById(R.id.btn_start_test);
         spinnerNumber = (Spinner) findViewById(R.id.spinner_number_question);
         adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, options);
         spinnerNumber.setAdapter(adapter);
         tvSubjectTitle.setText(chapter.getSubject() == null ? "" : chapter.getSubject().getName());
         tvChapterTitle.setText(chapter.getName());
+    }
+
+    public void onButtonStudyCardSelected(View v){
 
     }
+
+    public void onButtonStartTestSelected(View v){
+
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         onBackPressed();
