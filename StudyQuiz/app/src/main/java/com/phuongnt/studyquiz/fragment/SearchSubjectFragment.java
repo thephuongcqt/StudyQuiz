@@ -1,6 +1,7 @@
 package com.phuongnt.studyquiz.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.phuongnt.studyquiz.R;
+import com.phuongnt.studyquiz.activity.DetailSubjectActivity;
 import com.phuongnt.studyquiz.adapter.SearchAdapter;
 import com.phuongnt.studyquiz.model.apimodel.searchservice.SearchSubjectResponse;
 
@@ -25,12 +27,6 @@ public class SearchSubjectFragment extends Fragment {
     private ListView listView = null;
     private List<SearchSubjectResponse> srcList;
     private  Button btnLoadMore = null;
-
-    private SearchAdapter.IButtonClickListener buttonClickListener;
-
-    public void setButtonClickListener(SearchAdapter.IButtonClickListener buttonClickListener) {
-        this.buttonClickListener = buttonClickListener;
-    }
 
     public SearchSubjectFragment() {
         // Required empty public constructor
@@ -49,12 +45,15 @@ public class SearchSubjectFragment extends Fragment {
 
     public void setupListView(List<SearchSubjectResponse> list){
         srcList = list;
-        SearchAdapter<SearchSubjectResponse> adapter = new SearchAdapter<>(list, getActivity(), buttonClickListener);
+        SearchAdapter<SearchSubjectResponse> adapter = new SearchAdapter<>(list, getActivity());
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 SearchSubjectResponse item = srcList.get(position);
+                Intent intent = new Intent(getActivity(), DetailSubjectActivity.class);
+                intent.putExtra(DetailSubjectActivity.KEY_SUBJECT_OBJ, item);
+                startActivity(intent);
             }
         });
     }

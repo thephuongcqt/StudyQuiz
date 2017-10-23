@@ -1,6 +1,7 @@
 package com.phuongnt.studyquiz.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,12 +27,10 @@ public class SearchAdapter<T> extends BaseAdapter {
     private List<T> srcList;
     private LayoutInflater layoutInflater;
     private Context context;
-    private IButtonClickListener buttonClickListener;
 
-    public SearchAdapter(List<T> srcList, Context context, IButtonClickListener buttonClickListener) {
+    public SearchAdapter(List<T> srcList, Context context) {
         this.srcList = srcList;
         this.context = context;
-        this.buttonClickListener = buttonClickListener;
         layoutInflater = LayoutInflater.from(context);
     }
 
@@ -59,52 +58,24 @@ public class SearchAdapter<T> extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
+        TextView tvTitle = null;
+        TextView tvSubItem = null;
         if(convertView == null){
-            convertView = layoutInflater.inflate(R.layout.search_item, null);
-            holder = new ViewHolder();
-            holder.tvTitle = (TextView)convertView.findViewById(R.id.tv_title);
-            holder.tvSubItem = (TextView)convertView.findViewById(R.id.tv_sub_item);
-            Button button = (Button)convertView.findViewById(R.id.btn_sub_item);
-            button.setTag(position);
-            holder.btnSubitem = button;
-            button.setOnClickListener(new Button.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-//                    View parentRow = (View) v.getParent();
-//                    LinearLayout linearLayout = (LinearLayout) parentRow.getParent();
-//                    ListView listView = (ListView) linearLayout.getParent();
-//                    final int positionOther = listView.getPositionForView(parentRow);
-                    int position = (int)v.getTag();
-                    buttonClickListener.buttonClickAt(position);
-                }
-            });
-            convertView.setTag(holder);
-        } else{
-            holder = (ViewHolder) convertView.getTag();
+            convertView = layoutInflater.inflate(R.layout.search_item, parent, false);
         }
-        final T item = getItem(position);
+        tvSubItem = (TextView)convertView.findViewById(R.id.tv_sub_item);
+        tvTitle = (TextView)convertView.findViewById(R.id.tv_title);
+
+        T item = getItem(position);
         if(item instanceof SearchChapterResponse){
             SearchChapterResponse chapter = (SearchChapterResponse) item;
-            holder.tvTitle.setText("Chapter: " + chapter.getName());
-            holder.tvSubItem.setText("Subject: " + chapter.getSubject().getName());
-            holder.btnSubitem.setText("See all chapter in this subject");
+            tvTitle.setText("Chapter: " + chapter.getName());
+            tvSubItem.setText("Subject: " + chapter.getSubject().getName());
         } else if(item instanceof SearchSubjectResponse){
             SearchSubjectResponse subject = (SearchSubjectResponse)item;
-            holder.tvTitle.setText("Subject: " + subject.getName());
-            holder.tvSubItem.setText("Chapter Items: " + (subject.getChapters() == null ? 0 : subject.getChapters().size()));
-            holder.btnSubitem.setText("See all Chapter items");
+            tvTitle.setText("Subject: " + subject.getName());
+            tvSubItem.setText("Chapter Items: " + (subject.getChapters() == null ? 0 : subject.getChapters().size()));
         }
         return convertView;
-    }
-
-    static class ViewHolder{
-        TextView tvTitle;
-        TextView tvSubItem;
-        Button btnSubitem;
-    }
-
-    public interface IButtonClickListener{
-        void buttonClickAt(int position);
     }
 }
