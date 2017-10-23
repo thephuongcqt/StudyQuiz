@@ -9,39 +9,41 @@
     >
     <TextView
         android:focusable="false"
+        android:textSize="20dp"
         android:textStyle="bold"
         android:id="@+id/tv_title"
         android:gravity="center_vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="30dp"
+        android:minHeight="40dp"
         android:textColor="@color/main_black"
         android:text="item title"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="30dp">
+        android:minHeight="40dp">
         <TextView
+            android:textSize="12dp"
             android:focusable="false"
             android:id="@+id/tv_sub_item"
             android:gravity="center_vertical"
             android:layout_centerVertical="true"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/btn_sub_item"
             android:text="item description"
             />
-        <Button
-
-            android:textAllCaps="false"
-            android:id="@+id/btn_sub_item"
-            android:background="@color/white"
-            android:layout_centerVertical="true"
-            android:minHeight="0dp"
-            android:minWidth="0dp"
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="See all sub item"/>
+        <!--<Button-->
+            <!--android:textColor="@color/TransparentGrey"-->
+            <!--android:textSize="12dp"-->
+            <!--android:textAllCaps="false"-->
+            <!--android:id="@+id/btn_sub_item"-->
+            <!--android:background="@color/white"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:minHeight="0dp"-->
+            <!--android:minWidth="0dp"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="See all sub item"/>-->
     </RelativeLayout>
 </LinearLayout>

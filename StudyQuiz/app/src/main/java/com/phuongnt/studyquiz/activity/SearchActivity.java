@@ -87,8 +87,6 @@ public class SearchActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         chapterFragment = new SearchChapterFragment();
         subjectFragment = new SearchSubjectFragment();
-        chapterFragment.setButtonClickListener(buttonChapterListener);
-        subjectFragment.setButtonClickListener(buttonSubjectListener);
         adapter.addFragment(subjectFragment, "Subject");
         adapter.addFragment(chapterFragment, "Chapter");
         viewPager.setAdapter(adapter);
@@ -230,28 +228,4 @@ public class SearchActivity extends AppCompatActivity {
         onBackPressed();
         return super.onOptionsItemSelected(item);
     }
-
-    private SearchAdapter.IButtonClickListener buttonChapterListener = new SearchAdapter.IButtonClickListener() {
-        @Override
-        public void buttonClickAt(int position) {
-            SearchChapterResponse item = chapters.get(position);
-            if(item.getSubject() != null){
-
-            }
-        }
-    };
-
-    private SearchAdapter.IButtonClickListener buttonSubjectListener = new SearchAdapter.IButtonClickListener() {
-        @Override
-        public void buttonClickAt(int position) {
-            SearchSubjectResponse item = subjects.get(position);
-            chapters = item.getChapters();
-            for(SearchChapterResponse i : chapters){
-                i.setSubject(item);
-            }
-            chapterFragment.setupListView(chapters);
-            TabLayout.Tab tab = tabLayout.getTabAt(1);
-            tab.select();
-        }
-    };
 }
