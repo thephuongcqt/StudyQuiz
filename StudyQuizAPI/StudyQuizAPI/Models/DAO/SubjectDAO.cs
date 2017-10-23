@@ -31,10 +31,10 @@ namespace StudyQuizAPI.Models.DAO
             using (var db = new StudyQuizEntities())
             {
                 var list = db.Subjects.SqlQuery(sql, nameParam, offsetParam, numberParam).ToList();
-                //foreach(var item in list)
-                //{
-                //    item.Chapters = db.Chapters.Where(i => i.SubjectId == item.SubjectId).ToList<Chapter>();
-                //}
+                foreach (var item in list)
+                {
+                    item.Chapters = db.Chapters.Where(i => i.SubjectId == item.SubjectId).ToList<Chapter>();
+                }
                 return list;
             }
         }

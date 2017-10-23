@@ -35,7 +35,7 @@ namespace StudyQuizAPI.Models.DAO
                 var list = Mapper.Map<List<Question>>(result);
                 return list;
             }
-        }
+        }        
 
         public List<Question> GetQuestionsForChapterFlashCard(int number, long userId, long chapterId)
         {
@@ -63,6 +63,172 @@ namespace StudyQuizAPI.Models.DAO
                 var list = Mapper.Map<List<Question>>(result);
                 return list;
             }
+        }
+        public List<Question> GetQuestionForSubjectTest(int number, long userId, long subjectId)
+        {
+            var rawChapters = new ChapterDAO().GetChaptersBySubjectId(subjectId);
+            if(rawChapters != null || rawChapters.Count == 0)
+            {
+                var random = new Random();
+                List<Question> questions = null;
+                var shuffledChapters = rawChapters.OrderBy(item => random.Next()).ToList();
+
+                if(number < shuffledChapters.Count)
+                {
+                    questions = GetOneQuestionForChapter(number, userId, shuffledChapters);
+                }
+                else
+                {
+                    questions = GetMultipleQuestionsForChapter(number, userId, shuffledChapters);
+                }
+                return questions;
+            }            
+            return null;
+        }
+
+        private List<Question> GetOneQuestionForChapter(int number, long userId, List<Chapter> chapters)
+        {
+            var questions = new List<Question>();
+            bool changed = true;
+            while (changed)
+            {
+                changed = false;
+                foreach (var item in chapters)
+                {
+                    var tmp = GetQuestionsForChapterTest(1, userId, item.ChapterId);
+                    if (tmp.Count > 0)
+                    {
+                        changed = true;
+                    }
+                    questions.AddRange(tmp);
+                    if (questions.Count >= number)
+                    {
+                        return questions;
+                    }
+                }
+            }
+            return questions;
+        }
+
+        private List<Question> GetMultipleQuestionsForChapter(int number, long userId, List<Chapter> chapters)
+        {
+            var questions = new List<Question>();
+            int avgNumber = chapters.Count % number;
+            int remaining = number - (avgNumber * chapters.Count);
+            bool changed = true;
+            while (changed)
+            {
+                changed = false;
+                foreach (var item in chapters)
+                {
+                    int numberQuestions = avgNumber;
+                    if (remaining > 0)
+                    {
+                        numberQuestions++;
+                        remaining--;
+                    }
+                    var tmp = GetQuestionsForChapterTest(numberQuestions, userId, item.ChapterId);
+                    if(tmp.Count >= 0)
+                    {
+                        changed = true;
+                    }
+                    if (tmp.Count < numberQuestions)
+                    {
+                        remaining += (numberQuestions - tmp.Count);
+                    }
+                    questions.AddRange(tmp);
+                    if (questions.Count >= number)
+                    {
+                        questions.RemoveRange(number, questions.Count - number);
+                        return questions;                       
+                    }
+                }
+            }
+            return questions;
+        }
+
+        public List<Question> GetQuestionForSubjectFlashCard(int number, long userId, long subjectId)
+        {
+            var rawChapters = new ChapterDAO().GetChaptersBySubjectId(subjectId);
+            if (rawChapters != null || rawChapters.Count == 0)
+            {
+                var random = new Random();
+                List<Question> questions = null;
+                var shuffledChapters = rawChapters.OrderBy(item => random.Next()).ToList();
+
+                if (number < shuffledChapters.Count)
+                {
+                    questions = GetOneQuestionForChapterFlashCard(number, userId, shuffledChapters);
+                }
+                else
+                {
+                    questions = GetMultipleQuestionsForChapterFlashCard(number, userId, shuffledChapters);
+
+                }
+                return questions;
+            }
+            return null;
+        }
+
+        private List<Question> GetOneQuestionForChapterFlashCard(int number, long userId, List<Chapter> chapters)
+        {
+            var questions = new List<Question>();
+            bool changed = true;
+            while (changed)
+            {
+                changed = false;
+                foreach (var item in chapters)
+                {
+                    var tmp = GetQuestionsForChapterFlashCard(1, userId, item.ChapterId);
+                    if (tmp.Count > 0)
+                    {
+                        changed = true;
+                    }
+                    questions.AddRange(tmp);
+                    if (questions.Count >= number)
+                    {
+                        return questions;
+                    }
+                }
+            }
+            return questions;
+        }
+
+        private List<Question> GetMultipleQuestionsForChapterFlashCard(int number, long userId, List<Chapter> chapters)
+        {
+            var questions = new List<Question>();
+            int avgNumber = chapters.Count % number;
+            int remaining = number - (avgNumber * chapters.Count);
+            bool changed = true;
+            while (changed)
+            {
+                changed = false;
+                foreach (var item in chapters)
+                {
+                    int numberQuestions = avgNumber;
+                    if (remaining > 0)
+                    {
+                        numberQuestions++;
+                        remaining--;
+                    }
+                    var tmp = GetQuestionsForChapterFlashCard(numberQuestions, userId, item.ChapterId);
+                    if (tmp.Count >= 0)
+                    {
+                        changed = true;
+                    }
+                    if (tmp.Count < numberQuestions)
+                    {
+                        remaining += (numberQuestions - tmp.Count);
+                    }
+                    questions.AddRange(tmp);
+                    if (questions.Count >= number)
+                    {
+                        questions.RemoveRange(number, questions.Count - number);
+                        return questions;
+                    }
+                }
+            }
+            return questions;
         }
     }
 }
