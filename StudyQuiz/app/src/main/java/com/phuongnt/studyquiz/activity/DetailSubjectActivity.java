@@ -21,6 +21,8 @@ import com.phuongnt.studyquiz.model.apimodel.RequestParam;
 import com.phuongnt.studyquiz.model.apimodel.questionservice.QuestionResponse;
 import com.phuongnt.studyquiz.model.apimodel.searchservice.SearchChapterResponse;
 import com.phuongnt.studyquiz.model.apimodel.searchservice.SearchSubjectResponse;
+import com.phuongnt.studyquiz.model.viewmodel.Question;
+import com.phuongnt.studyquiz.model.viewmodel.TestData;
 import com.phuongnt.studyquiz.model.viewmodel.User;
 import com.phuongnt.studyquiz.service.APIManager;
 import com.phuongnt.studyquiz.service.IAPIHelper;
@@ -150,7 +152,14 @@ public class DetailSubjectActivity extends AppCompatActivity {
             Toast.makeText(this, "No question to test", Toast.LENGTH_SHORT).show();
             return;
         }
-        Toast.makeText(this, "Success with: " + questions.size() + " items", Toast.LENGTH_SHORT).show();
+        TestData.setQuestions(new ArrayList<Question>());
+        for(QuestionResponse item : questions){
+            TestData.addQuestion(item);
+        }
+        Intent intent = new Intent(this, TestRoomActivity.class);
+        TestRoomActivity.setCurrentIndex(1);
+        startActivity(intent);
+//        Toast.makeText(this, "Success with: " + questions.size() + " items", Toast.LENGTH_SHORT).show();
     }
 
     private void onError(String error){

@@ -8,6 +8,8 @@
     <string name="detail_chapter_btn_flashcard">Study with cards</string>
     <string name="detail_chapter_btn_test">Start test</string>
     <string name="detail_subject_title_list">All Chapter</string>
+    <string name="test_room_btn_previous">Previous</string>
+    <string name="test_room_btn_next">Next</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

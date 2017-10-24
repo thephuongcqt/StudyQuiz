@@ -1,5 +1,6 @@
 package com.phuongnt.studyquiz.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -17,6 +18,8 @@ import com.phuongnt.studyquiz.model.apimodel.CommonResponse;
 import com.phuongnt.studyquiz.model.apimodel.RequestParam;
 import com.phuongnt.studyquiz.model.apimodel.questionservice.QuestionResponse;
 import com.phuongnt.studyquiz.model.apimodel.searchservice.SearchChapterResponse;
+import com.phuongnt.studyquiz.model.viewmodel.Question;
+import com.phuongnt.studyquiz.model.viewmodel.TestData;
 import com.phuongnt.studyquiz.model.viewmodel.User;
 import com.phuongnt.studyquiz.service.APIManager;
 import com.phuongnt.studyquiz.service.IAPIHelper;
@@ -24,6 +27,7 @@ import com.phuongnt.studyquiz.service.MyProgressBar;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -118,7 +122,14 @@ public class DetailChapterActivity extends AppCompatActivity {
         if(questions == null || questions.isEmpty()){
             return;
         }
-        Toast.makeText(this, "Success with: " + questions.size() + " items", Toast.LENGTH_SHORT).show();
+        TestData.setQuestions(new ArrayList<Question>());
+        for(QuestionResponse item : questions){
+            TestData.addQuestion(item);
+        }
+        Intent intent = new Intent(this, TestRoomActivity.class);
+        TestRoomActivity.setCurrentIndex(1);
+        startActivity(intent);
+//        Toast.makeText(this, "Success with: " + questions.size() + " items", Toast.LENGTH_SHORT).show();
     }
 
     private void onError(String error){
