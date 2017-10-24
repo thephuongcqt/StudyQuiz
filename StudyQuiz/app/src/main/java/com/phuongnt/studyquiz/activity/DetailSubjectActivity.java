@@ -102,7 +102,7 @@ public class DetailSubjectActivity extends AppCompatActivity {
     }
 
     public void onButtonStudyCardSelected(View v){
-
+        Toast.makeText(this, "Not implement yet", Toast.LENGTH_SHORT).show();
     }
 
     public void onButtonStartTestSelected(View v){
@@ -150,7 +150,7 @@ public class DetailSubjectActivity extends AppCompatActivity {
             Toast.makeText(this, "No question to test", Toast.LENGTH_SHORT).show();
             return;
         }
-
+        Toast.makeText(this, "Success with: " + questions.size() + " items", Toast.LENGTH_SHORT).show();
     }
 
     private void onError(String error){

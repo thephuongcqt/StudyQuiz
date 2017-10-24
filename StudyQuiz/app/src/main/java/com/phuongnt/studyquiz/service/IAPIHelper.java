@@ -29,4 +29,6 @@ public interface IAPIHelper {
     Call<CommonResponse<List<SearchSubjectResponse>>> searchSubject(@QueryMap Map<String, String> params);
     @GET("Question/GetQuestionForSubjectTest")
     Call<CommonResponse<List<QuestionResponse>>> getSubjectTest(@QueryMap Map<String, String> params);
+    @GET("Question/GetQuestionForChapterTest")
+    Call<CommonResponse<List<QuestionResponse>>> getChapterTest(@QueryMap Map<String, String> params);
 }

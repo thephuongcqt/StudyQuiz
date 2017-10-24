@@ -9,11 +9,28 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.phuongnt.studyquiz.AppConst;
 import com.phuongnt.studyquiz.R;
+import com.phuongnt.studyquiz.model.apimodel.CommonResponse;
+import com.phuongnt.studyquiz.model.apimodel.RequestParam;
+import com.phuongnt.studyquiz.model.apimodel.questionservice.QuestionResponse;
 import com.phuongnt.studyquiz.model.apimodel.searchservice.SearchChapterResponse;
+import com.phuongnt.studyquiz.model.viewmodel.User;
+import com.phuongnt.studyquiz.service.APIManager;
+import com.phuongnt.studyquiz.service.IAPIHelper;
+import com.phuongnt.studyquiz.service.MyProgressBar;
 
 import org.w3c.dom.Text;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DetailChapterActivity extends AppCompatActivity {
     private static final int[] numberQuestions = {10, 15, 20, 25, 30};
@@ -54,11 +71,59 @@ public class DetailChapterActivity extends AppCompatActivity {
     }
 
     public void onButtonStudyCardSelected(View v){
-
+        Toast.makeText(this, "Not implement yet", Toast.LENGTH_SHORT).show();
     }
 
     public void onButtonStartTestSelected(View v){
+        int index = spinnerNumber.getSelectedItemPosition();
+        int number = numberQuestions[index];
+        User user = User.getCurrentUser();
+        if(user == null){
+            return;
+        }
 
+        MyProgressBar.show(this);
+
+        Map<String, String> params = new HashMap<>();
+        params.put(RequestParam.CHAPTER_CHAPTERID, chapter.getChapterId() + "");
+        params.put(RequestParam.CHAPTER_NUMBER, number + "");
+        params.put(RequestParam.CHAPTER_USERID, user.getUserId() + "");
+
+        IAPIHelper iapiHelper = APIManager.getAPIManager().create(IAPIHelper.class);
+        Call<CommonResponse<List<QuestionResponse>>> call = iapiHelper.getChapterTest(params);
+        call.enqueue(new Callback<CommonResponse<List<QuestionResponse>>>() {
+            @Override
+            public void onResponse(Call<CommonResponse<List<QuestionResponse>>> call, Response<CommonResponse<List<QuestionResponse>>> response) {
+                if(response.isSuccessful()){
+                    CommonResponse<List<QuestionResponse>> commonResponse = response.body();
+                    if(commonResponse.isSuccess()){
+                        onSuccess(commonResponse.getValue());
+                    } else{
+                        onError(commonResponse.getError());
+                    }
+                } else{
+                    onError(AppConst.ERROR_CONNECTION);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonResponse<List<QuestionResponse>>> call, Throwable t) {
+                onError(t.getMessage());
+            }
+        });
+    }
+
+    private void onSuccess(List<QuestionResponse> questions){
+        MyProgressBar.dismiss();
+        if(questions == null || questions.isEmpty()){
+            return;
+        }
+        Toast.makeText(this, "Success with: " + questions.size() + " items", Toast.LENGTH_SHORT).show();
+    }
+
+    private void onError(String error){
+        MyProgressBar.dismiss();
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
     }
 
     @Override
