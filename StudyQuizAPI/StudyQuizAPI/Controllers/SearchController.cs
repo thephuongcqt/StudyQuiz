@@ -12,15 +12,15 @@ namespace StudyQuizAPI.Controllers
 {
     public class SearchController : ApiController
     {
-        public object GetSubject(string searchValue)
-        {
-            if (string.IsNullOrWhiteSpace(searchValue))
-            {
-                return new Response(false, null);
-            }
-            var list = new SubjectDAO().SearchSubject(searchValue);
-            return new Response(true, list);
-        }
+        //public object GetSubject(string searchValue)
+        //{
+        //    if (string.IsNullOrWhiteSpace(searchValue))
+        //    {
+        //        return new Response(false, null);
+        //    }
+        //    var list = new SubjectDAO().SearchSubject(searchValue);
+        //    return new Response(true, list);
+        //}
 
         public object GetSubject(string searchValue, string offset, string number)
         {
@@ -38,11 +38,11 @@ namespace StudyQuizAPI.Controllers
 
         }
 
-        public object GetChapter(string searchValue)
-        {
-            var list = new ChapterDAO().SearchChapter(searchValue);
-            return new Response(true, list);
-        }
+        //public object GetChapter(string searchValue)
+        //{
+        //    var list = new ChapterDAO().SearchChapter(searchValue);
+        //    return new Response(true, list);
+        //}
 
         public object GetChapter(string searchValue, string offset, string number)
         {

@@ -38,6 +38,7 @@
     <EntitySetMapping Name="Questions">
       <EntityTypeMapping TypeName="StudyQuizModel.Question">
         <MappingFragment StoreEntitySet="Question">
+          <ScalarProperty Name="IsEnable" ColumnName="IsEnable" />
           <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
           <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
           <ScalarProperty Name="TypeId" ColumnName="TypeId" />
@@ -114,6 +115,7 @@
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="ChapterId" ColumnName="ChapterId" />
           <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+          <ScalarProperty Name="IsEnable" ColumnName="IsEnable" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
@@ -130,5 +132,32 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <EntitySetMapping Name="countries">
+      <EntityTypeMapping TypeName="StudyQuizModel.country">
+        <MappingFragment StoreEntitySet="countries">
+          <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="migrations">
+      <EntityTypeMapping TypeName="StudyQuizModel.migration">
+        <MappingFragment StoreEntitySet="migrations">
+          <ScalarProperty Name="batch" ColumnName="batch" />
+          <ScalarProperty Name="migration1" ColumnName="migration" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tags">
+      <EntityTypeMapping TypeName="StudyQuizModel.tag">
+        <MappingFragment StoreEntitySet="tags">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

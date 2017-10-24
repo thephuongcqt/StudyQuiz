@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activity.DetailSubjectActivity"
+    >
+    <include layout="@layout/app_bar"/>
+    <LinearLayout
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginTop="20dp"
+            style="@style/CommonTitle"
+            android:id="@+id/tv_subject_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Subject"/>
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+            <TextView
+                android:textSize="16dp"
+                android:gravity="center"
+                android:text="@string/detail_chapter_question_number"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            <Spinner
+                android:id="@+id/spinner_number_question"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+            </Spinner>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+            <Button
+                android:onClick="onButtonStudyCardSelected"
+                android:textSize="16dp"
+                style="@style/CommonButton"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@string/detail_chapter_btn_flashcard"
+                />
+            <LinearLayout
+                android:layout_width="10dp"
+                android:layout_height="match_parent">
+            </LinearLayout>
+            <Button
+                android:onClick="onButtonStartTestSelected"
+                android:textSize="16dp"
+                style="@style/CommonButton"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@string/detail_chapter_btn_test"
+                />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_chapter_title"
+            style="@style/CommonTitle"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="@string/detail_subject_title_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <ListView
+        android:id="@+id/lv_chapter_in_subject"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></ListView>
+</LinearLayout>

@@ -16,7 +16,7 @@ AS
 		SELECT QuestionId
 		FROM StudiedQuestions
 		WHERE UserId = @UserId
-	) AND ChapterId = @ChapterId AND TypeId != 0
+	) AND ChapterId = @ChapterId AND TypeId != 0 AND IsEnable = 1
 GO
 
 EXEC GET_QUESTIONS_NOT_STUDY_YET
@@ -37,7 +37,7 @@ AS
 	FROM Question a, 
 		(SELECT TOP (@Number) a.*, b.Count, b.WrongAnswer
 		FROM	
-			(SELECT * FROM Question WHERE ChapterId = @ChapterId AND TypeId != 0) a,
+			(SELECT * FROM Question WHERE ChapterId = @ChapterId AND TypeId != 0 AND IsEnable = 1) a,
 			(SELECT * FROM StudiedQuestions) b
 		WHERE a.QuestionId = b.QuestionId
 		ORDER BY b.Count ASC, b.WrongAnswer DESC) c
@@ -64,7 +64,7 @@ AS
 		SELECT QuestionId
 		FROM StudiedQuestions
 		WHERE UserId = @UserId
-	) AND ChapterId = @ChapterId
+	) AND ChapterId = @ChapterId AND IsEnable = 1
 GO
 
 EXEC GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET
@@ -84,7 +84,7 @@ AS
 	FROM Question a, 
 		(SELECT TOP (@Number) a.*, b.Count, b.WrongAnswer
 		FROM	
-			(SELECT * FROM Question WHERE ChapterId = @ChapterId AND TypeId != 0) a,
+			(SELECT * FROM Question WHERE ChapterId = @ChapterId AND TypeId != 0 AND IsEnable = 1) a,
 			(SELECT * FROM StudiedQuestions) b
 		WHERE a.QuestionId = b.QuestionId
 		ORDER BY b.Count ASC, b.WrongAnswer DESC) c

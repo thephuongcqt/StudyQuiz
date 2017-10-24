@@ -50,6 +50,7 @@
     <NavigationProperty Name="Feedbacks" Relationship="Self.FK_Feedback_Question" FromRole="Question" ToRole="Feedback" />
     <NavigationProperty Name="StudiedQuestions" Relationship="Self.FK_StudiedQuestions_Question" FromRole="Question" ToRole="StudiedQuestions" />
     <Property Name="CreatedUser" Type="Int64" />
+    <Property Name="IsEnable" Type="Boolean" />
   </EntityType>
   <EntityType Name="StudiedQuestion">
     <Key>
@@ -227,6 +228,9 @@
       <Parameter Name="UserId" Mode="In" Type="Int64" />
       <Parameter Name="ChapterId" Mode="In" Type="Int64" />
     </FunctionImport>
+    <EntitySet Name="countries" EntityType="StudyQuizModel.country" />
+    <EntitySet Name="migrations" EntityType="StudyQuizModel.migration" />
+    <EntitySet Name="tags" EntityType="StudyQuizModel.tag" />
   </EntityContainer>
   <ComplexType Name="GET_QUESTIONS_ALREADY_STDUY_Result">
     <Property Type="Int64" Name="QuestionId" Nullable="false" />
@@ -252,6 +256,7 @@
     <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
     <Property Type="Int64" Name="ChapterId" Nullable="true" />
     <Property Type="Int64" Name="CreatedUser" Nullable="true" />
+    <Property Type="Boolean" Name="IsEnable" Nullable="true" />
   </ComplexType>
   <ComplexType Name="GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET_Result">
     <Property Type="Int64" Name="QuestionId" Nullable="false" />
@@ -262,4 +267,28 @@
     <Property Type="Int64" Name="ChapterId" Nullable="true" />
     <Property Type="Int64" Name="CreatedUser" Nullable="true" />
   </ComplexType>
+  <EntityType Name="country">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="created_at" Type="DateTime" Precision="3" />
+    <Property Name="updated_at" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="migration">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="migration1" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="batch" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tag">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+  </EntityType>
 </Schema>

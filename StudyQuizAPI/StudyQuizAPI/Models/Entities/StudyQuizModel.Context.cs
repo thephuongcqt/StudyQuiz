@@ -35,6 +35,9 @@ namespace StudyQuizAPI.Models.Entities
         public virtual DbSet<StudiedQuestion> StudiedQuestions { get; set; }
         public virtual DbSet<Subject> Subjects { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<country> countries { get; set; }
+        public virtual DbSet<migration> migrations { get; set; }
+        public virtual DbSet<tag> tags { get; set; }
     
         public virtual ObjectResult<GET_QUESTIONS_ALREADY_STDUY_Result> GET_QUESTIONS_ALREADY_STDUY(Nullable<int> number, Nullable<long> userId, Nullable<long> chapterId)
         {
