@@ -26,7 +26,8 @@
         <activity android:name=".activity.SearchActivity" />
         <activity android:name=".activity.DetailChapterActivity" />
         <activity android:name=".activity.DetailSubjectActivity" />
-        <activity android:name=".activity.TestRoomActivity"></activity>
+        <activity android:name=".activity.TestRoomActivity" />
+        <activity android:name=".activity.TestResultActivity"></activity>
     </application>
 
 </manifest>

@@ -1,6 +1,9 @@
 package com.phuongnt.studyquiz.activity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -66,6 +69,8 @@ public class TestRoomActivity extends AppCompatActivity {
     public void onNextButtonSelected(View v){
         if(currentIndex < data.size()){
             currentIndex++;
+        } else{
+            finishTest();
         }
         toolbarTitle.setText(currentIndex + "/" + data.size());
         question = data.get(currentIndex - 1);
@@ -90,6 +95,45 @@ public class TestRoomActivity extends AppCompatActivity {
 
             mcQuestionFragment.setupLayout(question);
         }
+    }
+
+    private void finishTest(){
+        int unselectedItems = 0;
+        for(Question question : data){
+            if(question.getSelectedAnswer() == null){
+                unselectedItems++;
+            }
+        }
+
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:{
+                        goToTestResult();
+                        break;
+                    }
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        //No button clicked
+                        break;
+                }
+            }
+        };
+
+        String message = "Are you sure to finish this test?";
+        if(unselectedItems > 0){
+            message = "You are missing " + unselectedItems + " questions, Are you sure to finish?";
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message).setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener).show();
+
+    }
+
+    private void goToTestResult(){
+        Intent intent = new Intent(this, TestResultActivity.class);
+        startActivity(intent);
     }
 
     public void onQuestionSelected(View v){

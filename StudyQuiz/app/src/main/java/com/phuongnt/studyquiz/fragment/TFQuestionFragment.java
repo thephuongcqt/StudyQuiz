@@ -62,8 +62,9 @@ public class TFQuestionFragment extends Fragment {
             tvFalse.setBackground(getActivity().getDrawable(R.drawable.rectangle_border));
         }
     }
-    private void selectAnswer(int i){
-        if(i == 0){
+    private void selectAnswer(int index){
+        question.setSelectedAnswer(index);
+        if(index == 0){
             if(tvFalse != null){
                 tvFalse.setBackground(getActivity().getDrawable(R.drawable.rectangle_border_selected));
             }
@@ -75,13 +76,11 @@ public class TFQuestionFragment extends Fragment {
     }
 
     private void onSelectTrue(){
-        question.setSelectedAnswer(1);
         resetSelected();
         selectAnswer(1);
 
     }
     private void onSelectFalse(){
-        question.setSelectedAnswer(0);
         resetSelected();
         selectAnswer(0);
     }
