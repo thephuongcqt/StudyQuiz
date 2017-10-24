@@ -14,15 +14,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="{{asset("/css/AdminLTE.min.css")}}">
-    <link rel="stylesheet" href="{{asset("/css/skins/skin-yellow-light.min.css")}}">
-      <link rel="stylesheet" href="{{asset("/css/skins/skin-blue-light.min.css")}}">
-            <link rel="stylesheet" href="{{asset("/css/skins/skin-blue.min.css")}}">
+<link rel="stylesheet" href="{{asset("/css/skins/skin-green-light.min.css")}}"> 
+            <link rel="stylesheet" href="{{asset("/css/skins/skin-green-light.min.css")}}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <script src="{{asset("/plugins/jQuery/jquery-3.1.1.min.js")}}"></script>
     <script src="{{asset("/bootstrap/js/bootstrap.min.js")}}"></script>
     <script src="{{asset("/js/validation.js")}}"></script>
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-green-light sidebar-mini">
 <div class="wrapper">
     @include('adminlte.header')
 
