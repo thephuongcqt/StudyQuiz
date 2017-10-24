@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.phuongnt.studyquiz.R;
+import com.phuongnt.studyquiz.activity.TestRoomActivity;
 import com.phuongnt.studyquiz.model.viewmodel.Question;
 
 public class TFQuestionFragment extends Fragment {
@@ -20,6 +21,11 @@ public class TFQuestionFragment extends Fragment {
     private TextView tvFalse;
     public TFQuestionFragment() {
         // Required empty public constructor
+    }
+    private TestRoomActivity.IFragmentLyfecycleListener ilyfecycleListener;
+
+    public void setIlyfecycleListener(TestRoomActivity.IFragmentLyfecycleListener ilyfecycleListener) {
+        this.ilyfecycleListener = ilyfecycleListener;
     }
 
     @Override
@@ -43,24 +49,54 @@ public class TFQuestionFragment extends Fragment {
                 onSelectFalse();
             }
         });
+
+        ilyfecycleListener.onCreateViewDone();
         return rootView;
+    }
+
+    private void resetSelected(){
+        if(tvTrue != null){
+            tvTrue.setBackground(getActivity().getDrawable(R.drawable.rectangle_border));
+        }
+        if(tvFalse != null){
+            tvFalse.setBackground(getActivity().getDrawable(R.drawable.rectangle_border));
+        }
+    }
+    private void selectAnswer(int i){
+        if(i == 0){
+            if(tvFalse != null){
+                tvFalse.setBackground(getActivity().getDrawable(R.drawable.rectangle_border_selected));
+            }
+        } else{
+            if(tvTrue != null){
+                tvTrue.setBackground(getActivity().getDrawable(R.drawable.rectangle_border_selected));
+            }
+        }
     }
 
     private void onSelectTrue(){
         question.setSelectedAnswer(1);
-        tvTrue.setBackground(getActivity().getDrawable(R.drawable.rectangle_border_selected));
-        tvFalse.setBackground(getActivity().getDrawable(R.drawable.rectangle_border));
+        resetSelected();
+        selectAnswer(1);
+
     }
     private void onSelectFalse(){
         question.setSelectedAnswer(0);
-        tvTrue.setBackground(getActivity().getDrawable(R.drawable.rectangle_border));
-        tvFalse.setBackground(getActivity().getDrawable(R.drawable.rectangle_border_selected));
+        resetSelected();
+        selectAnswer(0);
     }
 
     public void setupLayout(Question question){
+        if(getActivity() == null || question == null){
+            return;
+        }
+        resetSelected();
         this.question = question;
         if(tvQuestionTitle != null){
             tvQuestionTitle.setText(question.getValue().getTerm());
+        }
+        if(question.getSelectedAnswer() != null){
+            selectAnswer(question.getSelectedAnswer());
         }
     }
 }

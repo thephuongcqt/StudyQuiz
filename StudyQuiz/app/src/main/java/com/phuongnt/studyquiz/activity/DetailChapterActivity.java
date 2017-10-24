@@ -127,7 +127,6 @@ public class DetailChapterActivity extends AppCompatActivity {
             TestData.addQuestion(item);
         }
         Intent intent = new Intent(this, TestRoomActivity.class);
-        TestRoomActivity.setCurrentIndex(1);
         startActivity(intent);
 //        Toast.makeText(this, "Success with: " + questions.size() + " items", Toast.LENGTH_SHORT).show();
     }
