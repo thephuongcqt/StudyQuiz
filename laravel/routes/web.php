@@ -38,5 +38,6 @@ Route::get('/profile','LoginController@getProfile');
 //Feedback
 Route::get('/feedback','FeedbackController@index');
 Route::get('/feedback/{id}','FeedbackController@detail');
+Route::post('/editQuestionFeedback','FeedbackController@getDetail');
 
 

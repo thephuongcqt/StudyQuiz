@@ -1,6 +1,5 @@
-
 @extends('adminlte.layout')
-@section('title', 'Dashboard')
+@section('title', 'Create Question')
 @section('content')
 <div class="wrapper-content">
    <section class="content-header">
@@ -13,81 +12,126 @@
     <!-- body -->
     <!-- hàng 1 -->
     <div class="col-md-12">
-      <div class="row">
-        <div class="col-md-4">
-          <div class="info-box">
-            <span class="info-box-icon bg-lime"><i class="fa fa-envelope-o"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Total Feedback</span>
-              <span class="info-box-number"> </span>
-            </div>
-            <!-- /.info-box-content -->
+   <!--    <div class="col-md-6 " style="padding-right: 15px;padding-left: 15px;">
+          
+      </div> -->
+       <div class="col-md-6">
+          <!-- Horizontal Form -->
+          <div class="box box-info" style="border-top-color:#07f907">
+           <!--  <div class="box-header with-border">
+              <h3 class="box-title">Horizontal Form</h3>
+            </div> -->
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form method ="post" class="form-horizontal" action="/editQuestionFeedback">
+             <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+               <div class="form-group" style="padding-top: 20px;">
+                 <label for="email" class="col-md-3 control-label">Term</label>
+                  <div class="col-md-6">
+                   <textarea rows="4" cols="60"  name="term" id="term" maxlength="100" required="required"
+                     style="resize: none">{{$Question->Term}}</textarea>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label for="email" class="col-md-3 control-label">Definition</label>
+                  <div class="col-md-6">
+                      <input id="definition" type="text" class="form-control" name="definition" value="{{$Question->Definition}}"   required="required">
+                  </div>
+              </div>
+            <!--   <div class="form-group">
+                  <label for="email" class="col-md-4 control-label">Subject</label>
+                  <div class="col-md-6">
+                      
+                                <select name="MySubject" id="MySubject" onchange="leaveChange()"  class="form-control">
+                                   
+                                     @foreach($Subjects as $key => $val)
+                                   <option value="{{$val->SubjectId}}" >
+                                   {{$val->Name}}
+                                   </option>
+                                  
+                                  @endforeach
+                                </select>
+                                 
+                  </div>
+              </div> -->
+              <div class="form-group">
+                  <label for="email" class="col-md-4 control-label">{{$Question->ChapterId}}</label>
+                  <div class="col-md-6">
+                    <select name="MyChapter" id="MyChapter"  class="form-control" required="required">
+                    </select>
+                  </div>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                
+                <button type="button" id="btnSubmit" class="btn btn-info pull-right">Sign in</button>
+              </div>
+              <!-- /.box-footer -->
+            </form>
           </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-4">
-          <div class="info-box">
-            <span class="info-box-icon bg-lime"><i class="fa fa-flag-o"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Feedback duplicate Question</span>
-              <span class="info-box-number"> </span>
-            </div>
-            <!-- /.info-box-content -->
           </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-4">
-          <div class="info-box">
-            <span class="info-box-icon bg-lime"><i class="fa fa-files-o"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Feedback Wrong Answer</span>
-              <span class="info-box-number"> </span>
+      <!-- commnent -->
+      <div class="col-md-6 " style="padding-right: 15px;padding-left: 15px;">
+          <div class="box box-info" style="border-top-color:#07f907">
+            <div class="box-header with-border ">
+                <h3 class="box-title">Comment For Question </h3>
             </div>
-            <!-- /.info-box-content -->
+            <div class="box-body">
+                <table class="table table-bordered">
+                    <thead>
+                    <th class="col-md-2">FeedbackId</th>
+                    <th class="col-md-9">Comment</th>
+                    </thead>
+                    <tbody>
+                    @foreach ($Comments as $cmt)
+                      <tr>
+                          <th class="text-center">{{$cmt->FeedbackId}}</th>
+                          <th>{{$cmt->Comment}}</th>
+                      </tr>
+                    @endforeach
+                    </tbody>
+                    <div class="text-center">{{$Comments->links()}}</div>
+                </table>
+            </div>
           </div>
-          <!-- /.info-box -->
-        </div>
-         
-        
-        <!-- /.col -->
       </div>
-      <!-- /.row -->
     </div>
-    <div class="col-md-12">
-   <div class="col-md-6 " style="padding-right: 15px;padding-left: 15px;">
-          <div class="bg-gray">
-          <div class="box-header with-border ">
-            <h3 class="box-title">Top Question have Wrong answer </h3>
-          </div>
-          <div class="box-body">
-              <table class="table table-bordered  ">
-                  <thead>
-                  <th>#</th>
-                  <th>QuestionId</th>
-                  <th>Total Feedback</th>
-                  <th>OPTION</th>
-                  </thead>
-                  <tbody>
-                   
-                  </tbody>
-              </table>
-          </div>
- 
-        
-     </div>
- 
-    </div>
-    
- 
- 
+    <!-- comment -->
+  
+      
+     
     </section>
 <!-- //endbody -->
 
 
 </div>
 @endsection
+<script>
+// function myFunction() {
+//     alert("Hello World");
+// }
+
+function leaveChange() {
+     var id = $('#MySubject option:selected').val();
+   
+    
+          $.ajax({
+                    type: 'GET',
+                    cache: false,
+                    url: '/createQuestion/ajax/'+id,
+                    dataType: 'JSON',
+                     
+                }).done(function (response, textStatus, jqXHR) {
+                     
+                    $('#MyChapter').html('');
+                    $.each(response, function (i, val) {
+                        $('#MyChapter').append('<option value="'+val+'">'+'Chapter '+val+' : '+ i+'</option>');
+                    });
+                    // $("#MyChapter").val(data.month)
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                     
+                    alert('通信に失敗しました');
+                });
+}
+  
+</script>

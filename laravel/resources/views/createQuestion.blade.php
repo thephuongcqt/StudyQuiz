@@ -58,7 +58,7 @@
                             <td>
                                 <div class="form-group no-padding no-margin">
                                     <div class="input-group col-md-8">
-                                    <textarea rows="4" cols="100"  name="term" id="term" maxlength="300" >
+                                    <textarea rows="4" cols="100"  name="term" id="term" maxlength="300" required="required" >
                                     </textarea>
                                     </div>
                                 </div>

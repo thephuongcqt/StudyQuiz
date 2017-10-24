@@ -1551,7 +1551,7 @@ a:focus {
   border-top-color: #3c8dbc;
 }
 .box.box-info {
-  border-top-color: #00c0ef;
+  border-top-color: #07f907;
 }
 .box.box-danger {
   border-top-color: #dd4b39;
@@ -1621,7 +1621,7 @@ a:focus {
   color: #ffffff;
 }
 .box.box-solid.box-info {
-  border: 1px solid #00c0ef;
+  border: 1px solid #07f907;
 }
 .box.box-solid.box-info > .box-header {
   color: #ffffff;
@@ -2573,7 +2573,7 @@ a:focus {
   border-top-color: #3c8dbc;
 }
 .nav-tabs-custom.tab-info > .nav-tabs > li.active {
-  border-top-color: #00c0ef;
+  border-top-color: #07f907;
 }
 .nav-tabs-custom.tab-danger > .nav-tabs > li.active {
   border-top-color: #dd4b39;
