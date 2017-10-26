@@ -2,7 +2,7 @@
 @extends('adminlte.layout')
 @section('title', 'Dashboard')
 @section('content')
-<div class="wrapper-content">
+<div class="wrapper-content" >
    <section class="content-header">
       <h1>
         Manage Feedback
@@ -60,10 +60,10 @@
       <!-- /.row -->
     </div>
     <div class="col-md-12">
-   <div class="col-md-6 " style="padding-right: 15px;padding-left: 15px;">
+   <div class="col-md-6 " style="padding-right: 15px;padding-left: 0px">
           <div class="bg-gray">
           <div class="box-header with-border ">
-            <h3 class="box-title">Top Question have Wrong answer </h3>
+            <h3 class="box-title">Top 5 Question have wrong answers </h3>
           </div>
           <div class="box-body">
               <table class="table table-bordered  ">
@@ -85,15 +85,13 @@
                   </tbody>
               </table>
           </div>
-            <div class="text-center">{{$feedback->links()}}</div></div>
-        
+             </div>
      </div>
-     <!-- <div class="col-md-1"></div> -->
       <!-- //top QA -->
-    <div class="col-md-6 " style="padding-right: 15px;padding-left: 15px;">
+    <div class="col-md-6 " style="padding-left: 15px;padding-right: 0px">
           <div class="bg-gray">
           <div class="box-header with-border ">
-            <h3 class="box-title">Top Question have Wrong answer </h3>
+            <h3 class="box-title">Top 5 Duplicated Question </h3>
           </div>
           <div class="box-body">
               <table class="table table-bordered  ">
@@ -113,15 +111,50 @@
                   </tbody>
               </table>
           </div>
-            <div class="text-center">{{$feedbackD->links()}}</div></div>
-        
+            </div>
      </div>
  <!--    // end topQA -->
     </div>
-    
-    
  <!-- end hang 1 -->
- <div class="col-md-12 bg-gray" style="height: 300px;max-height: 300px;margin-top: 20px">FULL</div>
+ <!-- //table feedback Wrong answer -->
+ <!-- // end table wrong -->
+     <div class="col-md-12 bg-gray" style="margin-top: 20px">
+    <div class="box-body">
+          <div class="box-header with-border ">
+            <h3 class="box-title">Question have wrong answers </h3>
+          </div>
+              <table class="table table-bordered">
+                  <thead>
+                  <th class="col-md-1">FeedbackId</th>
+                  <th class="col-md-1">UserId</th>
+                  <th class="col-md-1">QuestionId</th>
+                  <th class="col-md-1">ErrorId</th>
+                  <th class="col-md-5">Comment</th>
+                  <th class="col-md-1">Accepted</th>
+                  <th class="col-md-2">ACTION</th>
+                  </thead>
+                  <tbody>
+                   @foreach ($FeedbackALL as $key => $val)
+            <tr>
+              <td>{{$val->FeedbackId}}</td>
+              <td>{{$val->UserId}}</td>
+              <td>{{$val->QuestionId}}</td>
+              <td>{{$val->ErrorId}}</td>
+              <td>{{$val->Comment}}</td>
+              <td>{{$val->Accepted}}</td>
+              <td>MY OPTION</td>
+            </tr>
+            @endforeach
+
+                  </tbody>
+ 
+              </table>
+              <div class="text-center"> {{$FeedbackALL->links()}}</div>
+          </div>
+    
+    
+ <!--    // end topQA -->
+    </div>
 </div>
     </section>
 <!-- //endbody -->
@@ -129,3 +162,7 @@
 
 </div>
 @endsection
+<script src="{{asset("/plugins/jQuery/jquery-3.1.1.min.js")}}"></script>
+<script>
+
+</script>

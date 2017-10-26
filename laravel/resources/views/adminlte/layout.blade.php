@@ -4,22 +4,21 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>
-     @yield('title_prefix', config('adminlte.title_prefix', ''))
-        @yield('title', config('adminlte.title', 'Trang chu'))
+       <title>
+        @yield('title_prefix', config('adminlte.title_prefix', ''))
+        @yield('title', config('adminlte.title', 'Dashboard'))
         @yield('title_postfix', config('adminlte.title_postfix', ''))
     </title>
     <link rel="stylesheet" href="{{asset("/bootstrap/css/bootstrap.min.css")}}">
-    <link rel="stylesheet" href="{{asset("/bootstrap/css/bootstrap.css")}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="{{asset("/css/AdminLTE.min.css")}}">
-<link rel="stylesheet" href="{{asset("/css/skins/skin-green-light.min.css")}}"> 
-            <link rel="stylesheet" href="{{asset("/css/skins/skin-green-light.min.css")}}">
+    <link rel="stylesheet" href="{{asset("/css/skins/skin-green-light.min.css")}}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <script src="{{asset("/plugins/jQuery/jquery-3.1.1.min.js")}}"></script>
     <script src="{{asset("/bootstrap/js/bootstrap.min.js")}}"></script>
     <script src="{{asset("/js/validation.js")}}"></script>
+    <script src="{{asset("/js/adminlte.min.js")}}"></script>
 </head>
 <body class="hold-transition skin-green-light sidebar-mini">
 <div class="wrapper">
@@ -30,12 +29,12 @@
     <div class="content-wrapper">
 
         @yield('content')
-    
+
     </div>
 
     @include('adminlte.footer')
 </div>
-
+  
 <script src="{{asset("/js/adminlte.min.js")}}"></script>
 </body>
 </html>
