@@ -17,7 +17,7 @@ public class MyProgressBar {
             _instance = new ProgressDialog(context);
         }
         _instance.setIndeterminate(false);
-        _instance.setCancelable(true);
+        _instance.setCancelable(false);
         _instance.setMessage("Loading...");
         _instance.show();
     }

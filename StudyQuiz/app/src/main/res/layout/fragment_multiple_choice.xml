@@ -1,0 +1,59 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.MCQuestionFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_question_title"
+            android:textColor="@color/black"
+            android:gravity="center"
+            style="@style/CommonTitle"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/ll_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/answer_item0"
+                style="@style/answer_item"
+                android:onClick="onQuestionSelected"
+                />
+            <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/answer_item1"
+                style="@style/answer_item"
+                android:onClick="onQuestionSelected"
+                />
+            <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/answer_item2"
+                style="@style/answer_item"
+                android:onClick="onQuestionSelected"
+                />
+            <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/answer_item3"
+                style="@style/answer_item"
+                android:onClick="onQuestionSelected"
+                />
+            <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/answer_item4"
+                style="@style/answer_item"
+                android:onClick="onQuestionSelected"
+                />
+            <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/answer_item5"
+                style="@style/answer_item"
+                android:onClick="onQuestionSelected"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>
