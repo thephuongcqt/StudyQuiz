@@ -6,7 +6,55 @@
 <link href="https://datatables.yajrabox.com/css/datatables.bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-  <div class="col-md-12">
+<div class="col-md-12"><table id="users-table" class="table ">
+  <thead>
+    <tr >
+      <td class="col-md-1">Subject ID</td>
+       <td class="col-md-8">Name</td>
+      <!-- <td class="col-md-2">Created Date</td> -->
+     
+    </tr>
+  </thead>
+</table></div>
+ 
+
+
+<script src="https://datatables.yajrabox.com/js/jquery.dataTables.min.js"></script>
+<script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
+<script type="text/javascript">
+
+ 
+    $(function() {
+        $('#users-table').DataTable({
+
+        // deferRender:    true,
+        // scrollX:        true,
+        // scrollY:        200,
+        // scrollCollapse: true,
+        // scroller:       true,
+        order: [ [0, 'asc'] ],
+        processing: true,
+        serverSide: true,
+       
+        bLengthChange:false,
+        ajax: 'http://127.0.0.1:8000/createSubject/get_datatable',
+        
+        columns : [
+             
+              {data: 'count'},
+               {data: 'QuestionId'},
+              
+            ],
+       
+            pageLength: 10,
+        });
+    });
+</script>
+ 
+@endsection  
+
+
+   <div class="col-md-12">
       <div class="row">
         <div class="col-md-4">
           <div class="info-box">
@@ -52,46 +100,3 @@
       </div>
       <!-- /.row -->
     </div>
-<div class="col-md-12"><table id="users-table" class="table ">
-  <thead>
-    <tr >
-      <td class="col-md-1">Subject ID</td>
-       <td class="col-md-8">Name</td>
-      <!-- <td class="col-md-2">Created Date</td> -->
-     
-    </tr>
-  </thead>
-</table></div>
- 
-
-
-<script src="https://datatables.yajrabox.com/js/jquery.dataTables.min.js"></script>
-<script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
-<script type="text/javascript">
-
- 
-    $(function() {
-        $('#users-table').DataTable({
-
-        // deferRender:    true,
-        // scrollX:        true,
-        // scrollY:        200,
-        // scrollCollapse: true,
-        // scroller:       true,
-        processing: true,
-        serverSide: true,
-       
-        bLengthChange:false,
-        ajax: 'http://127.0.0.1:8000/createSubject/get_datatable',
-        columns : [
-              {data: 'QuestionId'},
-              {data: 'count'},
-              // {data: 'CreatedDate'},
-            ],
-       
-            pageLength: 10,
-        });
-    });
-</script>
- 
-@endsection  

@@ -10,7 +10,7 @@
      <div class="container">
              <form method ="post" class="form-horizontal" action="/createQuestion" id="createQForm">
                  <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-                <!--  <meta name="csrf-token" content="{{ csrf_token() }}" /> -->
+                
                  <div class="table1"> 
                  <table class="table table-bordered">
                         <!--row 1-->

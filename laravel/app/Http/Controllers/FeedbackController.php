@@ -15,23 +15,28 @@ class FeedbackController extends Controller
 {
 //     
     public function index(){     
-     if(Session::get("Username")==null){
-          return redirect('/admin');
-        }    
+     // if(Session::get("Username")==null){
+     //      return redirect('/admin');
+     //    }    
         $feedback = DB::table('Feedback')
           	->select(DB::raw('count(*) as count,QuestionId'))
           	->where('ErrorId','=',1)
           	->groupBy('QuestionId')
             ->orderBy('count','desc')
             ->take(5)->get();
+            
             $feedbackD = DB::table('Feedback')
           	->select(DB::raw('count(*) as count,QuestionId'))
           	->where('ErrorId','=',2)
           	->groupBy('QuestionId')
+            ->orderBy('count','desc')
             ->take(5)->get();
+
         $count = count(Feedback::all());
-        $countDup = count($feedback);
-        $countWrong = $count-$countDup;
+        $countDup = count(Feedback::where('ErrorId','=',2)->get());
+        $countWrong = count(Feedback::where('ErrorId','=',1)->get());
+        // print_r("ALL". $countDup );exit();
+       
         $FeedBackAll = DB::table("Feedback")
                       ->orderBy('FeedbackId',"DESC")
                       ->paginate(5);
@@ -43,11 +48,12 @@ class FeedbackController extends Controller
                 'countWrong'=>$countWrong,
                 'FeedbackALL'=>$FeedBackAll,
                 ]);
+        // return view('feedback');
     }
     public function detail($id){
-       if(Session::get("Username")==null){
+      if(Session::get("Username")==null){
           return redirect('/admin');
-        }
+      }
       $feedbackQuestion= DB::table('Feedback')
                   ->where('QuestionId','=',$id)
                   ->select('Feedback.FeedbackId','Feedback.Comment')
@@ -68,20 +74,16 @@ class FeedbackController extends Controller
                   ->select('Chapter.ChapterId','Chapter.Name')
                   ->get();
       $Type = $Question->TypeId;
-
                 return view('Feedback.FeedbackDetail',['totalFeedback'=>$totalFeedback,'Question'=>$Question,'Comments'=>$feedbackQuestion,'Subjects'=>$ListSubject,'SubjectSelected'=>$SubjectId,'id'=>$myChapter,'Type'=>$Type]);
-                          
-    
     }
     
     function getDetail(Request $request){
-        if(Session::get("Username")==null){
+      if(Session::get("Username")==null){
           return redirect('/admin');
-        }
+      }
       $input = $request->all();
-      
-        print_r($input);
-        exit();
+      print_r($input);
+      exit();
       //if type = 1 Muti
       $QuestionId = $input['QuestionId'];
       $Question = Question::where('QuestionId',$QuestionId)->first();
@@ -104,6 +106,33 @@ class FeedbackController extends Controller
     function test(){
       $Type=1;
       return view('welcome',['Type'=>$Type]);
+    }
+      
+    public function get_datatable(){
+        $DKM =  DB::table('Feedback')
+            ->select(DB::raw('count(*) as count,QuestionId'))
+            ->where('ErrorId','=',1)
+            ->groupBy('QuestionId')
+            ->orderBy('count','asc')
+           ->get();
+
+     return Datatables::of($DKM)
+     ->addColumn('action', function($DKM) {
+    return '<a href="/feedback/'.$DKM->QuestionId.'" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Edit</a>';
+      })->make(true);
+    }
+    public function get_datatableDuplicate(){
+        $DKM =  DB::table('Feedback')
+            ->select(DB::raw('count(*) as count,QuestionId'))
+            ->where('ErrorId','=',2)
+            ->groupBy('QuestionId')
+            ->orderBy('count','asc')
+           ->get();
+
+     return Datatables::of($DKM)
+     ->addColumn('action', function($DKM) {
+    return '<a href="/feedback/'.$DKM->QuestionId.'" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Edit</a>';
+      })->make(true);
     }
 
 

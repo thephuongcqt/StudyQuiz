@@ -35,9 +35,23 @@ Route::get('/profile','LoginController@getProfile');
 // Route::post('/loadChapter', 'QuestionController@loadChapter');
 //Feedback
 Route::get('/feedback','FeedbackController@index');
+Route::get('/feedback/get_datatable', 'FeedbackController@get_datatable');
+Route::get('/feedback/get_datatableDuplicate', 'FeedbackController@get_datatableDuplicate');
+
 Route::get('/feedback/{id}','FeedbackController@detail');
 Route::post('/editQuestionFeedback','FeedbackController@getDetail');
 Route::get('/deleteQuestion/{id}','QuestionController@deleteQuestion');
+
+Route::get('/createSubject','SubjectController@create');
+Route::get('/createSubject/get_datatable', 'SubjectController@get_datatable');
+Route::post('/createSubject','SubjectController@created');
+
+Route::get('/users','UserController@getAllUser');
+Route::get('/createUser','UserController@create');
+Route::post('/createUser','UserController@created');
+Route::get('/edit/{id}','UserController@edit');
+Route::get('/delete/{id}','UserController@delete');
+
 
 
 
