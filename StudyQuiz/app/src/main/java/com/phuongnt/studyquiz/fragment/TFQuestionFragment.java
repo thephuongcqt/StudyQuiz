@@ -1,10 +1,7 @@
 package com.phuongnt.studyquiz.fragment;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +19,10 @@ public class TFQuestionFragment extends Fragment {
     public TFQuestionFragment() {
         // Required empty public constructor
     }
-    private TestRoomActivity.IFragmentLyfecycleListener ilyfecycleListener;
+    private TestRoomActivity.IFragmentLifecycleListener lifecycleListener;
 
-    public void setIlyfecycleListener(TestRoomActivity.IFragmentLyfecycleListener ilyfecycleListener) {
-        this.ilyfecycleListener = ilyfecycleListener;
+    public void setIlyfecycleListener(TestRoomActivity.IFragmentLifecycleListener lifecycleListener) {
+        this.lifecycleListener = lifecycleListener;
     }
 
     @Override
@@ -50,27 +47,27 @@ public class TFQuestionFragment extends Fragment {
             }
         });
 
-        ilyfecycleListener.onCreateViewDone();
+        lifecycleListener.onCreateViewDone();
         return rootView;
     }
 
     private void resetSelected(){
         if(tvTrue != null){
-            tvTrue.setBackground(getActivity().getDrawable(R.drawable.rectangle_border));
+            tvTrue.setBackground(getActivity().getDrawable(R.drawable.border_gray));
         }
         if(tvFalse != null){
-            tvFalse.setBackground(getActivity().getDrawable(R.drawable.rectangle_border));
+            tvFalse.setBackground(getActivity().getDrawable(R.drawable.border_gray));
         }
     }
     private void selectAnswer(int index){
         question.setSelectedAnswer(index);
         if(index == 0){
             if(tvFalse != null){
-                tvFalse.setBackground(getActivity().getDrawable(R.drawable.rectangle_border_selected));
+                tvFalse.setBackground(getActivity().getDrawable(R.drawable.border_yellow));
             }
         } else{
             if(tvTrue != null){
-                tvTrue.setBackground(getActivity().getDrawable(R.drawable.rectangle_border_selected));
+                tvTrue.setBackground(getActivity().getDrawable(R.drawable.border_yellow));
             }
         }
     }

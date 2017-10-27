@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.phuongnt.studyquiz.AppConst;
 import com.phuongnt.studyquiz.R;
 import com.phuongnt.studyquiz.activity.DetailSubjectActivity;
 import com.phuongnt.studyquiz.adapter.SearchAdapter;
@@ -52,7 +53,7 @@ public class SearchSubjectFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 SearchSubjectResponse item = srcList.get(position);
                 Intent intent = new Intent(getActivity(), DetailSubjectActivity.class);
-                intent.putExtra(DetailSubjectActivity.KEY_SUBJECT_OBJ, item);
+                intent.putExtra(AppConst.KEY_SUBJECT_OBJ, item);
                 startActivity(intent);
             }
         });

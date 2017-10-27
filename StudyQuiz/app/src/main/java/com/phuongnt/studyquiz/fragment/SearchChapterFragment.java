@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.phuongnt.studyquiz.AppConst;
 import com.phuongnt.studyquiz.R;
 import com.phuongnt.studyquiz.activity.DetailChapterActivity;
 import com.phuongnt.studyquiz.adapter.SearchAdapter;
@@ -48,7 +49,7 @@ public class SearchChapterFragment extends Fragment{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 SearchChapterResponse item = srcList.get(position);
                 Intent intent = new Intent(getActivity(), DetailChapterActivity.class);
-                intent.putExtra(DetailChapterActivity.KEY_CHAPTER_OBJ, item);
+                intent.putExtra(AppConst.KEY_CHAPTER_OBJ, item);
                 startActivity(intent);
             }
         });

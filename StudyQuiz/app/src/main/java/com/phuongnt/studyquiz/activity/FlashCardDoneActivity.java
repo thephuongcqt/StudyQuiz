@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,33 +11,22 @@ import com.phuongnt.studyquiz.AppConst;
 import com.phuongnt.studyquiz.R;
 import com.phuongnt.studyquiz.model.apimodel.searchservice.SearchChapterResponse;
 import com.phuongnt.studyquiz.model.apimodel.searchservice.SearchSubjectResponse;
-import com.phuongnt.studyquiz.model.viewmodel.Question;
 import com.phuongnt.studyquiz.model.viewmodel.TestData;
 
-import java.util.List;
-
-public class TestResultActivity extends AppCompatActivity {
-    private Object sourceObj;
-
-    List<Question> questions;
-    private int correctAnswer;
-    private TextView tvTitle;
-    private TextView tvSubtitle;
+public class FlashCardDoneActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TextView toolbarTitle;
+    private Object sourceObj;
+    private TextView tvTitle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test_result);
-
+        setContentView(R.layout.activity_flash_card_done);
         getComponent();
         initComponent();
-        getResult();
     }
-
     private void getComponent(){
-        tvTitle = (TextView)findViewById(R.id.tv_title);
-        tvSubtitle = (TextView) findViewById(R.id.tv_subtitle);
+        tvTitle = (TextView) findViewById(R.id.tv_done_title);
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
@@ -53,30 +41,17 @@ public class TestResultActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbarTitle.setText(R.string.test_result_title);
+
+        int count = TestData.getQuestions().size();
+        tvTitle.setText("You just studies " + count + " terms");
     }
 
-    private void getResult(){
-        correctAnswer = 0;
-        questions = TestData.getQuestions();
-        for(Question question : questions){
-            if(question.getSelectedAnswer() != null){
-                if(question.getValue().getDefinition().equals(question.getSelectedAnswer() + "")){
-                    correctAnswer++;
-                }
-            }
-        }
-
-        tvTitle.setText("Your score: " + (correctAnswer * 100)/questions.size()  + "%" );
-        tvSubtitle.setText("You are missed " + (questions.size() - correctAnswer) + " out of " + questions.size() + " questions");
-    }
-
-    public void onButtonRetakeSelected(View v){
-        Intent intent = new Intent(this, TestRoomActivity.class);
+    public void onButtonStudyAgainSelected(View v){
+        Intent intent = new Intent(this, FlashCardRoomActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
-
-    public void onButtonNewTestSelected(View v){
+    public void onButtonStudyNewSeleted(View v){
         Intent intent;
         if(sourceObj instanceof SearchChapterResponse){
             intent = new Intent(this, DetailChapterActivity.class);
