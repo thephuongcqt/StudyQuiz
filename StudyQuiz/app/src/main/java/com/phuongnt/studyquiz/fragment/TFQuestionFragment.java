@@ -19,10 +19,10 @@ public class TFQuestionFragment extends Fragment {
     public TFQuestionFragment() {
         // Required empty public constructor
     }
-    private TestRoomActivity.IFragmentLyfecycleListener ilyfecycleListener;
+    private TestRoomActivity.IFragmentLifecycleListener lifecycleListener;
 
-    public void setIlyfecycleListener(TestRoomActivity.IFragmentLyfecycleListener ilyfecycleListener) {
-        this.ilyfecycleListener = ilyfecycleListener;
+    public void setIlyfecycleListener(TestRoomActivity.IFragmentLifecycleListener lifecycleListener) {
+        this.lifecycleListener = lifecycleListener;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class TFQuestionFragment extends Fragment {
             }
         });
 
-        ilyfecycleListener.onCreateViewDone();
+        lifecycleListener.onCreateViewDone();
         return rootView;
     }
 

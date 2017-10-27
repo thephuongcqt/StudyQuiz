@@ -39,7 +39,7 @@ import retrofit2.Response;
 public class DetailChapterActivity extends AppCompatActivity {
     private static final int[] numberQuestions = {10, 15, 20, 25, 30};
     public static final String[] options = {"10", "15", "20", "25", "30"};
-    public static final String KEY_CHAPTER_OBJ = "currentChapter";
+
     private SearchChapterResponse chapter = null;
     private TextView tvSubjectTitle = null;
     private TextView tvChapterTitle = null;
@@ -55,7 +55,11 @@ public class DetailChapterActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
-            chapter = (SearchChapterResponse) bundle.get(KEY_CHAPTER_OBJ);
+            chapter = (SearchChapterResponse) bundle.get(AppConst.KEY_CHAPTER_OBJ);
+            if(chapter == null){
+                onBackPressed();
+                return;
+            }
         }
 
         toolbar = (Toolbar)findViewById(R.id.toolbar);
@@ -75,15 +79,61 @@ public class DetailChapterActivity extends AppCompatActivity {
     }
 
     public void onButtonStudyCardSelected(View v){
-//        Toast.makeText(this, "Not implement yet", Toast.LENGTH_SHORT).show();
         int index = spinnerNumber.getSelectedItemPosition();
         int number = numberQuestions[index];
         User user = User.getCurrentUser();
         if(user == null){
             return;
         }
+        MyProgressBar.show(this);
+
+        Map<String, String> params = new HashMap<>();
+        params.put(RequestParam.CHAPTER_CHAPTERID, chapter.getChapterId() + "");
+        params.put(RequestParam.CHAPTER_NUMBER, number + "");
+        params.put(RequestParam.CHAPTER_USERID, user.getUserId() + "");
+
+        IAPIHelper iapiHelper = APIManager.getAPIManager().create(IAPIHelper.class);
+        Call<CommonResponse<List<QuestionResponse>>> call = iapiHelper.getChapterCards(params);
+        call.enqueue(new Callback<CommonResponse<List<QuestionResponse>>>() {
+            @Override
+            public void onResponse(Call<CommonResponse<List<QuestionResponse>>> call, Response<CommonResponse<List<QuestionResponse>>> response) {
+                if(response.isSuccessful()){
+                    CommonResponse<List<QuestionResponse>> commonResponse = response.body();
+                    if(commonResponse.isSuccess()){
+                        onSuccessCard(commonResponse.getValue());
+                    } else{
+                        onErrorCard(commonResponse.getError());
+                    }
+                } else{
+                    onErrorCard(AppConst.ERROR_CONNECTION);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonResponse<List<QuestionResponse>>> call, Throwable t) {
+                onErrorCard(t.getMessage());
+            }
+        });
+    }
+
+    private void onSuccessCard(List<QuestionResponse> questions){
+        MyProgressBar.dismiss();
+        if(questions == null || questions.isEmpty()){
+            Toast.makeText(this, "No question to test", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        TestData.setQuestions(new ArrayList<Question>());
+        for(QuestionResponse item : questions){
+            TestData.addQuestion(item);
+        }
         Intent intent = new Intent(this, FlashCardRoomActivity.class);
+        intent.putExtra(AppConst.SOURCE_OBJECT_KEY, chapter);
         startActivity(intent);
+    }
+
+    private void onErrorCard(String error){
+        MyProgressBar.dismiss();
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
     }
 
     public void onButtonStartTestSelected(View v){
@@ -109,23 +159,23 @@ public class DetailChapterActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     CommonResponse<List<QuestionResponse>> commonResponse = response.body();
                     if(commonResponse.isSuccess()){
-                        onSuccess(commonResponse.getValue());
+                        onSuccessTest(commonResponse.getValue());
                     } else{
-                        onError(commonResponse.getError());
+                        onErrorTest(commonResponse.getError());
                     }
                 } else{
-                    onError(AppConst.ERROR_CONNECTION);
+                    onErrorTest(AppConst.ERROR_CONNECTION);
                 }
             }
 
             @Override
             public void onFailure(Call<CommonResponse<List<QuestionResponse>>> call, Throwable t) {
-                onError(t.getMessage());
+                onErrorTest(t.getMessage());
             }
         });
     }
 
-    private void onSuccess(List<QuestionResponse> questions){
+    private void onSuccessTest(List<QuestionResponse> questions){
         MyProgressBar.dismiss();
         if(questions == null || questions.isEmpty()){
             return;
@@ -135,12 +185,12 @@ public class DetailChapterActivity extends AppCompatActivity {
             TestData.addQuestion(item);
         }
         Intent intent = new Intent(this, TestRoomActivity.class);
-        intent.putExtra(TestRoomActivity.SOURCE_OBJECT_KEY, chapter);
+        intent.putExtra(AppConst.SOURCE_OBJECT_KEY, chapter);
         startActivity(intent);
 //        Toast.makeText(this, "Success with: " + questions.size() + " items", Toast.LENGTH_SHORT).show();
     }
 
-    private void onError(String error){
+    private void onErrorTest(String error){
         MyProgressBar.dismiss();
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
     }

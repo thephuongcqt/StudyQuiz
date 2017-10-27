@@ -11,6 +11,9 @@
     <string name="test_room_btn_previous">Previous</string>
     <string name="test_room_btn_next">Next</string>
     <string name="test_result_title">Test Result</string>
+    <string name="flash_card_done_title">Nice work!</string>
+    <string name="flash_card_done_btn_study_again">Study again</string>
+    <string name="flash_card_done_btn_study_new">Study new cards</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

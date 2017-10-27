@@ -26,7 +26,7 @@ public class QuestionResponse implements Serializable {
     @SerializedName("ChapterId")
     private long chapterId;
     @SerializedName("CreatedUser")
-    private LoginResponse createdUser;
+    private long createdUser;
     @SerializedName("IsEnable")
     private boolean isEnable;
     @SerializedName("Chapter")
@@ -84,11 +84,11 @@ public class QuestionResponse implements Serializable {
         this.chapterId = chapterId;
     }
 
-    public LoginResponse getCreatedUser() {
+    public long getCreatedUser() {
         return createdUser;
     }
 
-    public void setCreatedUser(LoginResponse createdUser) {
+    public void setCreatedUser(long createdUser) {
         this.createdUser = createdUser;
     }
 

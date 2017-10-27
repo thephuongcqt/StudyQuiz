@@ -38,4 +38,10 @@ public class TestData {
         }
         questions.add(new Question(question));
     }
+
+    public static void resetAnswer(){
+        for(Question item : questions){
+            item.setSelectedAnswer(null);
+        }
+    }
 }

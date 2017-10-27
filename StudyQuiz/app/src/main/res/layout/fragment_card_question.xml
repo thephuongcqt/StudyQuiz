@@ -2,15 +2,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
     tools:context="com.phuongnt.studyquiz.fragment.CardQuestionFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:onClick="onFragentQuestionSelected"
-        android:textSize="30sp"
+    <LinearLayout
+        android:padding="5dp"
+        android:orientation="vertical"
+        android:background="@color/light_gray"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Question" />
+        android:gravity="center"
+        android:onClick="onFragentQuestionSelected">
+        <TextView
+            android:layout_marginBottom="10dp"
+            android:id="@+id/tv_card_question"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:textSize="26sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Answer" />
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_card_answers"
+                android:textColor="@color/black"
+                android:textSize="26sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Answer" />
+        </LinearLayout>
 
+    </LinearLayout>
 </FrameLayout>

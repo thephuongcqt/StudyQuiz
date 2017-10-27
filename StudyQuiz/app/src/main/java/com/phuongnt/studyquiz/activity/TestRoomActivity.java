@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+import com.phuongnt.studyquiz.AppConst;
 import com.phuongnt.studyquiz.R;
 import com.phuongnt.studyquiz.fragment.MCQuestionFragment;
 import com.phuongnt.studyquiz.fragment.TFQuestionFragment;
@@ -22,7 +23,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class TestRoomActivity extends AppCompatActivity {
-    public static final String SOURCE_OBJECT_KEY = "source_object_key";
+
     private Object sourceObj;
 
     private static List<Question> data;
@@ -33,7 +34,7 @@ public class TestRoomActivity extends AppCompatActivity {
     private final TFQuestionFragment tfQuestionFragment = new TFQuestionFragment();
     private Question question = null;
 
-    private IFragmentLyfecycleListener lyfecycleListener = new IFragmentLyfecycleListener() {
+    private IFragmentLifecycleListener lifecycleListener = new IFragmentLifecycleListener() {
         @Override
         public void onCreateViewDone() {
             if(question.getValue().getTypeId() == 1){
@@ -61,7 +62,7 @@ public class TestRoomActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
-            sourceObj = bundle.get(SOURCE_OBJECT_KEY);
+            sourceObj = bundle.get(AppConst.SOURCE_OBJECT_KEY);
         }
     }
 
@@ -71,9 +72,10 @@ public class TestRoomActivity extends AppCompatActivity {
             onBackPressed();
         }
         Collections.shuffle(data);
+        TestData.resetAnswer();
 
-        tfQuestionFragment.setIlyfecycleListener(lyfecycleListener);
-        mcQuestionFragment.setIlyfecycleListener(lyfecycleListener);
+        tfQuestionFragment.setIlyfecycleListener(lifecycleListener);
+        mcQuestionFragment.setIlyfecycleListener(lifecycleListener);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
@@ -150,9 +152,9 @@ public class TestRoomActivity extends AppCompatActivity {
     private void goToTestResult(){
         Intent intent = new Intent(this, TestResultActivity.class);
         if(sourceObj instanceof SearchSubjectResponse){
-            intent.putExtra(SOURCE_OBJECT_KEY, (SearchSubjectResponse)sourceObj);
+            intent.putExtra(AppConst.SOURCE_OBJECT_KEY, (SearchSubjectResponse)sourceObj);
         } else if(sourceObj instanceof SearchChapterResponse){
-            intent.putExtra(SOURCE_OBJECT_KEY, (SearchChapterResponse)sourceObj);
+            intent.putExtra(AppConst.SOURCE_OBJECT_KEY, (SearchChapterResponse)sourceObj);
         }
         startActivity(intent);
     }
@@ -161,7 +163,7 @@ public class TestRoomActivity extends AppCompatActivity {
         mcQuestionFragment.onQuestionSelected(v);
     }
 
-    public interface IFragmentLyfecycleListener{
+    public interface IFragmentLifecycleListener{
         void onCreateViewDone();
     }
 }

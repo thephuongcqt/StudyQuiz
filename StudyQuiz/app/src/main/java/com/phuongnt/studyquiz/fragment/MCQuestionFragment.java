@@ -25,10 +25,10 @@ public class MCQuestionFragment extends Fragment {
     private List<TextView> tvAnswers;
     private TextView tvQuestionTitle;
 
-    private TestRoomActivity.IFragmentLyfecycleListener ilyfecycleListener;
+    private TestRoomActivity.IFragmentLifecycleListener lifecycleListener;
 
-    public void setIlyfecycleListener(TestRoomActivity.IFragmentLyfecycleListener ilyfecycleListener) {
-        this.ilyfecycleListener = ilyfecycleListener;
+    public void setIlyfecycleListener(TestRoomActivity.IFragmentLifecycleListener lifecycleListener) {
+        this.lifecycleListener = lifecycleListener;
     }
 
     public MCQuestionFragment() {
@@ -57,8 +57,8 @@ public class MCQuestionFragment extends Fragment {
         tvAnswers.add(textView4);
         tvAnswers.add(textView5);
 
-        if(ilyfecycleListener != null){
-            ilyfecycleListener.onCreateViewDone();
+        if(lifecycleListener != null){
+            lifecycleListener.onCreateViewDone();
         }
         return rootView;
     }

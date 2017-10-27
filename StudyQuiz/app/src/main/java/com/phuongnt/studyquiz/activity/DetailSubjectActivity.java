@@ -40,7 +40,7 @@ import retrofit2.Response;
 public class DetailSubjectActivity extends AppCompatActivity {
     private static final int[] numberQuestions = {10, 15, 20, 25, 30};
     public static final String[] options = {"10", "15", "20", "25", "30"};
-    public static final String KEY_SUBJECT_OBJ = "CurrentSubject";
+
     private SearchSubjectResponse subject = null;
     private TextView tvSubjectTitle = null;
     private Spinner spinnerNumber = null;
@@ -58,7 +58,11 @@ public class DetailSubjectActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
-            subject = (SearchSubjectResponse) bundle.get(KEY_SUBJECT_OBJ);
+            subject = (SearchSubjectResponse) bundle.get(AppConst.KEY_SUBJECT_OBJ);
+            if(subject == null){
+                onBackPressed();
+                return;
+            }
         }
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -97,7 +101,7 @@ public class DetailSubjectActivity extends AppCompatActivity {
                 SearchChapterResponse chapter = subject.getChapters().get(position);
                 chapter.setSubject(subject);
                 Intent intent = new Intent(DetailSubjectActivity.this, DetailChapterActivity.class);
-                intent.putExtra(DetailChapterActivity.KEY_CHAPTER_OBJ, chapter);
+                intent.putExtra(AppConst.KEY_CHAPTER_OBJ, chapter);
                 startActivity(intent);
             }
         });
@@ -112,6 +116,55 @@ public class DetailSubjectActivity extends AppCompatActivity {
         }
 //        Intent intent = new Intent(this, FlashCardRoomActivity.class);
 //        startActivity(intent);
+        MyProgressBar.show(this);
+
+        Map<String, String> params = new HashMap<>();
+        params.put(RequestParam.SUBJECT_SUBJECTID, subject.getSubjectId() + "");
+        params.put(RequestParam.SUBJECT_NUMBER, number + "");
+        params.put(RequestParam.SUBJECT_USERID, user.getUserId() + "");
+
+        IAPIHelper iapiHelper = APIManager.getAPIManager().create(IAPIHelper.class);
+        Call<CommonResponse<List<QuestionResponse>>> call = iapiHelper.getSubjectCards(params);
+        call.enqueue(new Callback<CommonResponse<List<QuestionResponse>>>() {
+            @Override
+            public void onResponse(Call<CommonResponse<List<QuestionResponse>>> call, Response<CommonResponse<List<QuestionResponse>>> response) {
+                if(response.isSuccessful()){
+                    CommonResponse<List<QuestionResponse>> commonResponse = response.body();
+                    if(commonResponse.isSuccess()){
+                        onSuccessCard(commonResponse.getValue());
+                    } else{
+                        onErrorCard(commonResponse.getError());
+                    }
+                } else{
+                    onErrorCard(AppConst.ERROR_CONNECTION);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonResponse<List<QuestionResponse>>> call, Throwable t) {
+                onErrorCard(t.getMessage());
+            }
+        });
+    }
+
+    private void onSuccessCard(List<QuestionResponse> questions){
+        MyProgressBar.dismiss();
+        if(questions == null || questions.isEmpty()){
+            Toast.makeText(this, "No question to test", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        TestData.setQuestions(new ArrayList<Question>());
+        for(QuestionResponse item : questions){
+            TestData.addQuestion(item);
+        }
+        Intent intent = new Intent(this, FlashCardRoomActivity.class);
+        intent.putExtra(AppConst.SOURCE_OBJECT_KEY, subject);
+        startActivity(intent);
+    }
+
+    private void onErrorCard(String error){
+        MyProgressBar.dismiss();
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
     }
 
     public void onButtonStartTestSelected(View v){
@@ -164,7 +217,7 @@ public class DetailSubjectActivity extends AppCompatActivity {
             TestData.addQuestion(item);
         }
         Intent intent = new Intent(this, TestRoomActivity.class);
-        intent.putExtra(TestRoomActivity.SOURCE_OBJECT_KEY, subject);
+        intent.putExtra(AppConst.SOURCE_OBJECT_KEY, subject);
         startActivity(intent);
     }
 
