@@ -13,8 +13,6 @@ import com.phuongnt.studyquiz.R;
 import com.phuongnt.studyquiz.activity.TestRoomActivity;
 import com.phuongnt.studyquiz.model.viewmodel.Question;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,13 +67,13 @@ public class MCQuestionFragment extends Fragment {
         question.setSelectedAnswer(index);
         TextView item = tvAnswers.get(index);
         if(item != null){
-            item.setBackground(getActivity().getDrawable(R.drawable.rectangle_border_selected));
+            item.setBackground(getActivity().getDrawable(R.drawable.border_yellow));
         }
     }
 
     private void deselectItem(TextView item){
         if(item != null){
-            item.setBackground(getActivity().getDrawable(R.drawable.rectangle_border));
+            item.setBackground(getActivity().getDrawable(R.drawable.border_gray));
         }
     }
 

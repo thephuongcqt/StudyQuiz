@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<LinearLayout android:orientation="vertical"
     android:background="@color/colorPrimary"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:context=".activity.FlashCardRoomActivity"
+    xmlns:tools="http://schemas.android.com/tools">
     <include layout="@layout/app_bar"/>
     <LinearLayout
         android:background="@color/white"
@@ -14,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <FrameLayout
-            android:id="@+id/question_container"
+            android:id="@+id/card_container"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="0dp">
@@ -27,6 +28,7 @@
         android:layout_height="2dp">
     </LinearLayout>
     <LinearLayout
+        android:background="@color/colorPrimary"
         android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="40dp">

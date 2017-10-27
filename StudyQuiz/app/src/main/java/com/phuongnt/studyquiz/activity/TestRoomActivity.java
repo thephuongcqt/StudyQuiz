@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.phuongnt.studyquiz.R;
 import com.phuongnt.studyquiz.fragment.MCQuestionFragment;
 import com.phuongnt.studyquiz.fragment.TFQuestionFragment;
+import com.phuongnt.studyquiz.model.apimodel.searchservice.SearchChapterResponse;
+import com.phuongnt.studyquiz.model.apimodel.searchservice.SearchSubjectResponse;
 import com.phuongnt.studyquiz.model.viewmodel.Question;
 import com.phuongnt.studyquiz.model.viewmodel.TestData;
 
@@ -20,6 +22,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class TestRoomActivity extends AppCompatActivity {
+    public static final String SOURCE_OBJECT_KEY = "source_object_key";
+    private Object sourceObj;
+
     private static List<Question> data;
     private static int currentIndex;
     private Toolbar toolbar;
@@ -44,26 +49,37 @@ public class TestRoomActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_room);
 
+        getComponent();
+        initComponent();
+        changeQuestion();
+    }
+
+    private void getComponent(){
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null){
+            sourceObj = bundle.get(SOURCE_OBJECT_KEY);
+        }
+    }
+
+    private void initComponent(){
         data = TestData.getQuestions();
         if(data == null || data.isEmpty()){
             onBackPressed();
         }
         Collections.shuffle(data);
 
-        toolbar = (Toolbar)findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        tfQuestionFragment.setIlyfecycleListener(lyfecycleListener);
+        mcQuestionFragment.setIlyfecycleListener(lyfecycleListener);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
 
         currentIndex = 1;
         question = data.get(currentIndex - 1);
         toolbarTitle.setText(currentIndex + "/" + data.size());
-
-
-        tfQuestionFragment.setIlyfecycleListener(lyfecycleListener);
-        mcQuestionFragment.setIlyfecycleListener(lyfecycleListener);
-        changeQuestion();
     }
 
     public void onNextButtonSelected(View v){
@@ -133,6 +149,11 @@ public class TestRoomActivity extends AppCompatActivity {
 
     private void goToTestResult(){
         Intent intent = new Intent(this, TestResultActivity.class);
+        if(sourceObj instanceof SearchSubjectResponse){
+            intent.putExtra(SOURCE_OBJECT_KEY, (SearchSubjectResponse)sourceObj);
+        } else if(sourceObj instanceof SearchChapterResponse){
+            intent.putExtra(SOURCE_OBJECT_KEY, (SearchChapterResponse)sourceObj);
+        }
         startActivity(intent);
     }
 

@@ -75,7 +75,15 @@ public class DetailChapterActivity extends AppCompatActivity {
     }
 
     public void onButtonStudyCardSelected(View v){
-        Toast.makeText(this, "Not implement yet", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Not implement yet", Toast.LENGTH_SHORT).show();
+        int index = spinnerNumber.getSelectedItemPosition();
+        int number = numberQuestions[index];
+        User user = User.getCurrentUser();
+        if(user == null){
+            return;
+        }
+        Intent intent = new Intent(this, FlashCardRoomActivity.class);
+        startActivity(intent);
     }
 
     public void onButtonStartTestSelected(View v){
@@ -127,6 +135,7 @@ public class DetailChapterActivity extends AppCompatActivity {
             TestData.addQuestion(item);
         }
         Intent intent = new Intent(this, TestRoomActivity.class);
+        intent.putExtra(TestRoomActivity.SOURCE_OBJECT_KEY, chapter);
         startActivity(intent);
 //        Toast.makeText(this, "Success with: " + questions.size() + " items", Toast.LENGTH_SHORT).show();
     }

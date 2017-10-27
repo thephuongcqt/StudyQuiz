@@ -104,7 +104,14 @@ public class DetailSubjectActivity extends AppCompatActivity {
     }
 
     public void onButtonStudyCardSelected(View v){
-        Toast.makeText(this, "Not implement yet", Toast.LENGTH_SHORT).show();
+        int index = spinnerNumber.getSelectedItemPosition();
+        int number = numberQuestions[index];
+        User user = User.getCurrentUser();
+        if(user == null){
+            return;
+        }
+//        Intent intent = new Intent(this, FlashCardRoomActivity.class);
+//        startActivity(intent);
     }
 
     public void onButtonStartTestSelected(View v){
@@ -130,23 +137,23 @@ public class DetailSubjectActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     CommonResponse<List<QuestionResponse>> commonResponse = response.body();
                     if(commonResponse.isSuccess()){
-                        onSuccess(commonResponse.getValue());
+                        onSuccessTest(commonResponse.getValue());
                     } else{
-                        onError(commonResponse.getError());
+                        onErrorTest(commonResponse.getError());
                     }
                 } else{
-                    onError(AppConst.ERROR_CONNECTION);
+                    onErrorTest(AppConst.ERROR_CONNECTION);
                 }
             }
 
             @Override
             public void onFailure(Call<CommonResponse<List<QuestionResponse>>> call, Throwable t) {
-                onError(t.getMessage());
+                onErrorTest(t.getMessage());
             }
         });
     }
 
-    private void onSuccess(List<QuestionResponse> questions){
+    private void onSuccessTest(List<QuestionResponse> questions){
         MyProgressBar.dismiss();
         if(questions == null || questions.isEmpty()){
             Toast.makeText(this, "No question to test", Toast.LENGTH_SHORT).show();
@@ -157,11 +164,11 @@ public class DetailSubjectActivity extends AppCompatActivity {
             TestData.addQuestion(item);
         }
         Intent intent = new Intent(this, TestRoomActivity.class);
+        intent.putExtra(TestRoomActivity.SOURCE_OBJECT_KEY, subject);
         startActivity(intent);
-//        Toast.makeText(this, "Success with: " + questions.size() + " items", Toast.LENGTH_SHORT).show();
     }
 
-    private void onError(String error){
+    private void onErrorTest(String error){
         MyProgressBar.dismiss();
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
     }
