@@ -12,4 +12,6 @@ public class AppConst {
     public static final String SOURCE_OBJECT_KEY = "source_object_key";
     public static final String KEY_SUBJECT_OBJ = "CurrentSubject";
     public static final String KEY_CHAPTER_OBJ = "currentChapter";
+    public static final String COLOR_GRAY = "#b7b7b7";
+    public static final String COLOR_RED = "#fb4c4c";
 }

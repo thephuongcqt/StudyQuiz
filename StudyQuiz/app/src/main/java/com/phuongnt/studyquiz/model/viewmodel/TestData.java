@@ -44,4 +44,19 @@ public class TestData {
             item.setSelectedAnswer(null);
         }
     }
+
+    public static void checkAnswer(){
+        for(Question item : questions){
+            if(item.getSelectedAnswer() != null){
+                int correctAnswer = Integer.parseInt(item.getValue().getDefinition());
+                if(correctAnswer == item.getSelectedAnswer()){
+                    item.setCorrect(true);
+                } else{
+                    item.setCorrect(false);
+                }
+            } else{
+                item.setCorrect(false);
+            }
+        }
+    }
 }

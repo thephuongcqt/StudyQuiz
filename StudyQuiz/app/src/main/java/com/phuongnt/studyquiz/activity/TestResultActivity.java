@@ -88,4 +88,9 @@ public class TestResultActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
+
+    public void onButtonReviewSelected(View v){
+        Intent intent = new Intent(this, ReviewAnswersActivity.class);
+        startActivity(intent);
+    }
 }
