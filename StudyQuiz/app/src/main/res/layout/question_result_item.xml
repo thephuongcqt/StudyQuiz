@@ -30,7 +30,7 @@
                     <TextView
                         android:textColor="@color/main_black"
                         android:textSize="26sp"
-                        android:text="day la dau tao la ai"
+                        android:text=""
                         style="@style/CommonTitle"
                         android:id="@+id/tv_question"
                         android:gravity="center"

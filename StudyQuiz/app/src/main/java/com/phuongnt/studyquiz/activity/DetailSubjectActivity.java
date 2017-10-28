@@ -38,9 +38,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DetailSubjectActivity extends AppCompatActivity {
-    private static final int[] numberQuestions = {10, 15, 20, 25, 30};
-    public static final String[] options = {"10", "15", "20", "25", "30"};
-
     private SearchSubjectResponse subject = null;
     private TextView tvSubjectTitle = null;
     private Spinner spinnerNumber = null;
@@ -77,7 +74,7 @@ public class DetailSubjectActivity extends AppCompatActivity {
         tvSubjectTitle = (TextView) findViewById(R.id.tv_subject_title);
         spinnerNumber = (Spinner) findViewById(R.id.spinner_number_question);
         tvChapterTitle = (TextView) findViewById(R.id.tv_chapter_title);
-        spinnerAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, options);
+        spinnerAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, AppConst.OPTIONS);
         spinnerNumber.setAdapter(spinnerAdapter);
 
         List<String> chapters = new ArrayList<>();
@@ -109,7 +106,7 @@ public class DetailSubjectActivity extends AppCompatActivity {
 
     public void onButtonStudyCardSelected(View v){
         int index = spinnerNumber.getSelectedItemPosition();
-        int number = numberQuestions[index];
+        int number = AppConst.NUMBER_QUESTIONS[index];
         User user = User.getCurrentUser();
         if(user == null){
             return;
@@ -169,7 +166,7 @@ public class DetailSubjectActivity extends AppCompatActivity {
 
     public void onButtonStartTestSelected(View v){
         int index = spinnerNumber.getSelectedItemPosition();
-        int number = numberQuestions[index];
+        int number = AppConst.NUMBER_QUESTIONS[index];
         User user = User.getCurrentUser();
         if(user == null){
             return;

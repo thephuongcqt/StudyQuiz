@@ -48,7 +48,7 @@ public class UserDB {
 
     public void truncate(){
         SQLiteDatabase db = DatabaseManager.getInstance().openWritableDatabase();
-        db.execSQL("DELETE FROM " + TABLE_USER + " IF EXISTS");
+        db.execSQL("DELETE FROM " + TABLE_USER);
     }
 
     public User getCurrentUser(){

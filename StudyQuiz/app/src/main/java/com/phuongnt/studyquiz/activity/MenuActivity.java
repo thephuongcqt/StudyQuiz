@@ -45,9 +45,9 @@ public class MenuActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FirstFragment(), "First");
-        adapter.addFragment(new SecondFragment(), "Second");
-        adapter.addFragment(new ThirdFragment(), "Third");
+        adapter.addFragment(new FirstFragment(), "Last Activity");
+        adapter.addFragment(new SecondFragment(), "Search history");
+        adapter.addFragment(new ThirdFragment(), "Profile");
         viewPager.setAdapter(adapter);
     }
 

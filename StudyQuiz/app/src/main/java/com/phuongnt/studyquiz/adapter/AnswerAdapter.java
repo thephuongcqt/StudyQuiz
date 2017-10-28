@@ -110,7 +110,7 @@ public class AnswerAdapter extends BaseAdapter {
         }
         tvWrongAnswer.setTextColor(Color.parseColor(AppConst.COLOR_RED));
         if(question.getSelectedAnswer() == null){
-            tvWrongAnswer.setText("Not selected yet");
+            tvWrongAnswer.setText(R.string.review_answer_not_selected);
             tvWrongAnswer.setTextColor(Color.parseColor(AppConst.COLOR_GRAY));
         }
 

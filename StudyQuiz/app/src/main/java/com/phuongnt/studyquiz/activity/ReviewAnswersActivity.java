@@ -2,7 +2,9 @@ package com.phuongnt.studyquiz.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.phuongnt.studyquiz.R;
 import com.phuongnt.studyquiz.adapter.AnswerAdapter;
@@ -16,6 +18,8 @@ public class ReviewAnswersActivity extends AppCompatActivity {
     private SingleScrollListView lvAnswers;
     private List<Question> data;
     private AnswerAdapter adapter;
+    private Toolbar toolbar;
+    private TextView toolbarTitle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,10 +29,16 @@ public class ReviewAnswersActivity extends AppCompatActivity {
         initComponent();
     }
     private void getComponent(){
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
         lvAnswers = (SingleScrollListView) findViewById(R.id.lv_answers);
-
     }
     private void initComponent(){
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbarTitle.setText(R.string.review_answer_toolbar_title);
+
         TestData.checkAnswer();
         data = TestData.getQuestions();
         adapter = new AnswerAdapter(data, this);

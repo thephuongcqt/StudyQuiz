@@ -5,11 +5,21 @@
     tools:context="com.phuongnt.studyquiz.fragment.ThirdFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Third"
-        android:textSize="40dp"
-        android:textStyle="bold"
-        android:layout_centerInParent="true"/>
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="vertical"
+        android:background="@color/light_gray"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/btn_Logout"
+            android:textColor="@color/colorPrimary"
+            android:text="Log out"
+            style="@style/CommonButton"
+            android:background="@drawable/border_primary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </FrameLayout>
