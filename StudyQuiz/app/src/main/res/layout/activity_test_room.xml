@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:background="@color/colorPrimary"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <include layout="@layout/app_bar"/>
     <LinearLayout
+        android:background="@color/white"
         android:layout_weight="1"
         android:orientation="vertical"
         android:padding="20dp"
@@ -16,7 +18,6 @@
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="0dp">
-            <include layout="@layout/fragment_multiple_choice"/>
         </FrameLayout>
 
     </LinearLayout>
@@ -31,8 +32,8 @@
         android:layout_height="40dp">
         <Button
             android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
-            android:background="@drawable/rectangle_border_primary"
+            android:textColor="@color/white"
+            android:background="@drawable/border_white"
             android:onClick="onPreviousButtonSelected"
             android:textSize="16dp"
             style="@style/CommonButton"
@@ -47,8 +48,8 @@
         </LinearLayout>
         <Button
             android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
-            android:background="@drawable/rectangle_border_primary"
+            android:textColor="@color/white"
+            android:background="@drawable/border_white"
             android:onClick="onNextButtonSelected"
             android:textSize="16dp"
             style="@style/CommonButton"

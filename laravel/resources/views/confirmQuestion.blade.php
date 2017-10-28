@@ -1,7 +1,7 @@
 @extends('adminlte.layout')
 @section('title', 'Confirm QA')
 @section('content')
-<ht
+ 
 <div class="wrapper-content">
     <section class="content-header">
         <h1>Question</h1>

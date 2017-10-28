@@ -9,6 +9,7 @@ use App\Chapter;
 use Session;
 use Carbon\Carbon;
 use DB;
+use App\Feedback;
 class QuestionController extends Controller
 {
    
@@ -24,26 +25,7 @@ class QuestionController extends Controller
     }
     function loadChapter($id){
         $chapter =  Chapter::where('SubjectId',$id)->pluck('ChapterId', 'Name');
-          //return json_encode($chapter);
         return response($chapter);
-    }
-    function confirmQuestion(Request $request){
-    	$input = $request->all();
-        $truefalse = $input['group1'];
-    	$type = $input['type'];
-        $term = $input['term'];
-        $definition = $input['Defination'];
-        $totalResult = ['--','--','--','--','--','--','--'];
-        if($type==1){
-        $tags = explode('|' , $term);
-        $num_tags = count($tags);
-        for ($i=0; $i <$num_tags ; $i++) { 
-            $totalResult[$i]=$tags[$i];
-            }
-        }
-        //    $id=1;
-    	// $Questions = Question::where('QuestionId',$id)->first();
-        return view('confirmQuestion',['term'=>$term,'TermArray'=>$totalResult,'result'=>$definition,'TFoption'=>$truefalse]);
     }
     function createQuestion(Request $request){
         if(Session::get("Username")==null){
@@ -77,6 +59,33 @@ class QuestionController extends Controller
        }
        
     }
-
+    function deleteQuestion($id){
+      //delete question  and delete feedback of question
+       if(Session::get("Username")==null){
+          return redirect('/admin');
+        }
+        $QuestionId = $id;
+        $QuestionIdX = 25;
+        $Question = DB::table('Question')->where('QuestionId', '=', $QuestionId);
+        if($Question == null){
+          echo "DKM";exit();
+            return("error");
+        }else{
+                 
+          DB::table('Question')->where('QuestionId', '=', $QuestionIdX)->delete();
+          
+          //delete all feedback of Question
+          $feedbackOfQuestion = DB::table('Feedback')->where('QuestionId', '=', $QuestionId)->get();
+          for ($i =0; $i< count($feedbackOfQuestion) ; $i ++) {
+            $IDX =$feedbackOfQuestion[$i]->FeedbackId;  
+            $X = Feedback::where('FeedbackId', $IDX)->delete();
+          }
+           return redirect('/feedback');
+       
+          // return view('Feedback.FeedbackDetail');
+        }
+      
+      
+    }
      
 }

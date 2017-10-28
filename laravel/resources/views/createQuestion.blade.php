@@ -10,7 +10,7 @@
      <div class="container">
              <form method ="post" class="form-horizontal" action="/createQuestion" id="createQForm">
                  <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-                <!--  <meta name="csrf-token" content="{{ csrf_token() }}" /> -->
+                
                  <div class="table1"> 
                  <table class="table table-bordered">
                         <!--row 1-->
@@ -121,37 +121,29 @@
      </div>   
     </section>
 </div>
+@endsection
+       
+<script src="{{asset("/plugins/jQuery/jquery-3.1.1.min.js")}}"></script>
 <script> 
-  
+  $('#MySubject').on('change', function () {
+      var id = $('#MySubject option:selected').val();
+      $.ajax({
+          type: 'GET',
+          cache: false,
+          url: '/createQuestion/ajax/'+id,
+          dataType: 'JSON',
            
-            $('#MySubject').on('change', function () {
-                var id = $('#MySubject option:selected').val();
-                $.ajax({
-                    type: 'GET',
-                    cache: false,
-                    url: '/createQuestion/ajax/'+id,
-                    dataType: 'JSON',
-                     
-                }).done(function (response, textStatus, jqXHR) {
-                     
-                    $('#MyChapter').html('');
-                    $.each(response, function (i, val) {
-                        $('#MyChapter').append('<option value="'+val+'">'+'Chapter '+val+' : '+ i+'</option>');
-                    });
-                }).fail(function (jqXHR, textStatus, errorThrown) {
-                     
-                    alert('通信に失敗しました');
-                });
-                 
-            });
-    
-// 
-
-
-
-
-
-
+      }).done(function (response, textStatus, jqXHR) {
+           
+          $('#MyChapter').html('');
+          $.each(response, function (i, val) {
+              $('#MyChapter').append('<option value="'+val+'">'+'Chapter '+val+' : '+ i+'</option>');
+          });
+      }).fail(function (jqXHR, textStatus, errorThrown) {
+           
+          alert('通信に失敗しました');
+      });
+  });
 function validateQuestion(evt,abc){
     var chapterChoose = $('#MyChapter option:selected').val();
     if(chapterChoose == null){
@@ -165,11 +157,9 @@ function validateQuestion(evt,abc){
         var result = XXX.split("|");
         if(result.length<=4 || result.length>7){
         alert("Question need 3->6 answer" );
-
          return false;
         }
         else{
-            
             for (var i = result.length; i <= 7; i++) {
                 result[i]=" ";
             }
@@ -182,15 +172,11 @@ function validateQuestion(evt,abc){
           document.getElementById("FinalQuestionE").innerHTML =result[5] ;
           document.getElementById("FinalQuestionF").innerHTML =result[6] ;
            $("#Multi").show();
-        
-
         }
-        
     }
     if(document.getElementById('TypeQA').value==2) {
            document.getElementById('table2').style.display = 'none'; 
            $("#Multi").hide();
-        
            var term = $("#term").val();
           var comment = $.trim($('#term').val());
             if(comment.length == 0){
@@ -209,17 +195,9 @@ function validateQuestion(evt,abc){
                 document.getElementById("field_name").innerHTML =$.trim($('#term').val()) ;
              return false;
             }
-
-
             else{
-                
-                 
             }
-
             }
-          
-                         
-
     }
 }
 function validateQuestionBeforeCreate(evt,sel){
@@ -241,19 +219,6 @@ function validateQuestionBeforeCreate(evt,sel){
        
        
 }
-// function choice1() {
-//      if (document.getElementById('TypeQA').value==1) { 
-//         document.getElementById('TrueFalse').style.display = 'none';
-//         document.getElementById('multi').style.display = 'block';
-//         document.getElementById('resultMulti').required =true;
-//     }
-//     else if(document.getElementById('TypeQA').value==2) {
-//         document.getElementById('TrueFalse').style.display = 'block';
-//         document.getElementById('multi').style.display = 'none';
-//         document.getElementById('resultMulti').required =false;
-//     }
-// }
-//=============
+ 
 
 </script>
-@endsection

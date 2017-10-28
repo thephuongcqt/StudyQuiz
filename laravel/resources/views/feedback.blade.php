@@ -2,7 +2,12 @@
 @extends('adminlte.layout')
 @section('title', 'Dashboard')
 @section('content')
-<div class="wrapper-content">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://datatables.yajrabox.com/css/datatables.bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+
+<div class="wrapper-content" style="height: 1000px">
    <section class="content-header">
       <h1>
         Manage Feedback
@@ -17,7 +22,7 @@
       <div class="row">
         <div class="col-md-4">
           <div class="info-box">
-            <span class="info-box-icon bg-lime"><i class="fa fa-envelope-o"></i></span>
+            <span class="info-box-icon bg-lime"><i class="fa fa-envelope-o" style="padding-top: 20%"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Feedback</span>
@@ -30,7 +35,7 @@
         <!-- /.col -->
         <div class="col-md-4">
           <div class="info-box">
-            <span class="info-box-icon bg-lime"><i class="fa fa-flag-o"></i></span>
+            <span class="info-box-icon bg-lime"><i class="fa fa-flag-o" style="padding-top: 20%"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Feedback duplicate Question</span>
@@ -43,7 +48,7 @@
         <!-- /.col -->
         <div class="col-md-4">
           <div class="info-box">
-            <span class="info-box-icon bg-lime"><i class="fa fa-files-o"></i></span>
+            <span class="info-box-icon bg-lime"><i class="fa fa-files-o" style="padding-top: 20%"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Feedback Wrong Answer</span>
@@ -59,73 +64,90 @@
       </div>
       <!-- /.row -->
     </div>
+    <!-- hàng 2 -->
     <div class="col-md-12">
-   <div class="col-md-6 " style="padding-right: 15px;padding-left: 15px;">
-          <div class="bg-gray">
-          <div class="box-header with-border ">
-            <h3 class="box-title">Top Question have Wrong answer </h3>
-          </div>
-          <div class="box-body">
-              <table class="table table-bordered  ">
-                  <thead>
-                  <th>#</th>
-                  <th>QuestionId</th>
-                  <th>Total Feedback</th>
-                  <th>OPTION</th>
-                  </thead>
-                  <tbody>
-                  @foreach($feedback as $fb =>$val)
-                      <tr>
-                          <th>{{$fb+1}}</th>
-                          <th>{{$val->QuestionId}}</th>
-                          <th>{{$val->count}}</th>
-                          <th><a href="/feedback/{{$val->QuestionId}}" class="btn btn-default btn-sm">View</a> </th>
-                      </tr>
-                  @endforeach
-                  </tbody>
-              </table>
-          </div>
-            <div class="text-center">{{$feedback->links()}}</div></div>
-        
-     </div>
-     <!-- <div class="col-md-1"></div> -->
-      <!-- //top QA -->
-    <div class="col-md-6 " style="padding-right: 15px;padding-left: 15px;">
-          <div class="bg-gray">
-          <div class="box-header with-border ">
-            <h3 class="box-title">Top Question have Wrong answer </h3>
-          </div>
-          <div class="box-body">
-              <table class="table table-bordered  ">
-                  <thead>
-                  <th>#</th>
-                  <th>QuestionId</th>
-                  <th>Total Feedback</th>
-                  </thead>
-                  <tbody>
-                  @foreach($feedbackD as $fb =>$val)
-                      <tr>
-                          <th>{{$fb+1}}</th>
-                          <th>{{$val->QuestionId}}</th>
-                          <th>{{$val->count}}</th>
-                      </tr>
-                  @endforeach
-                  </tbody>
-              </table>
-          </div>
-            <div class="text-center">{{$feedbackD->links()}}</div></div>
-        
-     </div>
- <!--    // end topQA -->
-    </div>
-    
-    
- <!-- end hang 1 -->
- <div class="col-md-12 bg-gray" style="height: 300px;max-height: 300px;margin-top: 20px">FULL</div>
-</div>
+      <div class="info-box" style="padding-left: 20px">
+         <div class="text-center page-header">Feedback of Question have wrong answer</div>
+      <table id="users-table" class="table text-center">
+      <thead>
+      <tr>
+      <td class="col-md-5">Total Feedback</td>
+      <td class="col-md-5">Question ID</td>
+      <td class="col-md-2">Action</td>
+      </tr>
+      </thead>
+      </table> 
+      </div>
+      </div>
+      <!-- hàng 3 -->
+        <div class="text-center"> <button class="btn btn-success" id="btn_process" type="button">Process</button>
+                      <a class="btn btn-danger" href="/deleteQuestion/1"><i class="fa fa-trash-o fa-lg"></i> Delete</a>
+                    </div>
+      <div class="col-md-12">
+      <div class="info-box" style="padding-left: 20px">
+      <div class="text-center page-header">Feedback of Question was duplicated</div>
+      <table id="dup-table" class="table text-center">
+      <thead>
+      <tr>
+      <td class="col-md-5">Total Feedback</td>
+      <td class="col-md-5">Question ID</td>
+      <td class="col-md-2">Action</td>
+      </tr>
+      </thead>
+      </table> 
+      </div>
+      </div>
+   
     </section>
-<!-- //endbody -->
-
-
 </div>
+
+
+
+
+
+
+<script src="https://datatables.yajrabox.com/js/jquery.dataTables.min.js"></script>
+<script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script> 
+<script type="text/javascript">
+ 
+    $(function() {
+        $('#users-table').DataTable({
+        processing: true,
+        serverSide: true,
+        order: [[ 0, "desc" ]],
+        bLengthChange:false,
+        pageLength: 10,
+        ajax: 'http://127.0.0.1:8000/feedback/get_datatable',
+        columns : [
+          
+              {data: 'count'},
+              {data: 'QuestionId'},
+              {
+                  
+                  data: 'action'
+              },
+            ],
+        });
+    });
+    $(function() {
+        $('#dup-table').DataTable({
+        processing: true,
+        serverSide: true,
+        order: [[ 0, "desc" ]],
+        bLengthChange:false,
+        pageLength: 10,
+        ajax: 'http://127.0.0.1:8000/feedback/get_datatableDuplicate',
+        columns : [
+          
+              {data: 'count'},
+              {data: 'QuestionId'},
+              {
+                  
+                  data: 'action'
+              },
+            ],
+        });
+    });
+</script>
 @endsection
+  <!-- <script src="{{asset("/plugins/jQuery/jquery-3.1.1.min.js")}}"></script> -->

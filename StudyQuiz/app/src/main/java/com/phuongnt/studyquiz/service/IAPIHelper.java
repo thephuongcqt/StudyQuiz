@@ -6,6 +6,7 @@ import com.phuongnt.studyquiz.model.apimodel.loginservice.LoginResponse;
 import com.phuongnt.studyquiz.model.apimodel.questionservice.QuestionResponse;
 import com.phuongnt.studyquiz.model.apimodel.searchservice.SearchChapterResponse;
 import com.phuongnt.studyquiz.model.apimodel.searchservice.SearchSubjectResponse;
+import com.phuongnt.studyquiz.model.apimodel.signupservice.SignUpRequest;
 
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,8 @@ import retrofit2.http.QueryMap;
 public interface IAPIHelper {
     @POST("User/PostLogin")
     Call<CommonResponse<LoginResponse>> login(@Body LoginRequest loginRequest);
+    @POST("User/PostSignUp")
+    Call<CommonResponse<LoginResponse>> singUp(@Body SignUpRequest signUpRequest);
     @GET("Search/GetChapter")
     Call<CommonResponse<List<SearchChapterResponse>>> searchChapter(@QueryMap Map<String, String> params);
     @GET("Search/GetSubject")
@@ -31,4 +34,8 @@ public interface IAPIHelper {
     Call<CommonResponse<List<QuestionResponse>>> getSubjectTest(@QueryMap Map<String, String> params);
     @GET("Question/GetQuestionForChapterTest")
     Call<CommonResponse<List<QuestionResponse>>> getChapterTest(@QueryMap Map<String, String> params);
+    @GET("Question/GetQuestionForSubjectFlashCard")
+    Call<CommonResponse<List<QuestionResponse>>> getSubjectCards(@QueryMap Map<String, String> params);
+    @GET("Question/GetQuestionForChapterFlashCard")
+    Call<CommonResponse<List<QuestionResponse>>> getChapterCards(@QueryMap Map<String, String> params);
 }

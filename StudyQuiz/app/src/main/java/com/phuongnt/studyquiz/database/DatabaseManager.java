@@ -31,12 +31,18 @@ public class DatabaseManager {
 
 
     public synchronized SQLiteDatabase openWritableDatabase(){
+        if (mOpenCounter < 0) {
+            mOpenCounter = 0;
+        }
         mOpenCounter++;
         mDatabase = mDatabaseHelper.getWritableDatabase();
         return mDatabase;
     }
 
     public synchronized  SQLiteDatabase openReadableDatabase(){
+        if (mOpenCounter < 0) {
+            mOpenCounter = 0;
+        }
         mOpenCounter++;
         mDatabase = mDatabaseHelper.getReadableDatabase();
         return mDatabase;

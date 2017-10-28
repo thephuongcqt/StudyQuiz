@@ -9,11 +9,14 @@
     >
     <include layout="@layout/app_bar"/>
     <LinearLayout
+        android:gravity="center"
+        android:layout_weight="1"
         android:orientation="vertical"
         android:layout_margin="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp">
         <TextView
+            android:textColor="@color/black"
             android:id="@+id/tv_title"
             android:gravity="center"
             style="@style/CommonTitle"
@@ -21,6 +24,7 @@
             android:layout_height="wrap_content"
             android:text="test"/>
         <TextView
+            android:textColor="@color/black"
             android:layout_marginTop="10dp"
             android:gravity="center"
             style="@style/CommonTitle"
@@ -28,6 +32,7 @@
             android:layout_height="wrap_content"
             android:text="Keep Studying!"/>
         <TextView
+            android:textColor="@color/black"
             android:id="@+id/tv_subtitle"
             android:layout_marginTop="10dp"
             android:gravity="center"
@@ -35,12 +40,47 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="test"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:onClick="onButtonRetakeSelected"
+                android:layout_weight="1"
+                style="@style/CommonButtonBorder"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Retake"/>
+            <LinearLayout
+                android:layout_width="10dp"
+                android:layout_height="match_parent"></LinearLayout>
+            <Button
+                android:onClick="onButtonNewTestSelected"
+                android:layout_weight="1"
+                style="@style/CommonButtonBorder"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Start new test"/>
+        </LinearLayout>
         <Button
-            android:layout_marginTop="10dp"
+            android:onClick="onButtonReviewSelected"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/border_primary"
             style="@style/CommonButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Retake"/>
+            android:text="Review answers"/>
     </LinearLayout>
-
+    <!--<LinearLayout-->
+        <!--android:layout_weight="1"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+        <!--<ListView-->
+            <!--android:id="@+id/lv_questions"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
+        <!--</ListView>-->
+    <!--</LinearLayout>-->
 </LinearLayout>

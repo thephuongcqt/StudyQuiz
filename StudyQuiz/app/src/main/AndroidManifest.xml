@@ -27,7 +27,11 @@
         <activity android:name=".activity.DetailChapterActivity" />
         <activity android:name=".activity.DetailSubjectActivity" />
         <activity android:name=".activity.TestRoomActivity" />
-        <activity android:name=".activity.TestResultActivity"></activity>
+        <activity android:name=".activity.TestResultActivity" />
+        <activity android:name=".activity.FlashCardRoomActivity" />
+        <activity android:name=".activity.FlashCardDoneActivity" />
+        <activity android:name=".activity.ReviewAnswersActivity" />
+        <activity android:name=".activity.SignUpActivity"></activity>
     </application>
 
 </manifest>
