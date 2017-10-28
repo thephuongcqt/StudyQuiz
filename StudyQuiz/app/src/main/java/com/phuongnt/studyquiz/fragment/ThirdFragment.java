@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.phuongnt.studyquiz.R;
 import com.phuongnt.studyquiz.activity.LoginActivity;
@@ -21,6 +22,11 @@ import com.phuongnt.studyquiz.model.viewmodel.User;
  */
 public class ThirdFragment extends Fragment {
     private Button mbuttonLogout;
+    private User currentUser;
+    private TextView tvUsername;
+    private TextView tvName;
+    private TextView tvEmail;
+
 
     public ThirdFragment() {
         // Required empty public constructor
@@ -36,23 +42,38 @@ public class ThirdFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_third, container, false);
-        mbuttonLogout = (Button) rootView.findViewById(R.id.btn_Logout);
+        getComponent(rootView);
+        initComponent();
+        return rootView;
+    }
+
+    private void getComponent(View root){
+        mbuttonLogout = (Button) root.findViewById(R.id.btn_Logout);
+        tvUsername = (TextView) root.findViewById(R.id.tv_username);
+        tvName = (TextView) root.findViewById(R.id.tv_name);
+        tvEmail = (TextView) root.findViewById(R.id.tv_email);
         mbuttonLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onButtonLogoutSelected();
             }
         });
-        return rootView;
+    }
+
+    private void initComponent(){
+        currentUser = User.getCurrentUser();
+        if(currentUser == null){
+            onButtonLogoutSelected();
+        }
+        tvUsername.setText(currentUser.getUsername());
+        tvName.setText(currentUser.getName());
+        tvEmail.setText(currentUser.getEmail());
     }
 
     private void onButtonLogoutSelected(){
         new UserDB().truncate();
         Intent intent = new Intent(getActivity(), LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
-    }
-
-    public void btnLogOutSelected(View v){
-
     }
 }

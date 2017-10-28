@@ -2,6 +2,7 @@ package com.phuongnt.studyquiz.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -87,6 +88,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         MyProgressBar.dismiss();
         Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
@@ -94,4 +96,27 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
         MyProgressBar.dismiss();
     }
+
+    boolean doubleBack = false;
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBack) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBack = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBack = false;
+            }
+        }, 2000);
+    }
+
+
 }
