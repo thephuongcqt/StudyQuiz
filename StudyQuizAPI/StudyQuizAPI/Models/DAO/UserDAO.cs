@@ -29,8 +29,8 @@ namespace StudyQuizAPI.Models.DAO
                 {
                     throw new Exception(Errors.USER_USERNAME_DUPLICATION);
                 }
-                var list = db.Users.Where(i => i.Email.ToUpper().Equals(user.Email.ToUpper()));
-                if(list != null)
+                var list = db.Users.Where(i => i.Email.ToUpper().Equals(user.Email.ToUpper())).ToList<User>();
+                if(list != null && list.Count > 0)
                 {
                     throw new Exception(Errors.EMAIL_DUPLICATION);
                 }
