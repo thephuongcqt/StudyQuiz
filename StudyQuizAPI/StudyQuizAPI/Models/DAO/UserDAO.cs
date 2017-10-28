@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using StudyQuizAPI.AppResource;
 using StudyQuizAPI.Models.Entities;
+using StudyQuizAPI.Models.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace StudyQuizAPI.Models.DAO
             }
         }
 
-        public User Register(User user)
+        public User Register(SignUpRequest user)
         {
             using (var db = new StudyQuizEntities())
             {
@@ -28,7 +29,21 @@ namespace StudyQuizAPI.Models.DAO
                 {
                     throw new Exception(Errors.USER_USERNAME_DUPLICATION);
                 }
-                result = db.Users.Add(user);
+                var list = db.Users.Where(i => i.Email.ToUpper().Equals(user.Email.ToUpper()));
+                if(list != null)
+                {
+                    throw new Exception(Errors.EMAIL_DUPLICATION);
+                }
+
+                var newUser = new User
+                {
+                    Name = user.Name,
+                    Username = user.Username,
+                    Email = user.Email,
+                    Password = user.Password
+                };
+
+                result = db.Users.Add(newUser);
                 if(db.SaveChanges() > 0)
                 {
                     return result;

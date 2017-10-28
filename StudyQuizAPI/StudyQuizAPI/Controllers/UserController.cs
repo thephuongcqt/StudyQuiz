@@ -2,6 +2,7 @@
 using StudyQuizAPI.Models;
 using StudyQuizAPI.Models.DAO;
 using StudyQuizAPI.Models.Entities;
+using StudyQuizAPI.Models.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +39,7 @@ namespace StudyQuizAPI.Controllers
         {
             try
             {
-                var user = json.ToObject<User>();
+                var user = json.ToObject<SignUpRequest>();
                 var result = new UserDAO().Register(user);
                 return new Response(true, result);
             } catch(Exception e)
