@@ -1,4 +1,4 @@
-package com.phuongnt.studyquiz.adapter;
+package com.phuongnt.studyquiz.utils;
 
 import android.content.Context;
 import android.util.AttributeSet;

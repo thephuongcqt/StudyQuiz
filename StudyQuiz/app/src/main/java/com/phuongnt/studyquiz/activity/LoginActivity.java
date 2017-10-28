@@ -1,16 +1,13 @@
 package com.phuongnt.studyquiz.activity;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.phuongnt.studyquiz.R;
 import com.phuongnt.studyquiz.database.UserDB;
 import com.phuongnt.studyquiz.model.apimodel.CommonResponse;
@@ -19,7 +16,7 @@ import com.phuongnt.studyquiz.model.apimodel.loginservice.LoginResponse;
 import com.phuongnt.studyquiz.model.viewmodel.User;
 import com.phuongnt.studyquiz.service.APIManager;
 import com.phuongnt.studyquiz.service.IAPIHelper;
-import com.phuongnt.studyquiz.service.MyProgressBar;
+import com.phuongnt.studyquiz.utils.MyProgressBar;
 
 import retrofit2.Call;
 import retrofit2.Callback;

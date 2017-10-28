@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -26,7 +25,7 @@ import com.phuongnt.studyquiz.model.viewmodel.TestData;
 import com.phuongnt.studyquiz.model.viewmodel.User;
 import com.phuongnt.studyquiz.service.APIManager;
 import com.phuongnt.studyquiz.service.IAPIHelper;
-import com.phuongnt.studyquiz.service.MyProgressBar;
+import com.phuongnt.studyquiz.utils.MyProgressBar;
 
 import java.util.ArrayList;
 import java.util.HashMap;

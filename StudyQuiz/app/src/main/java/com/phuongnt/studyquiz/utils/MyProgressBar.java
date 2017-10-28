@@ -1,4 +1,4 @@
-package com.phuongnt.studyquiz.service;
+package com.phuongnt.studyquiz.utils;
 
 import android.app.ProgressDialog;
 import android.content.Context;

@@ -7,9 +7,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".activity.ReviewAnswersActivity">
     <include layout="@layout/app_bar"/>
-    <com.phuongnt.studyquiz.adapter.SingleScrollListView
+    <com.phuongnt.studyquiz.utils.SingleScrollListView
         android:layout_weight="1"
         android:id="@+id/lv_answers"
         android:layout_width="match_parent"
-        android:layout_height="0dp"></com.phuongnt.studyquiz.adapter.SingleScrollListView>
+        android:layout_height="0dp"></com.phuongnt.studyquiz.utils.SingleScrollListView>
 </LinearLayout>

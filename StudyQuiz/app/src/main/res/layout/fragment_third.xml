@@ -33,16 +33,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp">
                     <TextView
-                        android:gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        style="@style/ProfileLabelItem"
                         android:text="Username"/>
                     <TextView
                         android:id="@+id/tv_username"
-                        android:text="values"
-                        android:gravity="center_vertical|right"
-                        android:layout_width="fill_parent"
-                        android:layout_height="match_parent" />
+                        style="@style/ProfileTextValueItem" />
                 </LinearLayout>
                 <LinearLayout
                     android:background="@color/gray"
@@ -59,16 +54,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp">
                     <TextView
-                        android:gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        style="@style/ProfileLabelItem"
                         android:text="Name"/>
                     <TextView
                         android:id="@+id/tv_name"
-                        android:text="values"
-                        android:gravity="center_vertical|right"
-                        android:layout_width="fill_parent"
-                        android:layout_height="match_parent" />
+                        style="@style/ProfileTextValueItem" />
                 </LinearLayout>
                 <LinearLayout
                     android:background="@color/gray"
@@ -85,16 +75,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp">
                     <TextView
-                        android:gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        style="@style/ProfileLabelItem"
                         android:text="Email"/>
                     <TextView
                         android:id="@+id/tv_email"
-                        android:text="values"
-                        android:gravity="center_vertical|right"
-                        android:layout_width="fill_parent"
-                        android:layout_height="match_parent" />
+                        style="@style/ProfileTextValueItem"/>
                 </LinearLayout>
                 <LinearLayout
                     android:background="@color/gray"
@@ -111,12 +96,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp">
                     <TextView
-                        android:gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        style="@style/ProfileLabelItem"
                         android:text="Password"/>
                     <TextView
-
+                        style="@style/ProfileTextValueItem"
                         android:id="@+id/tv_password"
                         android:text="values"
                         android:gravity="center_vertical|right"

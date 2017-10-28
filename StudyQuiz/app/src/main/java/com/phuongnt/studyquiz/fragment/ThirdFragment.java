@@ -17,6 +17,8 @@ import com.phuongnt.studyquiz.activity.LoginActivity;
 import com.phuongnt.studyquiz.database.UserDB;
 import com.phuongnt.studyquiz.model.viewmodel.User;
 
+import org.w3c.dom.Text;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -26,6 +28,7 @@ public class ThirdFragment extends Fragment {
     private TextView tvUsername;
     private TextView tvName;
     private TextView tvEmail;
+    private TextView tvPassword;
 
 
     public ThirdFragment() {
@@ -52,6 +55,7 @@ public class ThirdFragment extends Fragment {
         tvUsername = (TextView) root.findViewById(R.id.tv_username);
         tvName = (TextView) root.findViewById(R.id.tv_name);
         tvEmail = (TextView) root.findViewById(R.id.tv_email);
+        tvPassword = (TextView) root.findViewById(R.id.tv_password);
         mbuttonLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,6 +72,7 @@ public class ThirdFragment extends Fragment {
         tvUsername.setText(currentUser.getUsername());
         tvName.setText(currentUser.getName());
         tvEmail.setText(currentUser.getEmail());
+        tvPassword.setText("************");
     }
 
     private void onButtonLogoutSelected(){

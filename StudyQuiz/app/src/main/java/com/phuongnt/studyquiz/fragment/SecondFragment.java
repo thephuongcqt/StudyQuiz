@@ -7,15 +7,26 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.phuongnt.studyquiz.R;
+import com.phuongnt.studyquiz.database.SearchHistoryDB;
+import com.phuongnt.studyquiz.model.viewmodel.SearchHistory;
+import com.phuongnt.studyquiz.model.viewmodel.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class SecondFragment extends Fragment {
-
-
+    private List<SearchHistory> histories;
+    private List<String> srcHistories = new ArrayList<>();
+    private User user;
+    private ListView lvSearch;
+    private ArrayAdapter<String> mAdapter;
     public SecondFragment() {
         // Required empty public constructor
     }
@@ -29,7 +40,34 @@ public class SecondFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_second, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_second, container, false);
+        lvSearch = (ListView) rootView.findViewById(R.id.lv_search);
+        updateList();
+        return rootView;
+    }
+
+    public void updateList(){
+        if(getActivity() == null){
+            return;
+        }
+
+        if(user == null){
+            user = User.getCurrentUser();
+        }
+        histories = new SearchHistoryDB().getUserSearchHistory(user.getUserId());
+        if(histories.size() == srcHistories.size()){
+            return;
+        }
+        refreshSouceHistories();
+        mAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, srcHistories);
+        lvSearch.setAdapter(mAdapter);
+    }
+
+    private void refreshSouceHistories(){
+        srcHistories = new ArrayList<>();
+        for(SearchHistory item : histories){
+            srcHistories.add(item.getSearchValue());
+        }
     }
 
 }

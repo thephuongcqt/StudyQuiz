@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -14,19 +15,23 @@ import android.widget.Toast;
 
 import com.phuongnt.studyquiz.AppConst;
 import com.phuongnt.studyquiz.R;
-import com.phuongnt.studyquiz.adapter.SearchAdapter;
 import com.phuongnt.studyquiz.adapter.ViewPagerAdapter;
+import com.phuongnt.studyquiz.database.SearchHistoryDB;
+import com.phuongnt.studyquiz.database.UserDB;
 import com.phuongnt.studyquiz.fragment.SearchChapterFragment;
 import com.phuongnt.studyquiz.fragment.SearchSubjectFragment;
 import com.phuongnt.studyquiz.model.apimodel.CommonResponse;
 import com.phuongnt.studyquiz.model.apimodel.RequestParam;
 import com.phuongnt.studyquiz.model.apimodel.searchservice.SearchChapterResponse;
 import com.phuongnt.studyquiz.model.apimodel.searchservice.SearchSubjectResponse;
+import com.phuongnt.studyquiz.model.viewmodel.SearchHistory;
+import com.phuongnt.studyquiz.model.viewmodel.User;
 import com.phuongnt.studyquiz.service.APIManager;
 import com.phuongnt.studyquiz.service.IAPIHelper;
-import com.phuongnt.studyquiz.service.MyProgressBar;
+import com.phuongnt.studyquiz.utils.MyProgressBar;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,22 +61,12 @@ public class SearchActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("");
-        setupWindowAnimations();
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-    }
-
-    private void setupWindowAnimations() {
-//        Fade fade = new Fade();
-//        fade.setDuration(1000);
-//        getWindow().setEnterTransition();
-//        Slide slide = new Slide();
-//        slide.setDuration(3000);
-//        getWindow().setEnterTransition(slide);
     }
 
     private void dismissKeyboard(){
@@ -220,6 +215,22 @@ public class SearchActivity extends AppCompatActivity {
         progressCount--;
         if(progressCount <= 0){
             MyProgressBar.dismiss();
+            if(chapters != null && subjects != null && (!chapters.isEmpty() || !subjects.isEmpty())){
+                storeToSearchHistory();
+            }
+        }
+    }
+
+    private void storeToSearchHistory(){
+        User user = User.getCurrentUser();
+        SearchHistory item = new SearchHistory(searchValue, user.getUserId(), new Date());
+        SearchHistoryDB searchHistoryDB = new SearchHistoryDB();
+        boolean success = searchHistoryDB.update(item);
+        if(!success){
+            long searchId = searchHistoryDB.insert(item);
+            if(searchId < 0){
+                Log.e("storeToSearchHistory", item.toString());
+            }
         }
     }
 

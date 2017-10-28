@@ -3,12 +3,11 @@ package com.phuongnt.studyquiz.activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.phuongnt.studyquiz.R;
 import com.phuongnt.studyquiz.adapter.AnswerAdapter;
-import com.phuongnt.studyquiz.adapter.SingleScrollListView;
+import com.phuongnt.studyquiz.utils.SingleScrollListView;
 import com.phuongnt.studyquiz.model.viewmodel.Question;
 import com.phuongnt.studyquiz.model.viewmodel.TestData;
 
