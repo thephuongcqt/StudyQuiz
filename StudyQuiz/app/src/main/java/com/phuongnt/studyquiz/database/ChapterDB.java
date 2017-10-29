@@ -37,7 +37,7 @@ public class ChapterDB {
         return sql;
     }
 
-    public long insert(SearchChapterResponse chapter){
+    public static long insert(SearchChapterResponse chapter){
         try{
             SQLiteDatabase db = DatabaseManager.getInstance().openWritableDatabase();
             ContentValues values = new ContentValues();
@@ -56,7 +56,9 @@ public class ChapterDB {
         }
     }
 
-    public List<SearchChapterResponse> getChaptersBySubjectId(long subjectId){
+
+
+    public static List<SearchChapterResponse> getChaptersBySubjectId(long subjectId){
         String[] columns = {"*"};
         String where = COLUMN_SUBJECT_ID + " = ?";
         String[] args = {subjectId + ""};
@@ -76,7 +78,31 @@ public class ChapterDB {
             }
         } catch (Exception e){
             Log.e("Chapter_getChapters", e.getMessage());
+        } finally {
+            DatabaseManager.getInstance().closeDatabase();
         }
         return list;
+    }
+
+    public static SearchChapterResponse getChapterById(long chapterId){
+        String[] columns = {"*"};
+        String where = COLUMN_CHAPTER_ID + " = ?";
+        String[] args = {chapterId + ""};
+        try{
+            SQLiteDatabase db = DatabaseManager.getInstance().openReadableDatabase();
+            Cursor cursor = db.query(TABLE_CHAPTER, columns, where, args, null, null, null);
+            if(cursor.moveToFirst()){
+                String name = cursor.getString(1);
+                String dateStr = cursor.getString(2);
+                long subjectId = cursor.getLong(3);
+                SearchChapterResponse item = new SearchChapterResponse(chapterId, name, MyDateFormater.getDateFromString(dateStr), subjectId);
+                return item;
+            }
+        } catch (Exception e){
+            Log.e("Chapter_getChapters", e.getMessage());
+        }finally {
+            DatabaseManager.getInstance().closeDatabase();
+        }
+        return null;
     }
 }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -13,10 +14,14 @@ import android.widget.Toast;
 
 import com.phuongnt.studyquiz.AppConst;
 import com.phuongnt.studyquiz.R;
+import com.phuongnt.studyquiz.database.ActivityDB;
+import com.phuongnt.studyquiz.database.ChapterDB;
+import com.phuongnt.studyquiz.database.SubjectDB;
 import com.phuongnt.studyquiz.model.apimodel.CommonResponse;
 import com.phuongnt.studyquiz.model.apimodel.RequestParam;
 import com.phuongnt.studyquiz.model.apimodel.questionservice.QuestionResponse;
 import com.phuongnt.studyquiz.model.apimodel.searchservice.SearchChapterResponse;
+import com.phuongnt.studyquiz.model.viewmodel.Activity;
 import com.phuongnt.studyquiz.model.viewmodel.Question;
 import com.phuongnt.studyquiz.model.viewmodel.TestData;
 import com.phuongnt.studyquiz.model.viewmodel.User;
@@ -25,6 +30,7 @@ import com.phuongnt.studyquiz.service.IAPIHelper;
 import com.phuongnt.studyquiz.utils.MyProgressBar;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -117,6 +123,7 @@ public class DetailChapterActivity extends AppCompatActivity {
     }
 
     private void onSuccessCard(List<QuestionResponse> questions){
+        storeActivity(Activity.TYPE_FLASH_CARD);
         MyProgressBar.dismiss();
         if(questions == null || questions.isEmpty()){
             Toast.makeText(this, "No question to test", Toast.LENGTH_SHORT).show();
@@ -176,6 +183,7 @@ public class DetailChapterActivity extends AppCompatActivity {
     }
 
     private void onSuccessTest(List<QuestionResponse> questions){
+        storeActivity(Activity.TYPE_TEST);
         MyProgressBar.dismiss();
         if(questions == null || questions.isEmpty()){
             return;
@@ -198,5 +206,22 @@ public class DetailChapterActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         onBackPressed();
         return super.onOptionsItemSelected(item);
+    }
+
+    private void storeActivity(int type){
+        User user = User.getCurrentUser();
+        if(user != null){
+            long chapterId = ChapterDB.insert(chapter);
+            long subjectId = SubjectDB.insert(chapter.getSubject());
+            Activity activity = new Activity(chapter.getChapterId(), -1, type, new Date(), user.getUserId());
+            boolean success = ActivityDB.update(activity);
+            if(!success){
+                long activityId = ActivityDB.insert(activity);
+                Log.e("storeActivity", "activityId: " +activityId);
+            }
+            if(chapterId < 0){
+                Log.e("storeActivity", "chapterId: " +chapterId);
+            }
+        }
     }
 }

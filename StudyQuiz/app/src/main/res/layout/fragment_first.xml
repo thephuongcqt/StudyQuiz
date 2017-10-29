@@ -4,11 +4,16 @@
     android:layout_height="match_parent"
     tools:context="com.phuongnt.studyquiz.fragment.FirstFragment">
 
-    <LinearLayout
-        android:background="@color/light_gray"
-        android:layout_margin="20dp"
+    <!--<LinearLayout-->
+        <!--android:background="@color/light_gray"-->
+        <!--android:layout_margin="20dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+    <!--</LinearLayout>-->
+    <ListView
+        android:id="@+id/lv_activities"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </LinearLayout>
 
+    </ListView>
 </FrameLayout>

@@ -1,6 +1,7 @@
 package com.phuongnt.studyquiz.database;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -8,6 +9,7 @@ import com.phuongnt.studyquiz.model.apimodel.searchservice.SearchSubjectResponse
 import com.phuongnt.studyquiz.utils.MyDateFormater;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by PhuongNT on 10/29/17.
@@ -33,7 +35,7 @@ public class SubjectDB {
         return sql;
     }
 
-    public long insert(SearchSubjectResponse subject){
+    public static long insert(SearchSubjectResponse subject){
         try{
             SQLiteDatabase db = DatabaseManager.getInstance().openWritableDatabase();
             ContentValues values = new ContentValues();
@@ -49,5 +51,27 @@ public class SubjectDB {
         } finally {
             DatabaseManager.getInstance().closeDatabase();
         }
+    }
+
+    public static SearchSubjectResponse getSubjectById(long subjectId){
+        String[] columns = {"*"};
+        String where = COLUMN_SUBJECT_ID + " = ?";
+        String[] args = {subjectId + ""};
+        try{
+            SQLiteDatabase db = DatabaseManager.getInstance().openReadableDatabase();
+            Cursor cursor = db.query(TABLE_SUBJECT, columns, where, args, null, null, null);
+            if(cursor.moveToFirst()){
+                String name = cursor.getString(1);
+                String dateStr = cursor.getString(2);
+                Date date = MyDateFormater.getDateFromString(dateStr);
+                SearchSubjectResponse item = new SearchSubjectResponse(subjectId, name, date);
+                return item;
+            }
+        } catch (Exception e){
+            Log.e("Chapter_getChapters", e.getMessage());
+        }finally {
+            DatabaseManager.getInstance().closeDatabase();
+        }
+        return null;
     }
 }
