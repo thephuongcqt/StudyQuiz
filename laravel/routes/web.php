@@ -37,8 +37,11 @@ Route::get('/profile','LoginController@getProfile');
 Route::get('/feedback','FeedbackController@index');
 Route::get('/feedback/get_datatable', 'FeedbackController@get_datatable');
 Route::get('/feedback/get_datatableDuplicate', 'FeedbackController@get_datatableDuplicate');
+Route::get('/feedback/get_datatableSearch/{id}', 'FeedbackController@get_datatableSearch');
 
-Route::get('/feedback/{id}','FeedbackController@detail');
+Route::get('/feedback/{id}','FeedbackController@detailWrongAnswer');//for Wrong Answer
+Route::get('/feedbackDuplicateDetail/{id}','FeedbackController@duplicateDetail');//for duplicate Question
+
 Route::post('/editQuestionFeedback','FeedbackController@getDetail');
 Route::get('/deleteQuestion/{id}','QuestionController@deleteQuestion');
 

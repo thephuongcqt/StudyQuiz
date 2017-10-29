@@ -83,6 +83,21 @@
             android:hint="@string/email"
             android:inputType="text" />
 
+        <TextView
+            android:id="@+id/tName"
+            style="@style/CommonLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name" />
+
+        <EditText
+            android:id="@+id/name"
+            style="@style/CommonEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Name"
+            android:inputType="text" />
+
         <Button
             android:id="@+id/btnSignUp"
             style="@style/CommonButton"

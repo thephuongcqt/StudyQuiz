@@ -80,9 +80,12 @@
       </div>
       </div>
       <!-- hàng 3 -->
-       <div class="col-md-12">
+        <div class="text-center"> <button class="btn btn-success" id="btn_process" type="button">Process</button>
+                      <a class="btn btn-danger" href="/deleteQuestion/1"><i class="fa fa-trash-o fa-lg"></i> Delete</a>
+                    </div>
+      <div class="col-md-12">
       <div class="info-box" style="padding-left: 20px">
-         <div class="text-center page-header">Feedback of Question was duplicated</div>
+      <div class="text-center page-header">Feedback of Question was duplicated</div>
       <table id="dup-table" class="table text-center">
       <thead>
       <tr>
@@ -106,6 +109,7 @@
 <script src="https://datatables.yajrabox.com/js/jquery.dataTables.min.js"></script>
 <script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script> 
 <script type="text/javascript">
+ 
     $(function() {
         $('#users-table').DataTable({
         processing: true,

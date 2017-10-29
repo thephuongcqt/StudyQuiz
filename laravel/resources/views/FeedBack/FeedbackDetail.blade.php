@@ -13,7 +13,7 @@
     <!-- body -->
     <!-- hàng 1 -->
     <div class="col-md-12 bg-silver"  >
-       <div class="col-md-6" id="DIS">
+       <div class="col-md-6" id="DIS" >
         
           <div class="box box-info" style="border-top-color:#07f907;">
            
@@ -86,7 +86,7 @@
             <div class="box-header with-border ">
                 <h3 class="box-title">Comment For This Question </h3>
             </div>
-            <div class="box-body">
+            <div class="box-body" >
                 <table class="table table-bordered">
                     <thead>
                     <th class="col-md-2">FeedbackId</th>
@@ -99,11 +99,9 @@
                       <th>{{$cmt->Comment}}</th>
                     </tr>
                     @endforeach
-                     
-                    
-                     
                     </tbody>
                 </table>
+                <div class="text-center">{{$Comments->links()}}</div>
             </div>
           </div>
       </div>
@@ -128,7 +126,7 @@
          var arrA = ['X','A. ','B. ','C. ','D. ','E. ','F. '];
          var chapterId = {{$id}};
          var SubjectBegin = {{$SubjectSelected}};
-        
+          alert("DKM"+ SubjectBegin);
          //first time load Data
          $.ajax({
           type: 'GET',

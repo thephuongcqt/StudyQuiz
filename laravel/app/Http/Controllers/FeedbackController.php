@@ -48,9 +48,9 @@ class FeedbackController extends Controller
                 'countWrong'=>$countWrong,
                 'FeedbackALL'=>$FeedBackAll,
                 ]);
-        // return view('feedback');
+       
     }
-    public function detail($id){
+    public function detailWrongAnswer($id){
       if(Session::get("Username")==null){
           return redirect('/admin');
       }
@@ -76,7 +76,26 @@ class FeedbackController extends Controller
       $Type = $Question->TypeId;
                 return view('Feedback.FeedbackDetail',['totalFeedback'=>$totalFeedback,'Question'=>$Question,'Comments'=>$feedbackQuestion,'Subjects'=>$ListSubject,'SubjectSelected'=>$SubjectId,'id'=>$myChapter,'Type'=>$Type]);
     }
-    
+    public function duplicateDetail($id){
+       $feedbackQuestion= DB::table('Feedback')
+                  ->where('QuestionId','=',$id)
+                  ->select('Feedback.FeedbackId','Feedback.Comment')
+                  ->paginate(5);
+        $QuestionId = $id;
+        $Question =  DB::table('Question')
+                  ->where('QuestionId','=',$QuestionId)
+                  ->select('Question.*')->first();
+        $ChapterId = $Question->ChapterId;
+        $Chap = DB::table('Chapter')
+              ->where('Chapter.ChapterId','=',$ChapterId)
+              ->first();
+        $ChapterName = $Chap->Name;
+        $SubjectOfChapter = $Chap->SubjectId;
+        $Subject = DB::table('Subject')->where('SubjectId','=',$SubjectOfChapter)->first();
+        $SubjectName = $Subject->Name;
+         
+     return view('Feedback.FeedbackDuplicateDetail',['Comments'=>$feedbackQuestion,'QuestionId'=>$QuestionId,'Question'=>$Question,'SubjectName'=>$SubjectName,'ChapterName'=>$ChapterName,'Term'=>$Question->Term]);
+    }
     function getDetail(Request $request){
       if(Session::get("Username")==null){
           return redirect('/admin');
@@ -107,7 +126,7 @@ class FeedbackController extends Controller
       $Type=1;
       return view('welcome',['Type'=>$Type]);
     }
-      
+    //load table 1 for view(feedback)
     public function get_datatable(){
         $DKM =  DB::table('Feedback')
             ->select(DB::raw('count(*) as count,QuestionId'))
@@ -115,12 +134,12 @@ class FeedbackController extends Controller
             ->groupBy('QuestionId')
             ->orderBy('count','asc')
            ->get();
-
      return Datatables::of($DKM)
      ->addColumn('action', function($DKM) {
     return '<a href="/feedback/'.$DKM->QuestionId.'" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Edit</a>';
       })->make(true);
     }
+    //load table 2 for view(feedback)
     public function get_datatableDuplicate(){
         $DKM =  DB::table('Feedback')
             ->select(DB::raw('count(*) as count,QuestionId'))
@@ -131,9 +150,24 @@ class FeedbackController extends Controller
 
      return Datatables::of($DKM)
      ->addColumn('action', function($DKM) {
-    return '<a href="/feedback/'.$DKM->QuestionId.'" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Edit</a>';
+    return '<a href="/feedbackDuplicateDetail/'.$DKM->QuestionId.'" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Edit</a>';
       })->make(true);
     }
 
+    public function get_datatableSearch($id){
+        $Question = DB::table('Question')->where([
+                    ['QuestionId', '=', $id],
+                    ['IsEnable', '=', 1]
+                ])->first();
+       
+        // $Term  = $Question->Term;
+          $Term  ="e-";
+
+         $result = Question::where('Term','LIKE',"%{$Term}%")
+              ->select('Question.Term')
+              ->get();
+            return Datatables::of($result)->make(true);
+          
+    }
 
 }

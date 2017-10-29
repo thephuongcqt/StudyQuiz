@@ -1,7 +1,10 @@
 @extends('adminlte.layout')
-@section('title', 'Create Question')
+@section('title', 'Duplicate Answer Feedback')
 @section('content')
-  
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://datatables.yajrabox.com/css/datatables.bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 <div class="wrapper-content bg-silver">
    <section class="content-header">
       <h1>
@@ -15,48 +18,39 @@
     <div class="col-md-12 bg-silver"  >
        <div class="col-md-6" id="DIS">
         
-          <div class="box box-info" style="border-top-color:#07f907;">
+          <div class="box box-info" style="border-top-color:#07f907;height: 372px">
            
             <form method ="post" class="form-horizontal" id="editQuestionFeedback" action="/editQuestionFeedback">
              <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-              <div class="form-group" style="padding-top: 20px;">
-                  <label for="email" class="col-md-3 control-label">Subject </label>
+               <div class="form-group" style="padding-top: 20px;">
+                  <label for="text" class="col-md-3 control-label">Subject</label>
                   <div class="col-md-8">
-                    <select name="MySubject" id="MySubject"  class="form-control">
-                      @foreach ($Subjects as $key =>$val)
-                      <option value="{{$val->SubjectId}}" 
-                      <?php if ($val->SubjectId==$SubjectSelected): ?>
-                         selected="selected" 
-                      <?php endif ?> >{{$val->Name}}</option>
-                      @endforeach
-                    </select>
+                      <input id="definition" type="text" class="form-control" name="Subject" value="{{$SubjectName}}"  disabled="">
                   </div>
               </div>
-               <div class="form-group" style="padding-top: 20px;">
-                  <label for="email" class="col-md-3 control-label">Chapter </label>
+                <div class="form-group">
+                  <label for="text" class="col-md-3 control-label">Chapter</label>
                   <div class="col-md-8">
-                    <select name="MyChapter" id="MyChapter"  class="form-control"  >
-                    </select>
+                      <input id="definition" type="text" class="form-control" name="Chapter" disabled value="{{$ChapterName}}">
                   </div>
               </div>
                <div class="form-group" >
-                 <label for="email" class="col-md-3 control-label" >Term </label>
+                 <label for="email" class="col-md-3 control-label">Term </label>
                   <div class="col-md-8 ">
-                   <textarea rows="10" cols="50"  name="term" id="term" maxlength="1000"  
-                     style="resize: none;width: 100%"  >{{$Question->Term}}</textarea>
-                      <input type="hidden" name="QuestionId" value="{{$Question->QuestionId}}">
-                      <input type="hidden" name="TypeId" value="{{$Question->TypeId}}">
+                   <textarea rows="5" cols="50"  name="term" id="term" maxlength="1000"  
+                     style="resize: none;width: 100%;resize: none;overflow-y: scroll;" disabled>{{$Question->Term}}</textarea>
+                    
                   </div>
               </div>
               <div class="form-group">
                   <label for="email" class="col-md-3 control-label">Definition</label>
                   <div class="col-md-8">
-                      <input id="definition" type="text" class="form-control" name="definition" value="{{$Question->Definition}}">
+                      <input id="definition" type="text" class="form-control" name="definition" value="{{$Question->Definition}}" disabled>
                   </div>
               </div>
               <div class="form-group" style="padding-bottom: 20px">
                     <div class="text-center"> <button class="btn btn-success" id="btn_process" type="button">Process</button>
-                      <a class="btn btn-danger" href="/deleteQuestion/{{$Question->QuestionId}}"><i class="fa fa-trash-o fa-lg"></i> Delete</a>
+                      <a class="btn btn-danger" href="/deleteQuestion/1"><i class="fa fa-trash-o fa-lg"></i> Delete</a>
                     </div>
                       
             
@@ -81,7 +75,7 @@
           <!-- ll -->
         </div>
       <!-- commnent -->
-      <div class="col-md-6 " style="padding-right: 15px;padding-left: 15px;">
+      <div class="col-md-6 " style="padding-right: 15px;padding-left: 15px;min-height: 372px">
           <div class="box box-info" style="border-top-color:#07f907">
             <div class="box-header with-border ">
                 <h3 class="box-title">Comment For This Question </h3>
@@ -99,19 +93,28 @@
                       <th>{{$cmt->Comment}}</th>
                     </tr>
                     @endforeach
-                     
-                    
-                     
                     </tbody>
                 </table>
+          <div class="text-center">{{$Comments->links()}}</div>
             </div>
           </div>
       </div>
     </div>
     <!-- comment -->
-    <div class="col-md-12 bg-silver"  >
-      <div class="col-md-5 bg-green" >ALO</div>
-    </div>
+    <div class="col-md-12">
+     <div class="info-box" style="padding-left: 20px">
+      <div class="text-center page-header">Feedback of Question was duplicated</div>
+      <table id="dup-table" class="table text-center">
+      <thead>
+      <tr>
+      <td class="col-md-5">Term</td>
+      <td class="col-md-5">Definition </td>
+      <td class="col-md-2">Chapter </td>
+      </tr>
+      </thead>
+      </table> 
+      </div>
+      </div>
       
      
     </section>
@@ -120,134 +123,35 @@
 
  
 </div>
-@endsection
-<script src="{{asset("/plugins/jQuery/jquery-3.1.1.min.js")}}"></script>
- <script>  
 
-      $(document).ready(function(){
-         var arrA = ['X','A. ','B. ','C. ','D. ','E. ','F. '];
-         var chapterId = {{$id}};
-         var SubjectBegin = {{$SubjectSelected}};
-        
-         //first time load Data
-         $.ajax({
-          type: 'GET',
-          cache: false,
-          url: '/createQuestion/ajax/'+SubjectBegin,
-          dataType: 'JSON',
-        }).done(function (response, textStatus, jqXHR) {
-            $('#MyChapter').html('');
-            $.each(response, function (i, val) {
-                if (val== chapterId) {
-                   $('#MyChapter').append('<option value="'+val+'"  selected="selected" >'+'Chapter '+val+' : '+ i+'</option>');
-                 }else{
-                   $('#MyChapter').append('<option value="'+val+'">'+'Chapter '+val+' : '+ i+'</option>');
-                 }
-               
-            });
-        }).fail(function (jqXHR, textStatus, errorThrown) {
-            alert('Error Chapter Loading');
-        });
-         //end firsttiemloaddata
-         //Chapter load data
-      $('#MySubject').on('change', function () {
-      var id = $('#MySubject option:selected').val();
-      $.ajax({
-          type: 'GET',
-          cache: false,
-          url: '/createQuestion/ajax/'+id,
-          dataType: 'JSON',
-        }).done(function (response, textStatus, jqXHR) {
-            $('#MyChapter').html('');
-            $.each(response, function (i, val) {
-                $('#MyChapter').append('<option value="'+val+'">'+'Chapter '+val+' : '+ i+'</option>');
-            });
-        }).fail(function (jqXHR, textStatus, errorThrown) {
-            alert('Error Chapter Loading');
-        });
-      });
-     //endchapterLoaddata
-        var type = {{$Type}};
-        $("#TF_group").hide();   
-        $("#btn_process").click(function(){
-            $("#DDD").show();
-            var typeX = document.getElementById("definition").value;
-            alert(type);
+<script src="https://datatables.yajrabox.com/js/jquery.dataTables.min.js"></script>
+<script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script> 
 
-         if(type==1){
-            $("#TF_group").show();
-            $("#radio_group").hide();
-            var termTF =  $.trim($('#term').val());
-            var arrTF = termTF.split("|");
-            if(arrTF.length == 0){
-              alert("Please input term ");
-               $('#TF_group').hide();
-              return false;
-            }else{
-                if(arrTF.length!= 1){
-                alert("True false quesion just need question");
-                    $('#TF_group').hide();
-                    return false;
-                }else if(arr.length== 1){
-                    document.getElementById('table2').style.display = 'block'; 
-                    $('#TrueFalseX').show();
-                    document.getElementById("field_name").innerHTML =$.trim($('#term').val()) ;
-                 return false;
-                } 
-            }   
-         }
-         if(type==2){
-            $("#radio_group").show();   
-            $("#TF_group").hide(); 
-            var term = $("#term").val();
-            var arr = term.split("|");
-            alert(arr);     
-             if(arr.length > 3 && arr.length < 8){
-                $("#radio_group").empty();
-                $("#real_term").text(arr[0]);
-                $("#create_question").show();
-                $("#real_term").show();
-                 for(i = 1; i < arr.length; i++){
-                        if(i==1 || i== 3 || i ==5 || i==7){
-                            var div = document.createElement("Div");
-                            div.setAttribute("class", "col-md-12 bg-gray");
-                        }else{
-                          var div = document.createElement("Div");
-                          div.setAttribute("class", "col-md-12 bg-silver");
-                        }
-                        var input = document.createElement("INPUT");
-                        input.setAttribute("type", "radio");
-                        input.setAttribute("id", i);
-                        input.setAttribute("name", "Defi");
-                        input.setAttribute("value", i - 1);
-                        input.setAttribute("class","bg-green");
-                            if(i == 1){
-                              input.setAttribute("checked", "checked");
-                            }
-                        var label2 = document.createElement("Label");
-                        label2.setAttribute("style","word-wrap: break-word");
-                        label2.innerHTML = arrA[i]+arr[i].trim();
-                        var DIVTO = document.getElementById("DDD");
-                        div.appendChild(input);
-                        div.appendChild(label2);
-                        DIVTO.appendChild.div;
-                        var br = document.createElement("br");
-                        $("#radio_group").append(div);
-                        $("#radio_group").append(br);
-                }
-                $("#create_question").click(function(){
-                document.getElementById('editQuestionFeedback').submit();
-                });
-             }else{
-                alert("Term need 3 to 5 answer.Please input enought");
-                $("#radio_group").empty();
-                $("#create_question").hide();
-                $("#real_term").hide();
-             }
-         }    
+ <script>   
+ var QuestionId = {{$QuestionId}};
+             
+ $(function() {
+        $('#dup-table').DataTable({
+        processing: true,
+        serverSide: true,
+        order: [[ 0, "desc" ]],
+        bLengthChange:false,
+        pageLength: 10,
+        ajax: 'http://127.0.0.1:8000/feedback/get_datatableSearch'.QuestionId,
+        columns : [
+          
+              {data: 'count'},
+              {data: 'QuestionId'},
+              {
+                  
+                  data: 'action'
+              },
+            ],
         });
     });
+       
 
        
     </script>
  
+@endsection

@@ -7,6 +7,8 @@
     <string name="confirmPassword">ConfirmPassword</string>
     <string name="confirmPassword_placeholder">Confirm password</string>
     <string name="email">Email</string>
+    <string name="name">Name</string>
+    <string name="name_placeholder">Your name</string>
     <string name="detail_chapter_question_number">Number question:</string>
     <string name="detail_chapter_btn_flashcard">Study with cards</string>
     <string name="detail_chapter_btn_test">Start test</string>

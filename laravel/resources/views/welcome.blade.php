@@ -6,62 +6,21 @@
 <link href="https://datatables.yajrabox.com/css/datatables.bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-  <div class="col-md-12">
-      <div class="row">
-        <div class="col-md-4">
-          <div class="info-box">
-            <span class="info-box-icon bg-lime"><i class="fa fa-envelope-o" style="padding-top: 20%"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Feedback</span>
-              <span class="info-box-number">{{$total}}</span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-4">
-          <div class="info-box">
-            <span class="info-box-icon bg-lime"><i class="fa fa-flag-o" style="padding-top: 20%"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Feedback duplicate Question</span>
-              <span class="info-box-number">{{$countDup}}</span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-4">
-          <div class="info-box">
-            <span class="info-box-icon bg-lime"><i class="fa fa-files-o" style="padding-top: 20%"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Feedback Wrong Answer</span>
-              <span class="info-box-number">{{$countWrong}}</span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-         
-        
-        <!-- /.col -->
+ <!--  -->
+ <div class="col-md-12">
+     <div class="info-box" style="padding-left: 20px">
+      <div class="text-center page-header">Feedback of Question was duplicated</div>
+      <table id="dup-table" class="table text-center">
+      <thead>
+      <tr>
+      <td class="col-md-5">Total Feedback</td>
+      <td class="col-md-5">Question ID</td>
+      <td class="col-md-2">Action</td>
+      </tr>
+      </thead>
+      </table> 
       </div>
-      <!-- /.row -->
-    </div>
-<div class="col-md-12"><table id="users-table" class="table ">
-  <thead>
-    <tr >
-      <td class="col-md-1">Subject ID</td>
-       <td class="col-md-8">Name</td>
-      <!-- <td class="col-md-2">Created Date</td> -->
-     
-    </tr>
-  </thead>
-</table></div>
+      </div>
  
 
 
