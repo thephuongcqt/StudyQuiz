@@ -11,11 +11,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
+            android:visibility="gone"
+            android:id="@+id/tv_fragment_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="Fragment Chapter"
-            android:textSize="30dp"
+            android:textSize="26dp"
             android:textStyle="bold"
             android:layout_centerInParent="true"/>
         <ListView

@@ -20,6 +20,8 @@
     <color name="white">#ffffff</color>
     <color name="main_positive_color">#00acd9</color>
     <color name="red">#ff0000</color>
+    <color name="light_red">#fb4c4c</color>
+    <color name="light_red_1">#ff735c</color>
     <color name="main_text_color_3">#b7b7b7</color>
     <color name="main_text_color_2">#666666</color>
     <color name="main_text_color_1">#2a2b27</color>
@@ -27,4 +29,6 @@
     <color name="light_gray">#E5E5E5</color>
     <color name="transparent">#80FFFFFF </color>
     <color name="yellow">#ffd700</color>
+    <color name="light_blue">#3dcfcf</color>
+    <color name="light_green">#22b26d</color>
 </resources>

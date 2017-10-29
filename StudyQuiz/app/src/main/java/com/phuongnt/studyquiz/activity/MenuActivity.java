@@ -3,6 +3,7 @@ package com.phuongnt.studyquiz.activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +21,10 @@ public class MenuActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private final FirstFragment firstFragment = new FirstFragment();
+    private SecondFragment secondFragment = new SecondFragment();
+    private ThirdFragment thirdFragment = new ThirdFragment();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,20 +40,43 @@ public class MenuActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-        setupWindowAnimations();
     }
-    private void setupWindowAnimations() {
-//        Slide slide = new Slide();
-//        slide.setDuration(3000);
-//        getWindow().setExitTransition(slide);
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        secondFragment.updateList();
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FirstFragment(), "First");
-        adapter.addFragment(new SecondFragment(), "Second");
-        adapter.addFragment(new ThirdFragment(), "Third");
+        final ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+
+        adapter.addFragment(firstFragment, "Last Activity");
+        adapter.addFragment(secondFragment, "Search history");
+        adapter.addFragment(thirdFragment, "Profile");
         viewPager.setAdapter(adapter);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(position == 1){
+                    Fragment fragment = adapter.getItem(position);
+                    if(fragment instanceof SecondFragment){
+                        ((SecondFragment) fragment).updateList();
+                    }
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     public void onImageSearchTapped(View v){

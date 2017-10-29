@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.phuongnt.studyquiz.AppConst;
 import com.phuongnt.studyquiz.R;
@@ -28,6 +29,7 @@ public class SearchSubjectFragment extends Fragment {
     private ListView listView = null;
     private List<SearchSubjectResponse> srcList;
     private  Button btnLoadMore = null;
+    private TextView tvTitle;
 
     public SearchSubjectFragment() {
         // Required empty public constructor
@@ -40,6 +42,7 @@ public class SearchSubjectFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView =  inflater.inflate(R.layout.fragment_search_subject, container, false);
         listView = (ListView) rootView.findViewById(R.id.lv_subject);
+        tvTitle = (TextView) rootView.findViewById(R.id.tv_fragment_title);
 //        btnLoadMore = (Button) rootView.findViewById(R.id.btn_load_more);
         return rootView;
     }
@@ -57,5 +60,11 @@ public class SearchSubjectFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        if(srcList.size() > 0){
+            tvTitle.setVisibility(View.GONE);
+        } else{
+            tvTitle.setVisibility(View.VISIBLE);
+            tvTitle.setText("No Chapter found");
+        }
     }
 }

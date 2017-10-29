@@ -4,6 +4,9 @@
     <string name="username_placeholder">Enter your username</string>
     <string name="password">Password</string>
     <string name="password_placeholder">Enter your password</string>
+    <string name="confirmPassword">ConfirmPassword</string>
+    <string name="confirmPassword_placeholder">Confirm password</string>
+    <string name="email">Email</string>
     <string name="detail_chapter_question_number">Number question:</string>
     <string name="detail_chapter_btn_flashcard">Study with cards</string>
     <string name="detail_chapter_btn_test">Start test</string>
@@ -14,6 +17,9 @@
     <string name="flash_card_done_title">Nice work!</string>
     <string name="flash_card_done_btn_study_again">Study again</string>
     <string name="flash_card_done_btn_study_new">Study new cards</string>
+    <string name="review_answer_not_selected">Not selected yet</string>
+    <string name="review_answer_toolbar_title">Test review</string>
+    <string name="login_label_signup">Sign up now</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
