@@ -10,8 +10,8 @@ import android.widget.Toast;
 import com.phuongnt.studyquiz.R;
 
 public class SignUpActivity extends AppCompatActivity {
-    private EditText username,pass1,pass2,email;
-    private String Susername,Spass1,Spass2,Semail;
+    private EditText username,pass1,pass2,email,name;
+    private String Susername,Spass1,Spass2,Semail,Sname;
     private Button SignUp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +21,7 @@ public class SignUpActivity extends AppCompatActivity {
         pass1 = (EditText)findViewById(R.id.password);
         pass2 = (EditText)findViewById(R.id.confirmPassword);
         email = (EditText)findViewById(R.id.email);
+        name =  (EditText)findViewById(R.id.name);
         SignUp = (Button)findViewById(R.id.btnSignUp);
 
         SignUp.setOnClickListener(new View.OnClickListener() {
@@ -60,9 +61,14 @@ public class SignUpActivity extends AppCompatActivity {
             valid=false;
         }
 
+
         if(!Spass1.equalsIgnoreCase(Spass2)){
             pass2.setError("Password confirm is not correct");
             valid=false;
+        }
+        if(Sname.isEmpty() ){
+            name.setError("Please input confirm password");
+            valid =false;
         }
         return valid;
     }
@@ -71,5 +77,6 @@ public class SignUpActivity extends AppCompatActivity {
         Spass1 = pass1.getText().toString().trim();
         Spass2 = pass2.getText().toString().trim();
         Semail = email.getText().toString().trim();
+        Sname  = name.getText().toString().trim();
     }
 }
