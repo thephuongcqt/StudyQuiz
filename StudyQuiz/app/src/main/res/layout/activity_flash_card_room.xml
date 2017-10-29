@@ -8,6 +8,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <include layout="@layout/app_bar"/>
     <LinearLayout
+        android:clickable="true"
         android:background="@color/white"
         android:layout_weight="1"
         android:orientation="vertical"

@@ -22,7 +22,7 @@ namespace StudyQuizAPI.Models.DAO
         {
             string sql = "SELECT * FROM Chapter"
                 + " WHERE Name LIKE '%' + @name + '%'"
-                + " ORDER BY ChapterId"
+                + " ORDER BY Name"
                 + " OFFSET @offset ROWS"
                 + " FETCH NEXT @number ROWS ONLY";
             var nameParam = new SqlParameter("@name", name);

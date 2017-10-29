@@ -44,6 +44,7 @@ public class SearchActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private EditText edtSearch;
     private List<SearchChapterResponse> chapters = null;
     private List<SearchSubjectResponse> subjects = null;
     private SearchChapterFragment chapterFragment = null;
@@ -53,20 +54,38 @@ public class SearchActivity extends AppCompatActivity {
     private int chapterOffset = 0;
     private int subjectOffset = 0;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        getComponent();
+        initComponent();
+    }
+
+    private void getComponent(){
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        edtSearch = (EditText) findViewById(R.id.edt_search);
+    }
+
+    private void initComponent(){
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("");
-
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         setupViewPager(viewPager);
-
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null){
+            searchValue = bundle.getString(AppConst.SEARCH_VALUE);
+            if(searchValue != null){
+                edtSearch.setText(searchValue);
+                imageSearchSelected(null);
+            }
+        }
     }
 
     private void dismissKeyboard(){
@@ -105,8 +124,10 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void imageSearchSelected(View v){
-        dismissKeyboard();
-        searchValue = ((EditText) findViewById(R.id.edt_search)).getText().toString().trim();
+        if(v != null){
+            dismissKeyboard();
+        }
+        searchValue = (edtSearch).getText().toString().trim();
         if(searchValue.isEmpty()){
             return;
         }
@@ -122,6 +143,7 @@ public class SearchActivity extends AppCompatActivity {
             params.put(RequestParam.SEARCH_SEARCH_VALUE, searchValue);
             params.put(RequestParam.SEARCH_OFFSET, chapterOffset + "");
             params.put(RequestParam.SEARCH_NUMBER, AppConst.SEARCH_ITEMS_NUMBER + "");
+
             IAPIHelper iapiHelper = APIManager.getAPIManager().create(IAPIHelper.class);
             Call<CommonResponse<List<SearchChapterResponse>>> call = iapiHelper.searchChapter(params);
             call.enqueue(new Callback<CommonResponse<List<SearchChapterResponse>>>() {
