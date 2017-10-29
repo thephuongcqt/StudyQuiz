@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -78,6 +79,7 @@ public class TestRoomActivity extends AppCompatActivity {
         mcQuestionFragment.setIlyfecycleListener(lifecycleListener);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
 
         currentIndex = 1;
         question = data.get(currentIndex - 1);
@@ -165,5 +167,15 @@ public class TestRoomActivity extends AppCompatActivity {
 
     public interface IFragmentLifecycleListener{
         void onCreateViewDone();
+    }
+
+    public void onBackPressed() {
+        super.onBackPressed();
+
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        this.onBackPressed();
+        return super.onOptionsItemSelected(item);
     }
 }

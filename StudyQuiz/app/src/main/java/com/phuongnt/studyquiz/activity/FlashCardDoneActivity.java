@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -40,6 +41,7 @@ public class FlashCardDoneActivity extends AppCompatActivity {
     private void initComponent(){
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
         toolbarTitle.setText(R.string.test_result_title);
 
         int count = TestData.getQuestions().size();
@@ -51,7 +53,7 @@ public class FlashCardDoneActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
-    public void onButtonStudyNewSeleted(View v){
+    public void onButtonStudyNewSelected(View v){
         Intent intent;
         if(sourceObj instanceof SearchChapterResponse){
             intent = new Intent(this, DetailChapterActivity.class);
@@ -62,5 +64,16 @@ public class FlashCardDoneActivity extends AppCompatActivity {
         }
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        onButtonStudyNewSelected(null);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        this.onBackPressed();
+        return super.onOptionsItemSelected(item);
     }
 }
