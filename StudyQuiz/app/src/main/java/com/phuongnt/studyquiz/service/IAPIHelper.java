@@ -24,7 +24,7 @@ import retrofit2.http.QueryMap;
 public interface IAPIHelper {
     @POST("User/PostLogin")
     Call<CommonResponse<LoginResponse>> login(@Body LoginRequest loginRequest);
-    @POST("User/PostSignUp")
+    @POST("User/PostRegister")
     Call<CommonResponse<LoginResponse>> singUp(@Body SignUpRequest signUpRequest);
     @GET("Search/GetChapter")
     Call<CommonResponse<List<SearchChapterResponse>>> searchChapter(@QueryMap Map<String, String> params);

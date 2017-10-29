@@ -3,6 +3,8 @@ package com.phuongnt.studyquiz.database;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.design.widget.TabLayout;
+import android.util.Log;
 
 import com.phuongnt.studyquiz.model.viewmodel.User;
 
@@ -48,8 +50,16 @@ public class UserDB {
     }
 
     public void truncate(){
-        SQLiteDatabase db = DatabaseManager.getInstance().openWritableDatabase();
-        db.execSQL("DELETE FROM " + TABLE_USER);
+        try{
+            SQLiteDatabase db = DatabaseManager.getInstance().openWritableDatabase();
+//            db.execSQL("DELETE FROM " + TABLE_USER);
+            db.delete(TABLE_USER, null, null);
+        } catch (Exception e){
+            Log.e("UserDb_Truncate", e.getMessage());
+        } finally {
+            DatabaseManager.getInstance().closeDatabase();
+        }
+
     }
 
     public User getCurrentUser(){
@@ -71,6 +81,8 @@ public class UserDB {
         } catch (Exception e){
             System.out.println(e);
             return null;
+        } finally {
+            DatabaseManager.getInstance().closeDatabase();
         }
 
     }

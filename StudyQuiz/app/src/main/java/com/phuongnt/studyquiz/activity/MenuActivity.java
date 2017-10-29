@@ -45,7 +45,8 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        secondFragment.updateList();
+
+//        secondFragment.updateList();
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -80,8 +81,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void onImageSearchTapped(View v){
-        Intent intent = new Intent(MenuActivity.this, SearchActivity.class);
-
+        Intent intent = new Intent(this, SearchActivity.class);
         startActivity(intent);
     }
 }

@@ -2,7 +2,6 @@
 <LinearLayout
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -25,7 +24,8 @@
         android:orientation="vertical">
 
         <TextView
-            style="@style/CommonLabel"
+
+            style="@style/ProfileTextValueItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/username" />
@@ -38,7 +38,7 @@
             android:hint="@string/username_placeholder" />
 
         <TextView
-            style="@style/CommonLabel"
+            style="@style/ProfileTextValueItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -54,8 +54,8 @@
 
         <TextView
             android:id="@+id/textView3"
-            style="@style/CommonLabel"
-            android:layout_width="match_parent"
+            style="@style/ProfileTextValueItem"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="@string/confirmPassword" />
@@ -70,8 +70,8 @@
 
         <TextView
             android:id="@+id/textView"
-            style="@style/CommonLabel"
-            android:layout_width="match_parent"
+            style="@style/ProfileTextValueItem"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Email" />
 
@@ -85,8 +85,8 @@
 
         <TextView
             android:id="@+id/tName"
-            style="@style/CommonLabel"
-            android:layout_width="match_parent"
+            style="@style/ProfileTextValueItem"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/name" />
 

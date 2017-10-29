@@ -122,6 +122,7 @@ public class SearchActivity extends AppCompatActivity {
             params.put(RequestParam.SEARCH_SEARCH_VALUE, searchValue);
             params.put(RequestParam.SEARCH_OFFSET, chapterOffset + "");
             params.put(RequestParam.SEARCH_NUMBER, AppConst.SEARCH_ITEMS_NUMBER + "");
+
             IAPIHelper iapiHelper = APIManager.getAPIManager().create(IAPIHelper.class);
             Call<CommonResponse<List<SearchChapterResponse>>> call = iapiHelper.searchChapter(params);
             call.enqueue(new Callback<CommonResponse<List<SearchChapterResponse>>>() {

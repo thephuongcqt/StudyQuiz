@@ -1,5 +1,7 @@
 package com.phuongnt.studyquiz.model.apimodel.signupservice;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -7,9 +9,21 @@ import java.io.Serializable;
  */
 
 public class SignUpRequest implements Serializable {
+    @SerializedName("Username")
     private String username;
+
+    public SignUpRequest(String username, String password, String email, String name) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.name = name;
+    }
+
+    @SerializedName("Password")
     private String password;
+    @SerializedName("Email")
     private String email;
+    @SerializedName("Name")
     private String name;
 
     public String getUsername() {
