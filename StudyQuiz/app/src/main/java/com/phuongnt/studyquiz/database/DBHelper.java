@@ -17,11 +17,17 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(UserDB.createTable());
         db.execSQL(SearchHistoryDB.createTable());
+        db.execSQL(SubjectDB.createTable());
+        db.execSQL(ChapterDB.createTable());
+        db.execSQL(ActivityDB.createTable());
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IS EXISTS " + UserDB.TABLE_USER);
-        db.execSQL("DROP TABLE IS EXISTS " + SearchHistoryDB.TABLE_SEARCH_HISTORY);
+        db.execSQL(UserDB.dropTable());
+        db.execSQL(SearchHistoryDB.dropTable());
+        db.execSQL(SubjectDB.dropTable());
+        db.execSQL(ChapterDB.dropTable());
+        db.execSQL(ActivityDB.dropTable());
     }
 }

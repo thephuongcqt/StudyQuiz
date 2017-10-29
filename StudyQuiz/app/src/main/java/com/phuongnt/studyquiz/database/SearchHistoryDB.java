@@ -32,6 +32,11 @@ public class SearchHistoryDB {
         return  sql;
     }
 
+    public static String dropTable(){
+        String sql = "DROP TABLE IF EXISTS " + TABLE_SEARCH_HISTORY;
+        return sql;
+    }
+
     public void truncate(){
         SQLiteDatabase db = DatabaseManager.getInstance().openWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_SEARCH_HISTORY);
@@ -71,6 +76,7 @@ public class SearchHistoryDB {
                 cursor.moveToNext();
             }
         }
+        DatabaseManager.getInstance().closeDatabase();
         return list;
     }
 
