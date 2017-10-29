@@ -143,6 +143,7 @@ public class FlashCardRoomActivity extends AppCompatActivity {
     }
 
     public void onFragentQuestionSelected(View v){
+
         isQuestion = false;
         getFragmentManager()
                 .beginTransaction()
