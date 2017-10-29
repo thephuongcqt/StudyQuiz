@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.transition.Slide;
+import android.util.Log;
 import android.view.View;
 
 import com.phuongnt.studyquiz.R;
@@ -16,6 +17,9 @@ import com.phuongnt.studyquiz.adapter.ViewPagerAdapter;
 import com.phuongnt.studyquiz.fragment.FirstFragment;
 import com.phuongnt.studyquiz.fragment.SecondFragment;
 import com.phuongnt.studyquiz.fragment.ThirdFragment;
+import com.phuongnt.studyquiz.model.viewmodel.Activity;
+
+import java.util.List;
 
 public class MenuActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -46,7 +50,8 @@ public class MenuActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-//        secondFragment.updateList();
+        firstFragment.updateList();
+        secondFragment.updateList();
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -65,12 +70,12 @@ public class MenuActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                if(position == 1){
-                    Fragment fragment = adapter.getItem(position);
-                    if(fragment instanceof SecondFragment){
-                        ((SecondFragment) fragment).updateList();
-                    }
-                }
+//                if(position == 1){
+//                    Fragment fragment = adapter.getItem(position);
+//                    if(fragment instanceof SecondFragment){
+//                        ((SecondFragment) fragment).updateList();
+//                    }
+//                }
             }
 
             @Override

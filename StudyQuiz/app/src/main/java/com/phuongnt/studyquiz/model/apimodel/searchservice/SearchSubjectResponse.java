@@ -28,6 +28,12 @@ public class SearchSubjectResponse implements Serializable {
 
     }
 
+    public SearchSubjectResponse(long subjectId, String name, Date createdDate) {
+        this.subjectId = subjectId;
+        this.name = name;
+        this.createdDate = createdDate;
+    }
+
     public SearchSubjectResponse(List<SearchChapterResponse> chapters, long subjectId, String name, Date createdDate) {
         this.chapters = chapters;
         this.subjectId = subjectId;

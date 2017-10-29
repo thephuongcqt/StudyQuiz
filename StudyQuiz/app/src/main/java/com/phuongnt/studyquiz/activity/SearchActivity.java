@@ -246,10 +246,9 @@ public class SearchActivity extends AppCompatActivity {
     private void storeToSearchHistory(){
         User user = User.getCurrentUser();
         SearchHistory item = new SearchHistory(searchValue, user.getUserId(), new Date());
-        SearchHistoryDB searchHistoryDB = new SearchHistoryDB();
-        boolean success = searchHistoryDB.update(item);
+        boolean success = SearchHistoryDB.update(item);
         if(!success){
-            long searchId = searchHistoryDB.insert(item);
+            long searchId = SearchHistoryDB.insert(item);
             if(searchId < 0){
                 Log.e("storeToSearchHistory", item.toString());
             }

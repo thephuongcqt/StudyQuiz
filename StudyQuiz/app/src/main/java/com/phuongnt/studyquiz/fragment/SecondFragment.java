@@ -67,7 +67,7 @@ public class SecondFragment extends Fragment {
         if(user == null){
             user = User.getCurrentUser();
         }
-        histories = new SearchHistoryDB().getUserSearchHistory(user.getUserId());
+        histories = SearchHistoryDB.getUserSearchHistory(user.getUserId());
         if(histories.size() == srcHistories.size()){
             return;
         }
