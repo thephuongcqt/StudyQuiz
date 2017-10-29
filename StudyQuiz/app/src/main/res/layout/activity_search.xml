@@ -29,6 +29,8 @@
                     android:textColor="@color/colorPrimary"
                     android:background="@color/white"
                     android:layout_toLeftOf="@+id/iv_search"
+                    android:inputType="text"
+                    android:imeOptions="actionSearch"
                     android:layout_width="fill_parent"
                     android:layout_height="40dp" />
                 <ImageView
