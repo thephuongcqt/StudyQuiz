@@ -247,6 +247,7 @@
     </Compile>
     <Compile Include="Models\Service\MyRequest.cs" />
     <Compile Include="Models\Service\Response.cs" />
+    <Compile Include="Models\Service\SignUpRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -30,6 +30,10 @@ public class User implements Serializable {
         return _instance;
     }
 
+    public static void deleteCurrentUser(){
+        _instance = null;
+    }
+
     public User(long userId, String username, String password, String email, String name, long role) {
         this.userId = userId;
         this.username = username;
