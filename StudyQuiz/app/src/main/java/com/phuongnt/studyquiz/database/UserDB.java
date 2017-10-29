@@ -35,6 +35,7 @@ public class UserDB {
 
     public boolean insert(User user){
         SQLiteDatabase db = DatabaseManager.getInstance().openWritableDatabase();
+
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_USERID, user.getUserId());
         contentValues.put(COLUMN_USERNAME, user.getUsername());

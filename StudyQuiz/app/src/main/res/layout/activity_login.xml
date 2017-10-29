@@ -43,15 +43,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password_placeholder"/>
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="45dp">
+            <TextView
+                android:onClick="onTextSignupSelected"
+                android:text="@string/login_label_signup"
+                style="@style/CommonLabelPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
         <Button
             android:onClick="onLoginButtonSelected"
             style="@style/CommonButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:elevation="0dp"
             android:text="Login" />
-
     </LinearLayout>
 </LinearLayout>

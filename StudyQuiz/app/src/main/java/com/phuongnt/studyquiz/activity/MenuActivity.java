@@ -21,9 +21,9 @@ public class MenuActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-//    private FirstFragment firstFragment;
-//    private SecondFragment secondFragment;
-//    private ThirdFragment thirdFragment;
+    private final FirstFragment firstFragment = new FirstFragment();
+    private SecondFragment secondFragment = new SecondFragment();
+    private ThirdFragment thirdFragment = new ThirdFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +42,18 @@ public class MenuActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        secondFragment.updateList();
+    }
+
     private void setupViewPager(ViewPager viewPager) {
         final ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FirstFragment(), "Last Activity");
-        adapter.addFragment(new SecondFragment(), "Search history");
-        adapter.addFragment(new ThirdFragment(), "Profile");
+
+        adapter.addFragment(firstFragment, "Last Activity");
+        adapter.addFragment(secondFragment, "Search history");
+        adapter.addFragment(thirdFragment, "Profile");
         viewPager.setAdapter(adapter);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

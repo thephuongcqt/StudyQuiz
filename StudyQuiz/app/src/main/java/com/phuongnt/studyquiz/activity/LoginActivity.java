@@ -38,11 +38,12 @@ public class LoginActivity extends AppCompatActivity {
     public void onLoginButtonSelected(View v){
         String username = edtUsername.getText().toString().trim();
         String password = edtPassword.getText().toString().trim();
+
         LoginRequest loginRequest = new LoginRequest(username, password);
         try{
             Call<CommonResponse<LoginResponse>> call  = iapiHelper.login(loginRequest);
-            MyProgressBar.show(this);
 
+            MyProgressBar.show(this);
             call.enqueue(new Callback<CommonResponse<LoginResponse>>() {
                 @Override
                 public void onResponse(Call<CommonResponse<LoginResponse>> call, Response<CommonResponse<LoginResponse>> response) {
@@ -67,6 +68,11 @@ public class LoginActivity extends AppCompatActivity {
             MyProgressBar.dismiss();
             onError("Something was wrong");
         }
+    }
+
+    public void onTextSignupSelected(View v){
+        Intent intent = new Intent(this, SignUpActivity.class);
+        startActivity(intent);
     }
 
     private void onSuccess(LoginResponse response){

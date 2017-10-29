@@ -30,7 +30,8 @@
         <activity android:name=".activity.TestResultActivity" />
         <activity android:name=".activity.FlashCardRoomActivity" />
         <activity android:name=".activity.FlashCardDoneActivity" />
-        <activity android:name=".activity.ReviewAnswersActivity"></activity>
+        <activity android:name=".activity.ReviewAnswersActivity" />
+        <activity android:name=".activity.SignUpActivity"></activity>
     </application>
 
 </manifest>

@@ -82,8 +82,8 @@ public class SearchHistoryDB {
             values.put(COLUMN_USERID, item.getUserId());
             values.put(COLUMN_DATE, MyDateFormater.getStringFromDate(item.getDate()));
 
-            String where = COLUMN_USERID + " = ? " + COLUMN_SEARCH_VALUE + " = ? ";
-            String[] args = {item.getUserId() + "", item.getSearchValue()};
+            String where = "UPPER(" + COLUMN_USERID + ") = ? AND UPPER(" + COLUMN_SEARCH_VALUE + ") = ? ";
+            String[] args = {new String(item.getUserId() + "").toUpperCase(), item.getSearchValue().toUpperCase()};
 
             return  db.update(TABLE_SEARCH_HISTORY, values, where, args) > 0;
         } catch(Exception e){
