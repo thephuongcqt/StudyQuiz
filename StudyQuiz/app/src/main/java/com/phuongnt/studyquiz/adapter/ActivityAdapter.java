@@ -46,18 +46,25 @@ public class ActivityAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView tvTitle;
         TextView tvSubtitle;
+        TextView tvDate;
         if(convertView == null){
             convertView = layoutInflater.inflate(R.layout.activity_item, parent, false);
         }
         tvTitle = (TextView) convertView.findViewById(R.id.tv_activity_title);
         tvSubtitle = (TextView) convertView.findViewById(R.id.tv_activity_subtitle);
+        tvDate = (TextView) convertView.findViewById(R.id.tv_date);
         Activity item = getItem(position);
         if(item.getChapterId() >= 0){
             tvTitle.setText("Chapter: " + item.getChapter().getName());
         } else{
             tvTitle.setText("Subject: " + item.getSubject().getName());
         }
-        tvSubtitle.setText(MyDateFormater.getStringFromDate(item.getDate()));
+        if(item.getType() == Activity.TYPE_TEST){
+            tvSubtitle.setText("Doing Test");
+        } else{
+            tvSubtitle.setText("Study with flash card");
+        }
+        tvDate.setText(MyDateFormater.getStringFromDate(item.getDate()));
         return convertView;
     }
 }
