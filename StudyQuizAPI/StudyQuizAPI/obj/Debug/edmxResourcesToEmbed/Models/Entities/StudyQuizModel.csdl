@@ -208,26 +208,6 @@
       <End Role="User" EntitySet="Users" />
       <End Role="StudiedQuestions" EntitySet="StudiedQuestions" />
     </AssociationSet>
-    <FunctionImport Name="GET_QUESTIONS_ALREADY_STDUY" ReturnType="Collection(StudyQuizModel.GET_QUESTIONS_ALREADY_STDUY_Result)">
-      <Parameter Name="Number" Mode="In" Type="Int32" />
-      <Parameter Name="UserId" Mode="In" Type="Int64" />
-      <Parameter Name="ChapterId" Mode="In" Type="Int64" />
-    </FunctionImport>
-    <FunctionImport Name="GET_QUESTIONS_NOT_STUDY_YET" ReturnType="Collection(StudyQuizModel.GET_QUESTIONS_NOT_STUDY_YET_Result)">
-      <Parameter Name="Number" Mode="In" Type="Int32" />
-      <Parameter Name="UserId" Mode="In" Type="Int64" />
-      <Parameter Name="ChapterId" Mode="In" Type="Int64" />
-    </FunctionImport>
-    <FunctionImport Name="GET_FLASH_CARD_QUESTIONS_ALREADY_STDUY" ReturnType="Collection(StudyQuizModel.GET_FLASH_CARD_QUESTIONS_ALREADY_STDUY_Result)">
-      <Parameter Name="Number" Mode="In" Type="Int32" />
-      <Parameter Name="UserId" Mode="In" Type="Int64" />
-      <Parameter Name="ChapterId" Mode="In" Type="Int64" />
-    </FunctionImport>
-    <FunctionImport Name="GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET" ReturnType="Collection(StudyQuizModel.GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET_Result)">
-      <Parameter Name="Number" Mode="In" Type="Int32" />
-      <Parameter Name="UserId" Mode="In" Type="Int64" />
-      <Parameter Name="ChapterId" Mode="In" Type="Int64" />
-    </FunctionImport>
     <EntitySet Name="countries" EntityType="StudyQuizModel.country" />
     <EntitySet Name="migrations" EntityType="StudyQuizModel.migration" />
     <EntitySet Name="tags" EntityType="StudyQuizModel.tag" />
@@ -237,42 +217,22 @@
     <FunctionImport Name="GET_CHAPTERS_TEST" ReturnType="Collection(StudyQuizModel.GET_CHAPTERS_TEST_Result)">
       <Parameter Name="SubjectId" Mode="In" Type="Int64" />
     </FunctionImport>
+    <FunctionImport Name="GET_TYPE_COUNT" ReturnType="Collection(StudyQuizModel.GET_TYPE_COUNT_Result)">
+      <Parameter Name="ChapterId" Mode="In" Type="Int64" />
+    </FunctionImport>
+    <FunctionImport Name="GET_QUESTIONS_ALREADY_STDUY" ReturnType="Collection(StudyQuizModel.GET_QUESTIONS_ALREADY_STDUY_Result)">
+      <Parameter Name="Number" Mode="In" Type="Int32" />
+      <Parameter Name="UserId" Mode="In" Type="Int64" />
+      <Parameter Name="ChapterId" Mode="In" Type="Int64" />
+      <Parameter Name="TypeId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="GET_QUESTIONS_NOT_STUDY_YET" ReturnType="Collection(StudyQuizModel.GET_QUESTIONS_NOT_STUDY_YET_Result)">
+      <Parameter Name="Number" Mode="In" Type="Int32" />
+      <Parameter Name="UserId" Mode="In" Type="Int64" />
+      <Parameter Name="ChapterId" Mode="In" Type="Int64" />
+      <Parameter Name="TypeId" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
-  <ComplexType Name="GET_QUESTIONS_ALREADY_STDUY_Result">
-    <Property Type="Int64" Name="QuestionId" Nullable="false" />
-    <Property Type="Int64" Name="TypeId" Nullable="true" />
-    <Property Type="String" Name="Term" Nullable="true" MaxLength="Max" />
-    <Property Type="String" Name="Definition" Nullable="true" MaxLength="Max" />
-    <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
-    <Property Type="Int64" Name="ChapterId" Nullable="true" />
-  </ComplexType>
-  <ComplexType Name="GET_QUESTIONS_NOT_STUDY_YET_Result">
-    <Property Type="Int64" Name="QuestionId" Nullable="false" />
-    <Property Type="Int64" Name="TypeId" Nullable="true" />
-    <Property Type="String" Name="Term" Nullable="true" MaxLength="Max" />
-    <Property Type="String" Name="Definition" Nullable="true" MaxLength="Max" />
-    <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
-    <Property Type="Int64" Name="ChapterId" Nullable="true" />
-  </ComplexType>
-  <ComplexType Name="GET_FLASH_CARD_QUESTIONS_ALREADY_STDUY_Result">
-    <Property Type="Int64" Name="QuestionId" Nullable="false" />
-    <Property Type="Int64" Name="TypeId" Nullable="true" />
-    <Property Type="String" Name="Term" Nullable="true" MaxLength="Max" />
-    <Property Type="String" Name="Definition" Nullable="true" MaxLength="Max" />
-    <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
-    <Property Type="Int64" Name="ChapterId" Nullable="true" />
-    <Property Type="Int64" Name="CreatedUser" Nullable="true" />
-    <Property Type="Boolean" Name="IsEnable" Nullable="true" />
-  </ComplexType>
-  <ComplexType Name="GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET_Result">
-    <Property Type="Int64" Name="QuestionId" Nullable="false" />
-    <Property Type="Int64" Name="TypeId" Nullable="true" />
-    <Property Type="String" Name="Term" Nullable="true" MaxLength="Max" />
-    <Property Type="String" Name="Definition" Nullable="true" MaxLength="Max" />
-    <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
-    <Property Type="Int64" Name="ChapterId" Nullable="true" />
-    <Property Type="Int64" Name="CreatedUser" Nullable="true" />
-  </ComplexType>
   <EntityType Name="country">
     <Key>
       <PropertyRef Name="id" />
@@ -304,5 +264,29 @@
   <ComplexType Name="GET_CHAPTERS_TEST_Result">
     <Property Type="Int64" Name="ChapterId" Nullable="true" />
     <Property Type="Int32" Name="QuestionCount" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="GET_TYPE_COUNT_Result">
+    <Property Type="Int64" Name="TypeId" Nullable="true" />
+    <Property Type="Int32" Name="TypeCount" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="GET_QUESTIONS_ALREADY_STDUY_Result">
+    <Property Type="Int64" Name="QuestionId" Nullable="false" />
+    <Property Type="Int64" Name="TypeId" Nullable="true" />
+    <Property Type="String" Name="Term" Nullable="true" MaxLength="Max" />
+    <Property Type="String" Name="Definition" Nullable="true" MaxLength="Max" />
+    <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
+    <Property Type="Int64" Name="ChapterId" Nullable="true" />
+    <Property Type="Int64" Name="CreatedUser" Nullable="true" />
+    <Property Type="Boolean" Name="IsEnable" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="GET_QUESTIONS_NOT_STUDY_YET_Result">
+    <Property Type="Int64" Name="QuestionId" Nullable="false" />
+    <Property Type="Int64" Name="TypeId" Nullable="true" />
+    <Property Type="String" Name="Term" Nullable="true" MaxLength="Max" />
+    <Property Type="String" Name="Definition" Nullable="true" MaxLength="Max" />
+    <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
+    <Property Type="Int64" Name="ChapterId" Nullable="true" />
+    <Property Type="Int64" Name="CreatedUser" Nullable="true" />
+    <Property Type="Boolean" Name="IsEnable" Nullable="true" />
   </ComplexType>
 </Schema>

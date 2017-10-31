@@ -193,24 +193,19 @@
         <Function Name="GET_CHAPTERS_TEST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SubjectId" Type="bigint" Mode="In" />
         </Function>
-        <Function Name="GET_FLASH_CARD_QUESTIONS_ALREADY_STDUY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Number" Type="int" Mode="In" />
-          <Parameter Name="UserId" Type="bigint" Mode="In" />
-          <Parameter Name="ChapterId" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Number" Type="int" Mode="In" />
-          <Parameter Name="UserId" Type="bigint" Mode="In" />
-          <Parameter Name="ChapterId" Type="bigint" Mode="In" />
-        </Function>
         <Function Name="GET_QUESTIONS_ALREADY_STDUY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Number" Type="int" Mode="In" />
           <Parameter Name="UserId" Type="bigint" Mode="In" />
           <Parameter Name="ChapterId" Type="bigint" Mode="In" />
+          <Parameter Name="TypeId" Type="int" Mode="In" />
         </Function>
         <Function Name="GET_QUESTIONS_NOT_STUDY_YET" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Number" Type="int" Mode="In" />
           <Parameter Name="UserId" Type="bigint" Mode="In" />
+          <Parameter Name="ChapterId" Type="bigint" Mode="In" />
+          <Parameter Name="TypeId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GET_TYPE_COUNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ChapterId" Type="bigint" Mode="In" />
         </Function>
         <EntityContainer Name="StudyQuizModelStoreContainer">
@@ -465,26 +460,6 @@
             <End Role="User" EntitySet="Users" />
             <End Role="StudiedQuestions" EntitySet="StudiedQuestions" />
           </AssociationSet>
-          <FunctionImport Name="GET_QUESTIONS_ALREADY_STDUY" ReturnType="Collection(StudyQuizModel.GET_QUESTIONS_ALREADY_STDUY_Result)">
-            <Parameter Name="Number" Mode="In" Type="Int32" />
-            <Parameter Name="UserId" Mode="In" Type="Int64" />
-            <Parameter Name="ChapterId" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="GET_QUESTIONS_NOT_STUDY_YET" ReturnType="Collection(StudyQuizModel.GET_QUESTIONS_NOT_STUDY_YET_Result)">
-            <Parameter Name="Number" Mode="In" Type="Int32" />
-            <Parameter Name="UserId" Mode="In" Type="Int64" />
-            <Parameter Name="ChapterId" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="GET_FLASH_CARD_QUESTIONS_ALREADY_STDUY" ReturnType="Collection(StudyQuizModel.GET_FLASH_CARD_QUESTIONS_ALREADY_STDUY_Result)">
-            <Parameter Name="Number" Mode="In" Type="Int32" />
-            <Parameter Name="UserId" Mode="In" Type="Int64" />
-            <Parameter Name="ChapterId" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET" ReturnType="Collection(StudyQuizModel.GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET_Result)">
-            <Parameter Name="Number" Mode="In" Type="Int32" />
-            <Parameter Name="UserId" Mode="In" Type="Int64" />
-            <Parameter Name="ChapterId" Mode="In" Type="Int64" />
-          </FunctionImport>
           <EntitySet Name="countries" EntityType="StudyQuizModel.country" />
           <EntitySet Name="migrations" EntityType="StudyQuizModel.migration" />
           <EntitySet Name="tags" EntityType="StudyQuizModel.tag" />
@@ -494,42 +469,22 @@
           <FunctionImport Name="GET_CHAPTERS_TEST" ReturnType="Collection(StudyQuizModel.GET_CHAPTERS_TEST_Result)">
           <Parameter Name="SubjectId" Mode="In" Type="Int64" />
           </FunctionImport>
+          <FunctionImport Name="GET_TYPE_COUNT" ReturnType="Collection(StudyQuizModel.GET_TYPE_COUNT_Result)">
+          <Parameter Name="ChapterId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="GET_QUESTIONS_ALREADY_STDUY" ReturnType="Collection(StudyQuizModel.GET_QUESTIONS_ALREADY_STDUY_Result)">
+            <Parameter Name="Number" Mode="In" Type="Int32" />
+            <Parameter Name="UserId" Mode="In" Type="Int64" />
+            <Parameter Name="ChapterId" Mode="In" Type="Int64" />
+            <Parameter Name="TypeId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GET_QUESTIONS_NOT_STUDY_YET" ReturnType="Collection(StudyQuizModel.GET_QUESTIONS_NOT_STUDY_YET_Result)">
+            <Parameter Name="Number" Mode="In" Type="Int32" />
+            <Parameter Name="UserId" Mode="In" Type="Int64" />
+            <Parameter Name="ChapterId" Mode="In" Type="Int64" />
+            <Parameter Name="TypeId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
-        <ComplexType Name="GET_QUESTIONS_ALREADY_STDUY_Result">
-          <Property Type="Int64" Name="QuestionId" Nullable="false" />
-          <Property Type="Int64" Name="TypeId" Nullable="true" />
-          <Property Type="String" Name="Term" Nullable="true" MaxLength="Max" />
-          <Property Type="String" Name="Definition" Nullable="true" MaxLength="Max" />
-          <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
-          <Property Type="Int64" Name="ChapterId" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="GET_QUESTIONS_NOT_STUDY_YET_Result">
-          <Property Type="Int64" Name="QuestionId" Nullable="false" />
-          <Property Type="Int64" Name="TypeId" Nullable="true" />
-          <Property Type="String" Name="Term" Nullable="true" MaxLength="Max" />
-          <Property Type="String" Name="Definition" Nullable="true" MaxLength="Max" />
-          <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
-          <Property Type="Int64" Name="ChapterId" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="GET_FLASH_CARD_QUESTIONS_ALREADY_STDUY_Result">
-          <Property Type="Int64" Name="QuestionId" Nullable="false" />
-          <Property Type="Int64" Name="TypeId" Nullable="true" />
-          <Property Type="String" Name="Term" Nullable="true" MaxLength="Max" />
-          <Property Type="String" Name="Definition" Nullable="true" MaxLength="Max" />
-          <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
-          <Property Type="Int64" Name="ChapterId" Nullable="true" />
-          <Property Type="Int64" Name="CreatedUser" Nullable="true" />
-          <Property Type="Boolean" Name="IsEnable" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET_Result">
-          <Property Type="Int64" Name="QuestionId" Nullable="false" />
-          <Property Type="Int64" Name="TypeId" Nullable="true" />
-          <Property Type="String" Name="Term" Nullable="true" MaxLength="Max" />
-          <Property Type="String" Name="Definition" Nullable="true" MaxLength="Max" />
-          <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
-          <Property Type="Int64" Name="ChapterId" Nullable="true" />
-          <Property Type="Int64" Name="CreatedUser" Nullable="true" />
-        </ComplexType>
         <EntityType Name="country">
           <Key>
             <PropertyRef Name="id" />
@@ -561,6 +516,30 @@
         <ComplexType Name="GET_CHAPTERS_TEST_Result">
           <Property Type="Int64" Name="ChapterId" Nullable="true" />
           <Property Type="Int32" Name="QuestionCount" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GET_TYPE_COUNT_Result">
+          <Property Type="Int64" Name="TypeId" Nullable="true" />
+          <Property Type="Int32" Name="TypeCount" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GET_QUESTIONS_ALREADY_STDUY_Result">
+          <Property Type="Int64" Name="QuestionId" Nullable="false" />
+          <Property Type="Int64" Name="TypeId" Nullable="true" />
+          <Property Type="String" Name="Term" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="Definition" Nullable="true" MaxLength="Max" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
+          <Property Type="Int64" Name="ChapterId" Nullable="true" />
+          <Property Type="Int64" Name="CreatedUser" Nullable="true" />
+          <Property Type="Boolean" Name="IsEnable" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GET_QUESTIONS_NOT_STUDY_YET_Result">
+          <Property Type="Int64" Name="QuestionId" Nullable="false" />
+          <Property Type="Int64" Name="TypeId" Nullable="true" />
+          <Property Type="String" Name="Term" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="Definition" Nullable="true" MaxLength="Max" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
+          <Property Type="Int64" Name="ChapterId" Nullable="true" />
+          <Property Type="Int64" Name="CreatedUser" Nullable="true" />
+          <Property Type="Boolean" Name="IsEnable" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -648,57 +627,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GET_QUESTIONS_ALREADY_STDUY" FunctionName="StudyQuizModel.Store.GET_QUESTIONS_ALREADY_STDUY">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="StudyQuizModel.GET_QUESTIONS_ALREADY_STDUY_Result">
-                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
-                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
-                <ScalarProperty Name="Term" ColumnName="Term" />
-                <ScalarProperty Name="Definition" ColumnName="Definition" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ChapterId" ColumnName="ChapterId" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GET_QUESTIONS_NOT_STUDY_YET" FunctionName="StudyQuizModel.Store.GET_QUESTIONS_NOT_STUDY_YET">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="StudyQuizModel.GET_QUESTIONS_NOT_STUDY_YET_Result">
-                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
-                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
-                <ScalarProperty Name="Term" ColumnName="Term" />
-                <ScalarProperty Name="Definition" ColumnName="Definition" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ChapterId" ColumnName="ChapterId" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GET_FLASH_CARD_QUESTIONS_ALREADY_STDUY" FunctionName="StudyQuizModel.Store.GET_FLASH_CARD_QUESTIONS_ALREADY_STDUY">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="StudyQuizModel.GET_FLASH_CARD_QUESTIONS_ALREADY_STDUY_Result">
-                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
-                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
-                <ScalarProperty Name="Term" ColumnName="Term" />
-                <ScalarProperty Name="Definition" ColumnName="Definition" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ChapterId" ColumnName="ChapterId" />
-                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
-                <ScalarProperty Name="IsEnable" ColumnName="IsEnable" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET" FunctionName="StudyQuizModel.Store.GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="StudyQuizModel.GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET_Result">
-                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
-                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
-                <ScalarProperty Name="Term" ColumnName="Term" />
-                <ScalarProperty Name="Definition" ColumnName="Definition" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ChapterId" ColumnName="ChapterId" />
-                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="countries">
             <EntityTypeMapping TypeName="StudyQuizModel.country">
               <MappingFragment StoreEntitySet="countries">
@@ -739,6 +667,42 @@
               <ComplexTypeMapping TypeName="StudyQuizModel.GET_CHAPTERS_TEST_Result">
                 <ScalarProperty Name="ChapterId" ColumnName="ChapterId" />
                 <ScalarProperty Name="QuestionCount" ColumnName="QuestionCount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GET_TYPE_COUNT" FunctionName="StudyQuizModel.Store.GET_TYPE_COUNT">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="StudyQuizModel.GET_TYPE_COUNT_Result">
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="TypeCount" ColumnName="TypeCount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GET_QUESTIONS_ALREADY_STDUY" FunctionName="StudyQuizModel.Store.GET_QUESTIONS_ALREADY_STDUY">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="StudyQuizModel.GET_QUESTIONS_ALREADY_STDUY_Result">
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="Term" ColumnName="Term" />
+                <ScalarProperty Name="Definition" ColumnName="Definition" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ChapterId" ColumnName="ChapterId" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="IsEnable" ColumnName="IsEnable" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GET_QUESTIONS_NOT_STUDY_YET" FunctionName="StudyQuizModel.Store.GET_QUESTIONS_NOT_STUDY_YET">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="StudyQuizModel.GET_QUESTIONS_NOT_STUDY_YET_Result">
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="Term" ColumnName="Term" />
+                <ScalarProperty Name="Definition" ColumnName="Definition" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ChapterId" ColumnName="ChapterId" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="IsEnable" ColumnName="IsEnable" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
