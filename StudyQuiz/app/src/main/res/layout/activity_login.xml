@@ -25,6 +25,9 @@
             android:layout_height="wrap_content"
             android:text="@string/username" />
         <EditText
+            android:inputType="text"
+            android:maxLines="1"
+            android:imeOptions="actionNext"
             android:id="@+id/edt_username"
             style="@style/CommonEditText"
             android:layout_width="match_parent"

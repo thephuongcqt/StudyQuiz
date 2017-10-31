@@ -7,9 +7,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.phuongnt.studyquiz.AppConst;
 import com.phuongnt.studyquiz.R;
+import com.phuongnt.studyquiz.activity.DetailChapterActivity;
+import com.phuongnt.studyquiz.activity.DetailSubjectActivity;
 import com.phuongnt.studyquiz.activity.LoginActivity;
 import com.phuongnt.studyquiz.activity.MenuActivity;
 import com.phuongnt.studyquiz.adapter.ActivityAdapter;
@@ -34,6 +38,21 @@ public class FirstFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_first, container, false);
         lvActivities = (ListView) rootView.findViewById(R.id.lv_activities);
+        lvActivities.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Activity item = list.get(position);
+                Intent intent;
+                if(item.getChapterId() >= 0){
+                    intent = new Intent(getActivity(), DetailChapterActivity.class);
+                    intent.putExtra(AppConst.KEY_CHAPTER_OBJ, item.getChapter());
+                } else{
+                    intent = new Intent(getActivity(), DetailSubjectActivity.class);
+                    intent.putExtra(AppConst.KEY_SUBJECT_OBJ, item.getSubject());
+                }
+                startActivity(intent);
+            }
+        });
         updateList();
         return rootView;
     }

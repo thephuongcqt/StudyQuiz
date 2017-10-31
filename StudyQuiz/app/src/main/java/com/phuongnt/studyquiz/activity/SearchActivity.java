@@ -92,9 +92,13 @@ public class SearchActivity extends AppCompatActivity {
         InputMethodManager inputManager =
                 (InputMethodManager) this.
                         getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputManager.hideSoftInputFromWindow(
-                this.getCurrentFocus().getWindowToken(),
-                InputMethodManager.HIDE_NOT_ALWAYS);
+        if(inputManager.isAcceptingText()){
+            inputManager.hideSoftInputFromWindow(
+                    this.getCurrentFocus().getWindowToken(),
+                    InputMethodManager.HIDE_NOT_ALWAYS);
+        } else{
+
+        }
     }
 
     private void setupViewPager(ViewPager viewPager){
@@ -237,6 +241,7 @@ public class SearchActivity extends AppCompatActivity {
         progressCount--;
         if(progressCount <= 0){
             MyProgressBar.dismiss();
+            dismissKeyboard();
             if(chapters != null && subjects != null && (!chapters.isEmpty() || !subjects.isEmpty())){
                 storeToSearchHistory();
             }
