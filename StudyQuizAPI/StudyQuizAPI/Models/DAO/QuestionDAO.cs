@@ -14,221 +14,203 @@ namespace StudyQuizAPI.Models.DAO
         {
             using (var db = new StudyQuizEntities())
             {
-                var result = db.GET_QUESTIONS_NOT_STUDY_YET(number, userId, chapterId).ToList();
-                if(result != null && result.Count < number)
-                {
-                    var tmp = db.GET_QUESTIONS_ALREADY_STDUY(number - result.Count, userId, chapterId).ToList();
-                    if(tmp != null)
+                var remainingNumber = number;
+                var typeNumber = 2;
+                var types = db.GET_TYPE_COUNT(chapterId).ToList();
+                var questions = new List<Question>();
+                foreach(var item in types)
+                    if(item.TypeId != 0)
                     {
-                        Mapper.Initialize(x =>
+                        int targetNumber = remainingNumber / typeNumber;
+                        int typeId = (int)item.TypeId;
+                        var notStudiedQuestions = db.GET_QUESTIONS_NOT_STUDY_YET(targetNumber, userId, chapterId, typeId).ToList();
+                        int remainingQuestions = targetNumber - notStudiedQuestions.Count;
+                        var studiedQuestions = new List<GET_QUESTIONS_ALREADY_STDUY_Result>();
+                        if(remainingQuestions > 0)
                         {
-                            x.CreateMap<GET_QUESTIONS_ALREADY_STDUY_Result, GET_QUESTIONS_NOT_STUDY_YET_Result>();
-                        });
-                        var tmp2 = Mapper.Map<List<GET_QUESTIONS_NOT_STUDY_YET_Result>>(tmp);
-                        result.AddRange(tmp2);
+                            studiedQuestions = db.GET_QUESTIONS_ALREADY_STDUY(remainingQuestions, userId, chapterId, typeId).ToList();
+                        }
+                        var results = MergeToListQuestion(notStudiedQuestions, studiedQuestions);
+                        questions.AddRange(results);
+                        remainingNumber -= results.Count;
+                        typeNumber--;
                     }
-                }
-                Mapper.Initialize(x =>
-                {
-                    x.CreateMap<GET_QUESTIONS_NOT_STUDY_YET_Result, Question>();
-                });
-                var list = Mapper.Map<List<Question>>(result);
-                return list;
+                return questions;
             }
-        }        
+        }
+
+        private List<Question> MergeToListQuestion(List<GET_QUESTIONS_NOT_STUDY_YET_Result> notStudiedQuestions, List<GET_QUESTIONS_ALREADY_STDUY_Result> studiedQuestions)
+        {
+            Mapper.Initialize(i =>
+            {
+                i.CreateMap<GET_QUESTIONS_ALREADY_STDUY_Result, GET_QUESTIONS_NOT_STUDY_YET_Result>();
+            });
+            var tmp = Mapper.Map<List<GET_QUESTIONS_NOT_STUDY_YET_Result>>(studiedQuestions);
+            notStudiedQuestions.AddRange(tmp);
+
+            Mapper.Initialize(i =>
+            {
+                i.CreateMap<GET_QUESTIONS_NOT_STUDY_YET_Result, Question>();
+            });
+            var result = Mapper.Map<List<Question>>(notStudiedQuestions);
+            return result;
+        }
 
         public List<Question> GetQuestionsForChapterFlashCard(int number, long userId, long chapterId)
         {
             using (var db = new StudyQuizEntities())
             {
-                var result = db.GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET(number, userId, chapterId).ToList();
-                if(result != null && result.Count < number)
+                var remainingNumber = number;
+                var typeNumber = 3;
+                var types = db.GET_TYPE_COUNT(chapterId).ToList();
+                var questions = new List<Question>();
+                foreach (var item in types)
                 {
-                    var tmp = db.GET_FLASH_CARD_QUESTIONS_ALREADY_STDUY(number - result.Count, userId, chapterId);
-                    if(tmp != null)
+                    int targetNumber = remainingNumber / typeNumber;
+                    int typeId = (int)item.TypeId;
+                    var notStudiedQuestions = db.GET_QUESTIONS_NOT_STUDY_YET(targetNumber, userId, chapterId, typeId).ToList();
+                    int remainingQuestions = targetNumber - notStudiedQuestions.Count;
+                    var studiedQuestions = new List<GET_QUESTIONS_ALREADY_STDUY_Result>();
+                    if (remainingQuestions > 0)
                     {
-                        Mapper.Initialize(x =>
-                        {
-                            x.CreateMap<GET_FLASH_CARD_QUESTIONS_ALREADY_STDUY_Result, GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET_Result>();
-                        });
-                        var tmp2 = Mapper.Map<List<GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET_Result>>(tmp);
-                        result.AddRange(tmp2);
+                        studiedQuestions = db.GET_QUESTIONS_ALREADY_STDUY(remainingQuestions, userId, chapterId, typeId).ToList();
                     }
+                    var results = MergeToListQuestion(notStudiedQuestions, studiedQuestions);
+                    questions.AddRange(results);
+                    remainingNumber -= results.Count;
+                    typeNumber--;
                 }
-
-                Mapper.Initialize(x =>
-                {
-                    x.CreateMap<GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET_Result, Question>();
-                });
-                var list = Mapper.Map<List<Question>>(result);
-                return list;
+                return questions;
             }
         }
+        
         public List<Question> GetQuestionForSubjectTest(int number, long userId, long subjectId)
         {
-            var rawChapters = new ChapterDAO().GetChaptersBySubjectId(subjectId);
-            if(rawChapters != null || rawChapters.Count == 0)
+            using (var db = new StudyQuizEntities())
             {
-                var random = new Random();
-                List<Question> questions = null;
-                var shuffledChapters = rawChapters.OrderBy(item => random.Next()).ToList();
-
-                if(number < shuffledChapters.Count)
+                var chapters = db.GET_CHAPTERS_TEST(subjectId).ToList();
+                if(chapters != null && chapters.Count > 0)
                 {
-                    questions = GetOneQuestionForChapter(number, userId, shuffledChapters);
+                    List<Question> questions = null;
+                    if(number <= chapters.Count)
+                    {
+                        questions = GetOneQuestionPerChapter(number, userId, chapters);
+                    }
+                    else
+                    {
+                        questions = GetMultipleQuestionsPerChapter(number, userId, chapters);
+                    }
+                    return questions;
                 }
-                else
-                {
-                    questions = GetMultipleQuestionsForChapter(number, userId, shuffledChapters);
-                }
-                return questions;
-            }            
-            return null;
+            }
+            return new List<Question>();
         }
 
-        private List<Question> GetOneQuestionForChapter(int number, long userId, List<Chapter> chapters)
+        private List<Question> GetMultipleQuestionsPerChapter(int number, long userId, List<GET_CHAPTERS_TEST_Result> chapters)
         {
             var questions = new List<Question>();
-            bool changed = true;
-            while (changed)
+            var chapterNumber = chapters.Count;
+            var remainingQuestion = number;
+            for(int i = 0; i < chapters.Count; i++)
             {
-                changed = false;
-                foreach (var item in chapters)
+                long chapterId = (long)chapters[i].ChapterId;
+                var targetNumber = remainingQuestion / chapterNumber;
+                var list = GetQuestionsForChapterTest(targetNumber, userId, chapterId);
+                questions.AddRange(list);
+                chapterNumber--;
+                remainingQuestion -= (list == null ? 0 : list.Count);
+            }
+            return questions;
+        }
+
+        private List<Question> GetOneQuestionPerChapter(int number, long userId, List<GET_CHAPTERS_TEST_Result> chapters)
+        {
+            var questions = new List<Question>();
+            var chapterNumber = chapters.Count;
+            var remainingQuestion = number;
+            for (int i = 0; i < chapters.Count; i++)
+            {
+                long chapterId = (long)chapters[i].ChapterId;
+                var targetNumber = remainingQuestion / chapterNumber;
+                if(targetNumber <= 0)
                 {
-                    var tmp = GetQuestionsForChapterTest(1, userId, item.ChapterId);
-                    if (tmp.Count > 0)
-                    {
-                        changed = true;
-                    }
-                    questions.AddRange(tmp);
-                    if (questions.Count >= number)
-                    {
-                        return questions;
-                    }
+                    targetNumber = 1;
+                }
+                var list = GetQuestionsForChapterTest(targetNumber, userId, chapterId);
+                questions.AddRange(list);                
+                chapterNumber--;
+                remainingQuestion -= (list == null ? 0 : list.Count);
+                if (questions.Count == number || remainingQuestion <= 0)
+                {
+                    return questions;
                 }
             }
             return questions;
         }
 
-        private List<Question> GetMultipleQuestionsForChapter(int number, long userId, List<Chapter> chapters)
+
+        public List<Question> GetQuestionForSubjectCard(int number, long userId, long subjectId)
+        {
+            using (var db = new StudyQuizEntities())
+            {
+                var chapters = db.GET_CHAPTERS_CARD(subjectId).ToList();
+                if (chapters != null && chapters.Count > 0)
+                {
+                    List<Question> questions = null;
+                    if (number <= chapters.Count)
+                    {
+                        questions = GetOneQuestionPerChapterCard(number, userId, chapters);
+                    }
+                    else
+                    {
+                        questions = GetMultipleQuestionsPerChapterCard(number, userId, chapters);
+                    }
+                    return questions;
+                }
+            }
+            return new List<Question>();
+        }
+
+        private List<Question> GetMultipleQuestionsPerChapterCard(int number, long userId, List<GET_CHAPTERS_CARD_Result> chapters)
         {
             var questions = new List<Question>();
-            int avgNumber = chapters.Count % number;
-            int remaining = number - (avgNumber * chapters.Count);
-            bool changed = true;
-            while (changed)
+            var chapterNumber = chapters.Count;
+            var remainingQuestion = number;
+            for (int i = 0; i < chapters.Count; i++)
             {
-                changed = false;
-                foreach (var item in chapters)
-                {
-                    int numberQuestions = avgNumber;
-                    if (remaining > 0)
-                    {
-                        numberQuestions++;
-                        remaining--;
-                    }
-                    var tmp = GetQuestionsForChapterTest(numberQuestions, userId, item.ChapterId);
-                    if(tmp.Count >= 0)
-                    {
-                        changed = true;
-                    }
-                    if (tmp.Count < numberQuestions)
-                    {
-                        remaining += (numberQuestions - tmp.Count);
-                    }
-                    questions.AddRange(tmp);
-                    if (questions.Count >= number)
-                    {
-                        questions.RemoveRange(number, questions.Count - number);
-                        return questions;                       
-                    }
-                }
+                long chapterId = (long)chapters[i].ChapterId;
+                var targetNumber = remainingQuestion / chapterNumber;
+                var list = GetQuestionsForChapterFlashCard(targetNumber, userId, chapterId);
+                questions.AddRange(list);
+                chapterNumber--;
+                remainingQuestion -= (list == null ? 0 : list.Count);
             }
             return questions;
         }
 
-        public List<Question> GetQuestionForSubjectFlashCard(int number, long userId, long subjectId)
-        {
-            var rawChapters = new ChapterDAO().GetChaptersBySubjectId(subjectId);
-            if (rawChapters != null || rawChapters.Count == 0)
-            {
-                var random = new Random();
-                List<Question> questions = null;
-                var shuffledChapters = rawChapters.OrderBy(item => random.Next()).ToList();
-
-                if (number < shuffledChapters.Count)
-                {
-                    questions = GetOneQuestionForChapterFlashCard(number, userId, shuffledChapters);
-                }
-                else
-                {
-                    questions = GetMultipleQuestionsForChapterFlashCard(number, userId, shuffledChapters);
-
-                }
-                return questions;
-            }
-            return null;
-        }
-
-        private List<Question> GetOneQuestionForChapterFlashCard(int number, long userId, List<Chapter> chapters)
+        private List<Question> GetOneQuestionPerChapterCard(int number, long userId, List<GET_CHAPTERS_CARD_Result> chapters)
         {
             var questions = new List<Question>();
-            bool changed = true;
-            while (changed)
+            var chapterNumber = chapters.Count;
+            var remainingQuestion = number;
+            for (int i = 0; i < chapters.Count; i++)
             {
-                changed = false;
-                foreach (var item in chapters)
+                long chapterId = (long)chapters[i].ChapterId;
+                var targetNumber = remainingQuestion / chapterNumber;
+                if (targetNumber <= 0)
                 {
-                    var tmp = GetQuestionsForChapterFlashCard(1, userId, item.ChapterId);
-                    if (tmp.Count > 0)
-                    {
-                        changed = true;
-                    }
-                    questions.AddRange(tmp);
-                    if (questions.Count >= number)
-                    {
-                        return questions;
-                    }
+                    targetNumber = 1;
+                }
+                var list = GetQuestionsForChapterFlashCard(targetNumber, userId, chapterId);
+                questions.AddRange(list);
+                chapterNumber--;
+                remainingQuestion -= (list == null ? 0 : list.Count);
+                if (questions.Count == number || remainingQuestion <= 0)
+                {
+                    return questions;
                 }
             }
             return questions;
-        }
-
-        private List<Question> GetMultipleQuestionsForChapterFlashCard(int number, long userId, List<Chapter> chapters)
-        {
-            var questions = new List<Question>();
-            int avgNumber = chapters.Count % number;
-            int remaining = number - (avgNumber * chapters.Count);
-            bool changed = true;
-            while (changed)
-            {
-                changed = false;
-                foreach (var item in chapters)
-                {
-                    int numberQuestions = avgNumber;
-                    if (remaining > 0)
-                    {
-                        numberQuestions++;
-                        remaining--;
-                    }
-                    var tmp = GetQuestionsForChapterFlashCard(numberQuestions, userId, item.ChapterId);
-                    if (tmp.Count >= 0)
-                    {
-                        changed = true;
-                    }
-                    if (tmp.Count < numberQuestions)
-                    {
-                        remaining += (numberQuestions - tmp.Count);
-                    }
-                    questions.AddRange(tmp);
-                    if (questions.Count >= number)
-                    {
-                        questions.RemoveRange(number, questions.Count - number);
-                        return questions;
-                    }
-                }
-            }
-            return questions;
-        }
+        }       
     }
 }

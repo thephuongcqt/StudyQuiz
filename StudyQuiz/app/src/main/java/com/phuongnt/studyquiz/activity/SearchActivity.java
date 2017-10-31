@@ -7,10 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.phuongnt.studyquiz.AppConst;
@@ -61,6 +64,26 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
 
         getComponent();
+        edtSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    if(v != null){
+                        dismissKeyboard();
+                    }
+                    searchValue = (edtSearch).getText().toString().trim();
+                    if(searchValue.isEmpty()){
+                        return false;
+                    }
+                    MyProgressBar.show(SearchActivity.this);
+                    progressCount = 2;
+                    searchChapter();
+                    searchSubject();
+                }
+                return false;
+
+            }
+        });
         initComponent();
     }
 

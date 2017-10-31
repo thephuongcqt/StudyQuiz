@@ -55,7 +55,7 @@ namespace StudyQuizAPI.Controllers
                 long longSubectId = long.Parse(subjectId);
                 long longUserId = long.Parse(userId);
                 int intNumber = int.Parse(number);
-                var list = new QuestionDAO().GetQuestionForSubjectFlashCard(intNumber, longUserId, longSubectId);
+                var list = new QuestionDAO().GetQuestionForSubjectCard(intNumber, longUserId, longSubectId);
                 return new Response(true, list);
             }
             catch (Exception e)

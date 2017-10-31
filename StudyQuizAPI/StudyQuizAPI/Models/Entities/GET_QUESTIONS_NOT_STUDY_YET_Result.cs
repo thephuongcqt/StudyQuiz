@@ -19,5 +19,7 @@ namespace StudyQuizAPI.Models.Entities
         public string Definition { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<long> ChapterId { get; set; }
+        public Nullable<long> CreatedUser { get; set; }
+        public Nullable<bool> IsEnable { get; set; }
     }
 }

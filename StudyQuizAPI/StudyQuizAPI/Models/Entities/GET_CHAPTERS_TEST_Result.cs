@@ -11,15 +11,9 @@ namespace StudyQuizAPI.Models.Entities
 {
     using System;
     
-    public partial class GET_QUESTIONS_ALREADY_STDUY_Result
+    public partial class GET_CHAPTERS_TEST_Result
     {
-        public long QuestionId { get; set; }
-        public Nullable<long> TypeId { get; set; }
-        public string Term { get; set; }
-        public string Definition { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<long> ChapterId { get; set; }
-        public Nullable<long> CreatedUser { get; set; }
-        public Nullable<bool> IsEnable { get; set; }
+        public Nullable<int> QuestionCount { get; set; }
     }
 }
