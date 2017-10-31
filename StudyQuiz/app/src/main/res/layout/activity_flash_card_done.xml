@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <Button
-            android:onClick="onButtonStudyNewSeleted"
+            android:onClick="onButtonStudyNewSelected"
             android:layout_marginTop="15dp"
             android:textColor="@color/colorPrimary"
             android:text="@string/flash_card_done_btn_study_new"

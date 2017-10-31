@@ -32,12 +32,17 @@ public class SearchHistoryDB {
         return  sql;
     }
 
+    public static String dropTable(){
+        String sql = "DROP TABLE IF EXISTS " + TABLE_SEARCH_HISTORY;
+        return sql;
+    }
+
     public void truncate(){
         SQLiteDatabase db = DatabaseManager.getInstance().openWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_SEARCH_HISTORY);
     }
 
-    public long insert(SearchHistory item){
+    public static long insert(SearchHistory item){
         try{
             SQLiteDatabase db = DatabaseManager.getInstance().openWritableDatabase();
             ContentValues values = new ContentValues();
@@ -53,7 +58,7 @@ public class SearchHistoryDB {
         }
     }
 
-    public List<SearchHistory> getUserSearchHistory(long userId){
+    public static List<SearchHistory> getUserSearchHistory(long userId){
         String[] columns = {"*"};
         String where = COLUMN_USERID + " = ?";
         String[] args = {userId + ""};
@@ -71,10 +76,11 @@ public class SearchHistoryDB {
                 cursor.moveToNext();
             }
         }
+        DatabaseManager.getInstance().closeDatabase();
         return list;
     }
 
-    public boolean update(SearchHistory item){
+    public static boolean update(SearchHistory item){
         try{
             SQLiteDatabase db = DatabaseManager.getInstance().openWritableDatabase();
             ContentValues values = new ContentValues();

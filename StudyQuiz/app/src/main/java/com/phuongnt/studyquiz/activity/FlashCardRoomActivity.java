@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -72,6 +73,7 @@ public class FlashCardRoomActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
 
         currentIndex = 1;
         question = data.get(currentIndex - 1);
@@ -155,5 +157,15 @@ public class FlashCardRoomActivity extends AppCompatActivity {
                 .replace(R.id.card_container, answerFragment)
                 .commit();
         answerFragment.setupFragment(question);
+    }
+
+    public void onBackPressed() {
+        super.onBackPressed();
+
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        this.onBackPressed();
+        return super.onOptionsItemSelected(item);
     }
 }

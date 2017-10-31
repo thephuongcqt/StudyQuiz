@@ -3,6 +3,7 @@ package com.phuongnt.studyquiz.activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.phuongnt.studyquiz.R;
@@ -43,6 +44,11 @@ public class ReviewAnswersActivity extends AppCompatActivity {
         adapter = new AnswerAdapter(data, this);
         lvAnswers.setAdapter(adapter);
         lvAnswers.setSingleScroll(true);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        onBackPressed();
+        return super.onOptionsItemSelected(item);
     }
 }
 

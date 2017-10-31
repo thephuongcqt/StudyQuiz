@@ -25,7 +25,7 @@ public class SearchChapterResponse implements Serializable {
     String name;
     @SerializedName("CreatedDate")
     private
-    String createdDate;
+    Date createdDate;
     @SerializedName("SubjectId")
     private
     long subjectId;
@@ -33,9 +33,16 @@ public class SearchChapterResponse implements Serializable {
     public SearchChapterResponse() {
     }
 
-    public SearchChapterResponse(SearchSubjectResponse subject, List questions, long chapterId, String name, String createdDate, long subjectId) {
+    public SearchChapterResponse(SearchSubjectResponse subject, List questions, long chapterId, String name, Date createdDate, long subjectId) {
         this.subject = subject;
         this.questions = questions;
+        this.chapterId = chapterId;
+        this.name = name;
+        this.createdDate = createdDate;
+        this.subjectId = subjectId;
+    }
+
+    public SearchChapterResponse(long chapterId, String name, Date createdDate, long subjectId) {
         this.chapterId = chapterId;
         this.name = name;
         this.createdDate = createdDate;
@@ -74,11 +81,11 @@ public class SearchChapterResponse implements Serializable {
         this.name = name;
     }
 
-    public String getCreatedDate() {
+    public Date getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(String createdDate) {
+    public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
 

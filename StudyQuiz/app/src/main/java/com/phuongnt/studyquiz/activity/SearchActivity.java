@@ -7,10 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.phuongnt.studyquiz.AppConst;
@@ -44,6 +47,7 @@ public class SearchActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private EditText edtSearch;
     private List<SearchChapterResponse> chapters = null;
     private List<SearchSubjectResponse> subjects = null;
     private SearchChapterFragment chapterFragment = null;
@@ -53,29 +57,71 @@ public class SearchActivity extends AppCompatActivity {
     private int chapterOffset = 0;
     private int subjectOffset = 0;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        getComponent();
+        edtSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    if(v != null){
+                        dismissKeyboard();
+                    }
+                    searchValue = (edtSearch).getText().toString().trim();
+                    if(searchValue.isEmpty()){
+                        return false;
+                    }
+                    MyProgressBar.show(SearchActivity.this);
+                    progressCount = 2;
+                    searchChapter();
+                    searchSubject();
+                }
+                return false;
+
+            }
+        });
+        initComponent();
+    }
+
+    private void getComponent(){
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        edtSearch = (EditText) findViewById(R.id.edt_search);
+    }
+
+    private void initComponent(){
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("");
-
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         setupViewPager(viewPager);
-
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null){
+            searchValue = bundle.getString(AppConst.SEARCH_VALUE);
+            if(searchValue != null){
+                edtSearch.setText(searchValue);
+                imageSearchSelected(null);
+            }
+        }
     }
 
     private void dismissKeyboard(){
         InputMethodManager inputManager =
                 (InputMethodManager) this.
                         getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputManager.hideSoftInputFromWindow(
-                this.getCurrentFocus().getWindowToken(),
-                InputMethodManager.HIDE_NOT_ALWAYS);
+        if(inputManager.isAcceptingText()){
+            inputManager.hideSoftInputFromWindow(
+                    this.getCurrentFocus().getWindowToken(),
+                    InputMethodManager.HIDE_NOT_ALWAYS);
+        } else{
+
+        }
     }
 
     private void setupViewPager(ViewPager viewPager){
@@ -105,8 +151,10 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void imageSearchSelected(View v){
-        dismissKeyboard();
-        searchValue = ((EditText) findViewById(R.id.edt_search)).getText().toString().trim();
+        if(v != null){
+            dismissKeyboard();
+        }
+        searchValue = (edtSearch).getText().toString().trim();
         if(searchValue.isEmpty()){
             return;
         }
@@ -216,6 +264,7 @@ public class SearchActivity extends AppCompatActivity {
         progressCount--;
         if(progressCount <= 0){
             MyProgressBar.dismiss();
+            dismissKeyboard();
             if(chapters != null && subjects != null && (!chapters.isEmpty() || !subjects.isEmpty())){
                 storeToSearchHistory();
             }
@@ -225,10 +274,9 @@ public class SearchActivity extends AppCompatActivity {
     private void storeToSearchHistory(){
         User user = User.getCurrentUser();
         SearchHistory item = new SearchHistory(searchValue, user.getUserId(), new Date());
-        SearchHistoryDB searchHistoryDB = new SearchHistoryDB();
-        boolean success = searchHistoryDB.update(item);
+        boolean success = SearchHistoryDB.update(item);
         if(!success){
-            long searchId = searchHistoryDB.insert(item);
+            long searchId = SearchHistoryDB.insert(item);
             if(searchId < 0){
                 Log.e("storeToSearchHistory", item.toString());
             }

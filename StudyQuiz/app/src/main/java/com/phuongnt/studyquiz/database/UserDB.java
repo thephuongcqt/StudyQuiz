@@ -35,6 +35,11 @@ public class UserDB {
         return  sql;
     }
 
+    public static String dropTable(){
+        String sql = "DROP TABLE IF EXISTS " + TABLE_USER;
+        return sql;
+    }
+
     public boolean insert(User user){
         SQLiteDatabase db = DatabaseManager.getInstance().openWritableDatabase();
 

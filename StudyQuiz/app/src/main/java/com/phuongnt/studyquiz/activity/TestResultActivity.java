@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -52,6 +53,7 @@ public class TestResultActivity extends AppCompatActivity {
     private void initComponent(){
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
         toolbarTitle.setText(R.string.test_result_title);
     }
 
@@ -92,5 +94,16 @@ public class TestResultActivity extends AppCompatActivity {
     public void onButtonReviewSelected(View v){
         Intent intent = new Intent(this, ReviewAnswersActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        onButtonNewTestSelected(null);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        this.onBackPressed();
+        return super.onOptionsItemSelected(item);
     }
 }
