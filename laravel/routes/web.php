@@ -38,8 +38,9 @@ Route::get('/feedback','FeedbackController@index');
 Route::get('/feedback/get_datatable', 'FeedbackController@get_datatable');
 Route::get('/feedback/get_datatableDuplicate', 'FeedbackController@get_datatableDuplicate');
 Route::get('/feedback/get_datatableSearch/{id}', 'FeedbackController@get_datatableSearch');
-
+//Feeback of Wrong Answer
 Route::get('/feedback/{id}','FeedbackController@detailWrongAnswer');//for Wrong Answer
+//Feeback of Duplicate Question
 Route::get('/feedbackDuplicateDetail/{id}','FeedbackController@duplicateDetail');//for duplicate Question
 
 Route::post('/editQuestionFeedback','FeedbackController@getDetail');
@@ -54,6 +55,7 @@ Route::get('/createUser','UserController@create');
 Route::post('/createUser','UserController@created');
 Route::get('/edit/{id}','UserController@edit');
 Route::get('/delete/{id}','UserController@delete');
+
 
 
 

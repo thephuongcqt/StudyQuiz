@@ -9,7 +9,7 @@
  <!--  -->
  <div class="col-md-12">
      <div class="info-box" style="padding-left: 20px">
-      <div class="text-center page-header">Feedback of Question was duplicated</div>
+      <div class="text-center page-header">{{$x}}</div>
       <table id="dup-table" class="table text-center">
       <thead>
       <tr>
