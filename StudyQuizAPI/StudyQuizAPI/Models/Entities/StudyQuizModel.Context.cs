@@ -20,7 +20,6 @@ namespace StudyQuizAPI.Models.Entities
         public StudyQuizEntities()
             : base("name=StudyQuizEntities")
         {
-            Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -105,6 +104,24 @@ namespace StudyQuizAPI.Models.Entities
                 new ObjectParameter("ChapterId", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET_Result>("GET_FLASH_CARD_QUESTIONS_NOT_STUDY_YET", numberParameter, userIdParameter, chapterIdParameter);
+        }
+    
+        public virtual ObjectResult<GET_CHAPTERS_CARD_Result> GET_CHAPTERS_CARD(Nullable<long> subjectId)
+        {
+            var subjectIdParameter = subjectId.HasValue ?
+                new ObjectParameter("SubjectId", subjectId) :
+                new ObjectParameter("SubjectId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GET_CHAPTERS_CARD_Result>("GET_CHAPTERS_CARD", subjectIdParameter);
+        }
+    
+        public virtual ObjectResult<GET_CHAPTERS_TEST_Result> GET_CHAPTERS_TEST(Nullable<long> subjectId)
+        {
+            var subjectIdParameter = subjectId.HasValue ?
+                new ObjectParameter("SubjectId", subjectId) :
+                new ObjectParameter("SubjectId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GET_CHAPTERS_TEST_Result>("GET_CHAPTERS_TEST", subjectIdParameter);
         }
     }
 }

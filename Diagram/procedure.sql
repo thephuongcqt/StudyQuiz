@@ -95,3 +95,41 @@ EXEC GET_FLASH_CARD_QUESTIONS_ALREADY_STDUY
 	@Number = 100,
 	@UserId = 1,
 	@ChapterId = 13
+
+
+IF OBJECT_ID('GET_CHAPTERS_TEST', 'P') IS NOT NULL
+	DROP PROCEDURE GET_CHAPTERS_TEST
+GO
+CREATE PROCEDURE GET_CHAPTERS_TEST
+	@SubjectId BIGINT
+AS
+	SELECT ChapterId, COUNT(*) AS QuestionCount FROM Question
+	WHERE ChapterId IN (
+		SELECT ChapterId FROM Chapter 
+		WHERE SubjectId = @SubjectId
+	) AND TypeId != 0
+	GROUP BY chapterId
+	ORDER BY QuestionCount DESC
+GO
+
+EXEC GET_CHAPTERS_TEST
+	@SubjectId = 1
+
+
+IF OBJECT_ID('GET_CHAPTERS_CARD', 'P') IS NOT NULL
+	DROP PROCEDURE GET_CHAPTERS_CARD
+GO
+CREATE PROCEDURE GET_CHAPTERS_CARD
+	@SubjectId BIGINT
+AS
+	SELECT ChapterId, COUNT(*) AS QuestionCount FROM Question
+	WHERE ChapterId IN (
+		SELECT ChapterId FROM Chapter 
+		WHERE SubjectId = @SubjectId
+	) 
+	GROUP BY chapterId
+	ORDER BY QuestionCount
+GO
+
+EXEC GET_CHAPTERS_CARD
+	@SubjectId = 3

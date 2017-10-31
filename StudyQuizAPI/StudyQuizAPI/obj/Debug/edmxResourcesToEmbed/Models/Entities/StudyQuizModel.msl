@@ -159,5 +159,21 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GET_CHAPTERS_CARD" FunctionName="StudyQuizModel.Store.GET_CHAPTERS_CARD">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="StudyQuizModel.GET_CHAPTERS_CARD_Result">
+          <ScalarProperty Name="ChapterId" ColumnName="ChapterId" />
+          <ScalarProperty Name="QuestionCount" ColumnName="QuestionCount" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GET_CHAPTERS_TEST" FunctionName="StudyQuizModel.Store.GET_CHAPTERS_TEST">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="StudyQuizModel.GET_CHAPTERS_TEST_Result">
+          <ScalarProperty Name="ChapterId" ColumnName="ChapterId" />
+          <ScalarProperty Name="QuestionCount" ColumnName="QuestionCount" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

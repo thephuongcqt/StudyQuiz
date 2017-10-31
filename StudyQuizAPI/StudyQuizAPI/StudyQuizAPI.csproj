@@ -145,6 +145,12 @@
     <Compile Include="Models\Entities\country.cs">
       <DependentUpon>StudyQuizModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\GET_CHAPTERS_CARD_Result.cs">
+      <DependentUpon>StudyQuizModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\GET_CHAPTERS_TEST_Result.cs">
+      <DependentUpon>StudyQuizModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entities\migration.cs">
       <DependentUpon>StudyQuizModel.tt</DependentUpon>
     </Compile>
@@ -320,7 +326,11 @@
     <None Include="Properties\PublishProfiles\10b1ffd8-0ee0-4-231-b9ee - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\10b1ffd8-0ee0-4-231-b9ee - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\10b1ffd8-0ee0-4-231-b9ee - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\apistudyquiz - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\apistudyquiz - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\studyquiz - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\studyquiz - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\studyquiz - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\studyquiz - Web Deploy.pubxml" />
   </ItemGroup>
   <PropertyGroup>
