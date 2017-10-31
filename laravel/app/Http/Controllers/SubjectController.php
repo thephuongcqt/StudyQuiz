@@ -14,7 +14,9 @@ use App\Subject;
 class SubjectController extends Controller
 {
     function create(Request $request){
-
+      if(!session::has('User')){
+          return redirect('/admin');
+      }
 
     	return view('Subject.createSubject');
     }

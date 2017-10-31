@@ -24,14 +24,8 @@ class LoginController extends Controller
         }else{
             $RealPass = $users->Password;
             if($RealPass===$password){
-                        $_SESSION["User"] = $request;
-                        $name = $users->Username;
-                        $request->session()->put('Username', $name); 
-                        $request->session()->put('UserId', $users->UserId);
-                        $request->session()->put('NameOfUser', $users->Name);
-                        $request->session()->put('Email', $users->Email); 
-                        $request->session()->put('Role', $users->Role);     
-               return redirect('/');
+              $request->session()->put('User',$users);
+               return redirect('/welcome');
             }
         }
          return view('error');

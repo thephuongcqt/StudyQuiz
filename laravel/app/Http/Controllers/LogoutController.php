@@ -3,14 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Session;
 class LogoutController extends Controller
 {
     function logout(Request $request){
-    	$request->session()->forget('Username');
-    	$request->session()->forget('UserId');
-    	$request->session()->forget('NameOfUser');
-    	$request->session()->forget('Email');
-    	$request->session()->forget('Role');
+    $request->session()->flush();
     	 return redirect('/admin');    }
 }

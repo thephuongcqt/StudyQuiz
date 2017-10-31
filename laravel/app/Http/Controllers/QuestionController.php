@@ -28,9 +28,9 @@ class QuestionController extends Controller
         return response($chapter);
     }
     function createQuestion(Request $request){
-        if(Session::get("Username")==null){
+        if(!session::has('User')){
           return redirect('/admin');
-        }
+      }
        $input=$request->all();
        $TYPE = $input['type'];
        if($TYPE==1){
@@ -61,9 +61,9 @@ class QuestionController extends Controller
     }
     function deleteQuestion($id){
       //delete question  and delete feedback of question
-       if(Session::get("Username")==null){
+       if(!session::has('User')){
           return redirect('/admin');
-        }
+      }
         $QuestionId = $id;
         $QuestionIdX = 25;
         $Question = DB::table('Question')->where('QuestionId', '=', $QuestionId);
@@ -82,7 +82,7 @@ class QuestionController extends Controller
           }
            return redirect('/feedback');
        
-          // return view('Feedback.FeedbackDetail');
+         
         }
       
       
