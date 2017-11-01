@@ -1,9 +1,21 @@
 package com.phuongnt.studyquiz.model.viewmodel;
 
+import android.util.Log;
+
+import com.phuongnt.studyquiz.model.apimodel.CommonResponse;
 import com.phuongnt.studyquiz.model.apimodel.questionservice.QuestionResponse;
+import com.phuongnt.studyquiz.model.apimodel.studiedquestionservice.StudiedQuestions;
+import com.phuongnt.studyquiz.service.APIManager;
+import com.phuongnt.studyquiz.service.IAPIHelper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by PhuongNT on 10/24/17.
@@ -58,5 +70,42 @@ public class TestData {
                 item.setCorrect(false);
             }
         }
+    }
+
+    public static void saveStudiedQuestions(){
+        User user = User.getCurrentUser();
+        if(user == null || questions == null || questions.isEmpty()){
+            return;
+        }
+        checkAnswer();
+        Map<Long, Boolean> studiedQuestions = new HashMap<>();
+        for(Question item : questions){
+            studiedQuestions.put(item.getValue().getQuestionId(), item.isCorrect());
+        }
+
+        StudiedQuestions request = new StudiedQuestions(user.getUserId(), studiedQuestions);
+
+        IAPIHelper iapiHelper = APIManager.getAPIManager().create(IAPIHelper.class);
+        Call<CommonResponse> call = iapiHelper.saveStudiedQuestions(request);
+        call.enqueue(new Callback<CommonResponse>() {
+            @Override
+            public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
+                if(response.isSuccessful()){
+                    CommonResponse commonResponse = response.body();
+                    if(commonResponse.isSuccess()){
+                        // save success
+                    } else{
+                        Log.e("saveStudiedQuestions", commonResponse.getError());
+                    }
+                }else{
+                    Log.e("saveStudiedQuestions", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonResponse> call, Throwable t) {
+                Log.e("saveStudiedQuestions", t.getMessage());
+            }
+        });
     }
 }

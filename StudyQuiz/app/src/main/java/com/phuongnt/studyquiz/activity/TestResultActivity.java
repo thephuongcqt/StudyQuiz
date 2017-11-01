@@ -32,6 +32,7 @@ public class TestResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_result);
 
+        saveStudiedQuestion();
         getComponent();
         initComponent();
         getResult();
@@ -48,6 +49,20 @@ public class TestResultActivity extends AppCompatActivity {
         if(bundle != null){
             sourceObj = bundle.get(AppConst.SOURCE_OBJECT_KEY);
         }
+    }
+
+    private void saveStudiedQuestion() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    TestData.saveStudiedQuestions();
+                } catch(Exception e){
+                    Log.e("TestResult_Save", e.getMessage());
+                }
+            }
+        });
+        thread.start();
     }
 
     private void initComponent(){
