@@ -6,6 +6,13 @@
     <section class="content-header">
         <h1>Create Question</h1>
     </section>
+    <?php if (Session::has('success')): ?>
+                             <div class=" form-group ">
+                             <div class="col-md-5 col-md-push-4" style="display: inline-block;color: red">
+                             <h4><strong>{{Session::get('success')}}</strong></h4>
+                             </div>
+                        </div>
+                        <?php endif ?>
     <section class="content container-fluid">
      <div class="container">
              <form method ="post" class="form-horizontal" action="/createQuestion" id="createQForm">
@@ -18,7 +25,7 @@
                             <th class="col-md-4 labelCell">Subject</th>
                             <td>
                                 <div class="form-group col-md-5">
-                                <select name="MySubject" id="MySubject"  class="form-control">
+                                <select name="MySubject" id="MySubject"  class="form-control" onchange="getChap()">
                                    
                                      @foreach($subject as $key => $val)
                                    <option value="{{$val->SubjectId}}" >
@@ -46,8 +53,10 @@
                             <td>
                                 <div class="form-group col-md-5">
                                 <select name="type" id="TypeQA" class="form-control">
-                                    <option value="1" selected="selected">Multiple Choice</option>
-                                    <option value="2">True/False</option>
+                                    <option value="0" selected="selected">Flash Card</option>
+                                    <option value="1">True/False</option>
+                                    <option value="2">Multiple Choice</option>
+                                    
                                 </select>
                                 </div>
                             </td>
@@ -69,48 +78,23 @@
                         <button type="button" class="col-md-3 btn btn-default btn-md" onclick="validateQuestion(event,this)"  >Confirm</button>
                     </div>
                     </div>
-                 <div class="table2" id="table2" style="display: none;">
-                     <div class="container" style="border-radius: 1px;background:white">
-                  <div class="question" style="padding-bottom: 50px">
-                      <h2>Question</h2>
-                     <div class="col-md-12" id="field_name">
-                     </div>
-                  </div>   
-                <div id="Multi" class="answer" >
-                <div class="input-group col-md-5 tf" id='TrueFalse'  >
-                    <fieldset id="resultTF" >
-                        <div class="row ">
-                <input type="radio" value="0" name="Definition" checked="checked" style="float: left"><div class="col-md-5" id="FinalQuestionA"></div> 
-                        </div>
-                        <div class="row">
-                <input type="radio" value="1" name="Definition"   style="float: left"><div class="col-md-5" id="FinalQuestionB"></div> 
-                        </div>
-                        <div class="row">
-                <input type="radio" value="2" name="Definition"  style="float: left"><div class="col-md-5" id="FinalQuestionC"></div> 
-                        </div>
-                        <div class="row">
-                <input type="radio" value="3" name="Definition"   style="float: left"><div class="col-md-5" id="FinalQuestionD"></div> 
-                        </div>
-                        <div class="row">
-                <input type="radio" value="4" name="Definition"  style="float: left"><div class="col-md-5" id="FinalQuestionE"></div> 
-                        </div>
-                        <div class="row">
-                <input type="radio" value="5" name="Definition"   style="float: left"><div class="col-md-5" id="FinalQuestionF"></div> 
-                        </div>
-                    </fieldset>
-                    </div>
+
+              <div  id="DDD" style="display: none;" >
+              <br>
+              <div style="padding-bottom: 20px;padding-left: 20px"><h1><lable id="real_term"></lable></h1></div>
+                <div id= "flashCard">
+                Answer :  <lable id="FlashDefinition"></lable>
                 </div>
-                  <div id="TrueFalseX" class="answer">
-                      <div><input type="radio" name="DefinitionT" value="0" checked="checked"> True<br></div>
-                      <div><input type="radio" name="DefinitionT" value="1"> False<br></div> 
+                <div id="radio_group"></div>
+                <div id="TF_group" style="display: none;padding-left: 20px;background-color: white" >
+                       <input checked="checked" type="radio" name="TF" value="0"  class="bg-gray"> True<br>
+                       <input type="radio" name="TF" value="1" class="bg-silver"> False<br>
                 </div>
-                </div> 
-              
-                 <div class="box-footer">
-                        <button type="button" class="col-md-3 btn btn-default btn-md" style="margin-right: 10px" onclick="validateQuestionBeforeCreate(event,this)"  >Create Question</button>
-                         
-                    </div>       
-                </div>
+             <div class="form-group">
+                 <div class="col-md-12 text-center"><button class="btn btn-success center-block" id="create_question" type="button" hidden="true">Create question</button>  </div> 
+              </div>
+
+              </div>
                 <!-- question-answer -->              
                 </div>
                  </div>
@@ -124,9 +108,12 @@
 @endsection
        
 <script src="{{asset("/plugins/jQuery/jquery-3.1.1.min.js")}}"></script>
-<script> 
-  $('#MySubject').on('change', function () {
-      var id = $('#MySubject option:selected').val();
+ <script type="text/javascript">
+ 
+ 
+ //get chapter 
+ function getChap(){
+   var id = $('#MySubject option:selected').val();
       $.ajax({
           type: 'GET',
           cache: false,
@@ -143,82 +130,126 @@
            
           alert('通信に失敗しました');
       });
-  });
+ }
 function validateQuestion(evt,abc){
+    var arrA = ['X','A. ','B. ','C. ','D. ','E. ','F. '];
+  $("#DDD").show();
+
     var chapterChoose = $('#MyChapter option:selected').val();
     if(chapterChoose == null){
       alert("Please choose subject to have chapter");
+       $('#DDD').hide();
       return false;
     }
-    if (document.getElementById('TypeQA').value==1) { 
-          document.getElementById('table2').style.display = 'none'; 
-        $("#TrueFalseX").hide();
-        var XXX = document.getElementById('term').value;
-        var result = XXX.split("|");
-        if(result.length<=4 || result.length>7){
-        alert("Question need 3->6 answer" );
-         return false;
-        }
-        else{
-            for (var i = result.length; i <= 7; i++) {
-                result[i]=" ";
-            }
-          document.getElementById('table2').style.display = 'block'; 
-          document.getElementById("field_name").innerHTML =result[0] ;
-          document.getElementById("FinalQuestionA").innerHTML =result[1] ;
-          document.getElementById("FinalQuestionB").innerHTML =result[2] ;
-          document.getElementById("FinalQuestionC").innerHTML =result[3] ;
-          document.getElementById("FinalQuestionD").innerHTML =result[4] ;
-          document.getElementById("FinalQuestionE").innerHTML =result[5] ;
-          document.getElementById("FinalQuestionF").innerHTML =result[6] ;
-           $("#Multi").show();
-        }
-    }
-    if(document.getElementById('TypeQA').value==2) {
-           document.getElementById('table2').style.display = 'none'; 
-           $("#Multi").hide();
-           var term = $("#term").val();
-          var comment = $.trim($('#term').val());
-            if(comment.length == 0){
+     if (document.getElementById('TypeQA').value==0) { 
+         
+          $("#radio_group").hide();
+          $("#TF_group").hide(); 
+           var termF =  $.trim($('#term').val());
+            var arrF = termF.split("|");
+            if(termF.length == 0){
               alert("Please input term ");
-               $('#TrueFalseX').hide();
+                $('#DDD').hide();
               return false;
             }else{
-              var arr = term.split("|");
-            if(arr.length!= 1){
-            alert("True false quesion just need question");
-             return false;
+                if(arrF.length==2){
+                   $('#DDD').show();
+                 $("#real_term").text(arrF[0]);
+                 $("#FlashDefinition").text(arrF[1]);
+                 $("#create_question").click(function(){
+                document.getElementById('createQForm').submit();
+                });
+
+                }else{
+                  alert("Flash Card Type Term :  question|answer ");
+                  $('#DDD').hide();
+                }
             }
-            if(arr.length== 1){
-                  document.getElementById('table2').style.display = 'block'; 
-               $('#TrueFalseX').show();
-                document.getElementById("field_name").innerHTML =$.trim($('#term').val()) ;
-             return false;
+         
+          
+     }
+    if (document.getElementById('TypeQA').value==1) { 
+        $("#TF_group").show();
+            $("#radio_group").hide();
+            $("#flashCard").hide();
+            var termTF =  $.trim($('#term').val());
+            if(termTF.length==0){
+               alert("Please input term ");
+                $('#DDD').hide();
+              return false;
             }
-            else{
-            }
-            }
+            var arrTF = termTF.split("|");
+            if(arrTF.length == 0){
+              alert("Please input term ");
+                $('#DDD').hide();
+              return false;
+            }else{
+                if(arrTF.length!= 1){
+                alert("True false quesion just need question");
+                    $('#DDD').hide();
+                    return false;
+                }else if(arrTF.length== 1){
+                    $('#DDD').show();
+                    $('#TrueFalseX').show();
+                    
+                    $("#real_term").text(arrTF[0]);
+                    
+                           $("#create_question").click(function(){
+ document.getElementById('createQForm').submit();
+                            });
+                } 
+            } 
+    }
+    if(document.getElementById('TypeQA').value==2) {
+            $("#radio_group").show();   
+            $("#TF_group").hide(); 
+             $("#flashCard").hide();
+            var term = $("#term").val();
+            var arr = term.split("|");
+             if(arr.length > 3 && arr.length < 8){
+                $("#radio_group").empty();
+                $("#real_term").text(arr[0]);
+                $("#create_question").show();
+                $("#real_term").show();
+                 for(i = 1; i < arr.length; i++){
+                        if(i==1 || i== 3 || i ==5 || i==7){
+                            var div = document.createElement("Div");
+                            div.setAttribute("class", "col-md-12 bg-gray");
+                        }else{
+                          var div = document.createElement("Div");
+                          div.setAttribute("class", "col-md-12 bg-silver");
+                        }
+                        var input = document.createElement("INPUT");
+                        input.setAttribute("type", "radio");
+                        input.setAttribute("id", i);
+                        input.setAttribute("name", "Defi");
+                        input.setAttribute("value", i - 1);
+                        input.setAttribute("class","bg-green");
+                            if(i == 1){
+                              input.setAttribute("checked", "checked");
+                            }
+                        var label2 = document.createElement("Label");
+                        label2.setAttribute("style","word-wrap: break-word");
+                        label2.innerHTML = arrA[i]+arr[i].trim();
+                        var DIVTO = document.getElementById("DDD");
+                        div.appendChild(input);
+                        div.appendChild(label2);
+                        DIVTO.appendChild.div;
+                        var br = document.createElement("br");
+                        $("#radio_group").append(div);
+                        $("#radio_group").append(br);
+                }
+                $("#create_question").click(function(){
+                document.getElementById('createQForm').submit();
+                });
+             }else{
+                alert("Term need 3 to 5 answer.Please input enought");
+                $("#radio_group").empty();
+                $("#create_question").hide();
+                $("#real_term").hide();
+             }
     }
 }
-function validateQuestionBeforeCreate(evt,sel){
-        var XXX = document.getElementById('term').value;
-        if(document.getElementById('TypeQA').value==1){
-           var result = XXX.split("|");
-        var countResult = result.length -1 ;
-        var RadioChoose = $("input:radio[name='Definition']:checked").val();
-        var RadioChooseNumber = parseInt(RadioChoose) +1;
-        if(RadioChooseNumber>countResult){
-          alert("Definition is false.Please choose again");
-        }else{
-           document.getElementById('createQForm').submit();
-        }
-        }
-        if(document.getElementById('TypeQA').value==2){
-          document.getElementById('createQForm').submit();
-        }
-       
-       
-}
- 
+
 
 </script>

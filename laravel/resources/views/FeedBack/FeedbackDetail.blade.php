@@ -169,8 +169,6 @@
         $("#TF_group").hide();   
         $("#btn_process").click(function(){
             $("#DDD").show();
-            var typeX = document.getElementById("definition").value;
-            alert(type);
 
          if(type==1){
             $("#TF_group").show();
@@ -187,7 +185,7 @@
                     $('#TF_group').hide();
                     return false;
                 }else if(arr.length== 1){
-                    document.getElementById('table2').style.display = 'block'; 
+                    // document.getElementById('table2').style.display = 'block'; 
                     $('#TrueFalseX').show();
                     document.getElementById("field_name").innerHTML =$.trim($('#term').val()) ;
                  return false;

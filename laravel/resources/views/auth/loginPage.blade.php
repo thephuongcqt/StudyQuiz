@@ -44,26 +44,23 @@
  
                             </div>
                         </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember"  > Remember Me
-                                    </label>
-                                </div>
-                            </div>
+                        <?php if (Session::has('error')): ?>
+                             <div class=" form-group ">
+                             <div class="col-md-5 col-md-push-4" style="display: inline-block;color: red">
+                             <h4><strong>{{Session::get('error')}}</strong></h4>
+                             </div>
                         </div>
-
+                        <?php endif ?>
+                         
+                       
+                        
                         <div class="form-group">
                             <div class="col-md-8 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
                                     Login
                                 </button>
 
-                                <a class="btn btn-link"  >
-                                    Forgot Your Password?
-                                </a>
+                                
                             </div>
                         </div>
                     </form>

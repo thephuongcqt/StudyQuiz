@@ -27,16 +27,7 @@
 
                         <div class="form-group">
                             <label for="email" class="col-md-4 control-label">Login Error</label>
-
-                            
                         </div>
-
-                        
-
-                     
-
-                    
-                    
                 </div>
             </div>
         </div>

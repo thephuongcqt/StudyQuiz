@@ -14,13 +14,13 @@ class QuestionController extends Controller
 {
    
     function loadDetailQuestion(Request $request){
-        if(Session::get("Username")!=null &&  Session::get("Role")==0){
+        // if(Session::get("User")!=null){
           $subject = Subject::all();
           $chapter = Chapter::all();
          return view('createQuestion',['subject'=>$subject,'chapter'=>$chapter]);
-        }else{
-           return redirect('/admin');
-        }
+        // }else{
+        //    return redirect('/admin');
+        // }
        
     }
     function loadChapter($id){
@@ -32,30 +32,55 @@ class QuestionController extends Controller
           return redirect('/admin');
       }
        $input=$request->all();
+        $User = $request->session()->get('User');
+        $UserId = $User->UserId;
        $TYPE = $input['type'];
+
+       if($TYPE==0){
+
+        $Question = new Question;
+        $Question->TypeId = $input['type'];
+        $tags = explode('|' , $input['term']);
+        $Question->Term = $tags[0];
+        $Question->Definition = $tags[1];
+        $Question->CreatedDate = Carbon::now();
+        $Question->ChapterId = $input['MyChapter'];
+        $Question->CreatedUser  = $UserId;
+        $Question->IsEnable = 1;
+        $Question->save();
+         session::flash('success','Create Question successed');
+         return redirect('/createQuestion');
+       }
        if($TYPE==1){
+    
        $Question = new Question;
        $Question->TypeId = $input['type'];
-       $Question->Term = $input['term'];
        $tags = explode('|' , $input['term']);
-       $Question->Definition = $tags[$input['Definition']];;
+       $Question->Term = $input['term'];
+       $Question->Definition = $input['TF'];
        $Question->ChapterId= $input['MyChapter'];
-       $Question->CreatedUser= Session::get("UserId");
+       $Question->CreatedUser  = $UserId;
+       $Question->IsEnable = 1;
        $Question->CreatedDate = Carbon::now();
        $Question->save();
-        return redirect('/');
+         session::flash('success','Create Question successed');
+         return redirect('/createQuestion');
        }
        if($TYPE==2){
+       
       $Question= new Question;
       $Question->TypeId = $input['type'];
       $Question->Term = $input['term'];
-      
-      $Question->Definition = $input['DefinitionT'];
-      $Question->ChapterId= $input['MyChapter'];
-      $Question->CreatedUser= Session::get("UserId");
+      $tags = explode('|' , $input['term']);
+      $option = $input['Defi'] + 1;
+      $Question->Definition = $tags[$option];
       $Question->CreatedDate = Carbon::now();
+      $Question->ChapterId= $input['MyChapter'];
+      $Question->CreatedUser= $UserId;
+      $Question->IsEnable= 1;
       $Question->save();
-        return redirect('/');
+       session::flash('success','Create Question successed');
+         return redirect('/createQuestion');
        }
        
     }
@@ -68,8 +93,8 @@ class QuestionController extends Controller
         $QuestionIdX = 25;
         $Question = DB::table('Question')->where('QuestionId', '=', $QuestionId);
         if($Question == null){
-          echo "DKM";exit();
-            return("error");
+          session::flash('error','Question is not exist');
+           return redirect('/feedback');
         }else{
                  
           DB::table('Question')->where('QuestionId', '=', $QuestionIdX)->delete();
@@ -80,6 +105,7 @@ class QuestionController extends Controller
             $IDX =$feedbackOfQuestion[$i]->FeedbackId;  
             $X = Feedback::where('FeedbackId', $IDX)->delete();
           }
+          session::flash('delete','Delete  Question successed');
            return redirect('/feedback');
        
          

@@ -20,12 +20,20 @@ class LoginController extends Controller
          
        $users = User::where('Username', '=',$username)->first();
         if($users==null){
-           return view('error');
+            session::flash('error','Username of password is error');
+           return redirect('/admin');
         }else{
             $RealPass = $users->Password;
             if($RealPass===$password){
-              $request->session()->put('User',$users);
+                $role = $users->Role;
+                if($role ==0){
+                    $request->session()->put('User',$users);
                return redirect('/welcome');
+             }else{
+                session::flash('error','Login with Manager account');
+           return redirect('/admin');
+             }
+            
             }
         }
          return view('error');
