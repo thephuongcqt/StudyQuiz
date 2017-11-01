@@ -7,6 +7,7 @@ import com.phuongnt.studyquiz.model.apimodel.questionservice.QuestionResponse;
 import com.phuongnt.studyquiz.model.apimodel.searchservice.SearchChapterResponse;
 import com.phuongnt.studyquiz.model.apimodel.searchservice.SearchSubjectResponse;
 import com.phuongnt.studyquiz.model.apimodel.signupservice.SignUpRequest;
+import com.phuongnt.studyquiz.model.apimodel.studiedquestionservice.StudiedQuestions;
 
 import java.util.List;
 import java.util.Map;
@@ -38,4 +39,6 @@ public interface IAPIHelper {
     Call<CommonResponse<List<QuestionResponse>>> getSubjectCards(@QueryMap Map<String, String> params);
     @GET("Question/GetQuestionForChapterFlashCard")
     Call<CommonResponse<List<QuestionResponse>>> getChapterCards(@QueryMap Map<String, String> params);
+    @POST("StudiedQuestion/PostQuestion")
+    Call<CommonResponse> saveStudiedQuestions(@Body StudiedQuestions questions);
 }

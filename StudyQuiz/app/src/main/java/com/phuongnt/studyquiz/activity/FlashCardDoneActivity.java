@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -23,9 +24,25 @@ public class FlashCardDoneActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flash_card_done);
+        saveStudiedQuestion();
         getComponent();
         initComponent();
     }
+
+    private void saveStudiedQuestion() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    TestData.saveStudiedQuestions();
+                } catch(Exception e){
+                    Log.e("TestResult_Save", e.getMessage());
+                }
+            }
+        });
+        thread.start();
+    }
+
     private void getComponent(){
         tvTitle = (TextView) findViewById(R.id.tv_done_title);
         toolbar = (Toolbar)findViewById(R.id.toolbar);
