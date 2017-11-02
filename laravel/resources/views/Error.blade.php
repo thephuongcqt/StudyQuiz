@@ -27,6 +27,13 @@
 
                         <div class="form-group">
                             <label for="email" class="col-md-4 control-label">Login Error</label>
+                              <?php if (Session::has('error')): ?>
+                             <div class=" form-group ">
+                             <div class="col-md-5 col-md-push-4" style="display: inline-block;color: red">
+                             <h4><strong>{{Session::get('error')}}</strong></h4>
+                             </div>
+                        </div>
+                        <?php endif ?>
                         </div>
                 </div>
             </div>

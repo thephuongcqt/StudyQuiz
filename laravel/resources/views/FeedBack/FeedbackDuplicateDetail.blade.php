@@ -128,6 +128,10 @@
 <script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script> 
 
  <script>   
+  $(document).ready(function(){
+        <?php if (Session::has('success')): ?>
+          alert("Edit Question successed");
+        <?php endif ?>});
  var QuestionId = {{$QuestionId}};
              
  $(function() {

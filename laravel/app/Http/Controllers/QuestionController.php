@@ -12,7 +12,9 @@ use DB;
 use App\Feedback;
 class QuestionController extends Controller
 {
-   
+    function index(Request $request){
+      return view('Question.ManageQuestion');
+    }
     function loadDetailQuestion(Request $request){
         // if(Session::get("User")!=null){
           $subject = Subject::all();
@@ -72,8 +74,8 @@ class QuestionController extends Controller
       $Question->TypeId = $input['type'];
       $Question->Term = $input['term'];
       $tags = explode('|' , $input['term']);
-      $option = $input['Defi'] + 1;
-      $Question->Definition = $tags[$option];
+      $option = $input['Defi'] ;
+      $Question->Definition =$option;
       $Question->CreatedDate = Carbon::now();
       $Question->ChapterId= $input['MyChapter'];
       $Question->CreatedUser= $UserId;
@@ -90,7 +92,7 @@ class QuestionController extends Controller
           return redirect('/admin');
       }
         $QuestionId = $id;
-        $QuestionIdX = 25;
+        
         $Question = DB::table('Question')->where('QuestionId', '=', $QuestionId);
         if($Question == null){
           session::flash('error','Question is not exist');

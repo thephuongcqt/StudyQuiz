@@ -11,6 +11,7 @@ use App\User;
 use App\Question;
 use App\Chapter;
 use App\Subject;
+use Carbon\Carbon;
 class FeedbackController extends Controller
 {
 //     
@@ -103,27 +104,42 @@ class FeedbackController extends Controller
 					return redirect('/admin');
 			}
 			$input = $request->all();
-			print_r($input);
-			exit();
-			//if type = 1 Muti
-			$QuestionId = $input['QuestionId'];
-			$Question = Question::where('QuestionId',$QuestionId)->first();
-			if($Question==null){
-				return view('error');
-			}else{
-				$Term = $input['term'];
-				$TermArray = explode('|' , $Term);
-				$Definition = $input['Defi'];
-				$Answer = $TermArray[$Definition+1];
-				print_r($input);
-				exit();
-				$Question->Term=$input['term'];
-				$Question->Definition=$Answer;
-				$Question->ChapterId=$input['MyChapter'];
+			$TYPE  = $input['TypeId'];
+			if($TYPE==null){
+				return redirect('error');
 			}
-		 print_r($input);
-			exit();
+			$User = $request->session()->get('User');
+       		$UserId = $User->UserId;
+       		$QuestionId = $input['QuestionId'];
+				if($TYPE==0){
+				$tags = explode('|' , $input['term']);
+				$term = $tags[0];
+				$defi = $tags[1];
+				$Question =DB::table('Question')
+				->where('QuestionId','=',$QuestionId)
+				->update(['Term'=>$tags[0],'Definition'=>$defi,'ChapterId'=>$input['MyChapter']]);
+				session::flash('success','Edit done');
+				return redirect('/feedback/'.$QuestionId);
 					}
+					if($TYPE==1){
+				 
+				$Question =DB::table('Question')
+				->where('QuestionId','=',$QuestionId)
+				->update(['Term'=>$input['term'],'Definition'=>$input['TF'],'ChapterId'=>$input['MyChapter']]);
+				session::flash('success','Edit done');
+				return redirect('/feedback/'.$QuestionId);
+					}
+					if($TYPE==2){
+				$Question =DB::table('Question')
+				->where('QuestionId','=',$QuestionId)
+				->update(['Term'=>$input['term'],'Definition'=>$input['Defi'],'ChapterId'=>$input['MyChapter']]);
+				session::flash('success','Edit done');
+				return redirect('/feedback/'.$QuestionId);
+					}
+			
+			}
+		  
+					 
 		function test(Request $request){
 			if(!session::has('User')){
 					return redirect('/admin');

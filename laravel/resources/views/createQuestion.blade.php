@@ -6,13 +6,7 @@
     <section class="content-header">
         <h1>Create Question</h1>
     </section>
-    <?php if (Session::has('success')): ?>
-                             <div class=" form-group ">
-                             <div class="col-md-5 col-md-push-4" style="display: inline-block;color: red">
-                             <h4><strong>{{Session::get('success')}}</strong></h4>
-                             </div>
-                        </div>
-                        <?php endif ?>
+   
     <section class="content container-fluid">
      <div class="container">
              <form method ="post" class="form-horizontal" action="/createQuestion" id="createQForm">
@@ -109,7 +103,10 @@
        
 <script src="{{asset("/plugins/jQuery/jquery-3.1.1.min.js")}}"></script>
  <script type="text/javascript">
- 
+  $(document).ready(function(){
+        <?php if (Session::has('success')): ?>
+          alert("Create Question successed");
+        <?php endif ?>});
  
  //get chapter 
  function getChap(){
@@ -145,7 +142,7 @@ function validateQuestion(evt,abc){
          
           $("#radio_group").hide();
           $("#TF_group").hide(); 
-           var termF =  $.trim($('#term').val());
+            var termF =  $.trim($('#term').val());
             var arrF = termF.split("|");
             if(termF.length == 0){
               alert("Please input term ");
@@ -153,7 +150,14 @@ function validateQuestion(evt,abc){
               return false;
             }else{
                 if(arrF.length==2){
-                   $('#DDD').show();
+                  for (var i = 0; i <arrF.length; i++) {
+                  if(arrF[i].trim().length==0){
+                    alert("Question or The answer can't null.");
+                    $('#DDD').hide();
+                    return false;
+                  }
+                  }
+                 $('#DDD').show();
                  $("#real_term").text(arrF[0]);
                  $("#FlashDefinition").text(arrF[1]);
                  $("#create_question").click(function(){
@@ -206,11 +210,20 @@ function validateQuestion(evt,abc){
              $("#flashCard").hide();
             var term = $("#term").val();
             var arr = term.split("|");
+
              if(arr.length > 3 && arr.length < 8){
+              
                 $("#radio_group").empty();
-                $("#real_term").text(arr[0]);
+                $("#real_term").text(arr[0].trim());
                 $("#create_question").show();
                 $("#real_term").show();
+                for (var i = 0; i <arr.length; i++) {
+                  if(arr[i].trim().length==0){
+                    alert("The answer can't null.");
+                    $('#DDD').hide();
+                    return false;
+                  }
+                }
                  for(i = 1; i < arr.length; i++){
                         if(i==1 || i== 3 || i ==5 || i==7){
                             var div = document.createElement("Div");

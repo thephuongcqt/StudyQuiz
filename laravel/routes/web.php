@@ -19,13 +19,12 @@ Route::get('/home', 'HomeController@index')->name('home');
  
 
 
-//Create Question
-Route::get('/createQuestion', 'QuestionController@loadDetailQuestion');//checked
+//Question
+Route::get('/createQuestion', 'QuestionController@loadDetailQuestion');
 Route::post('/createQuestion', 'QuestionController@createQuestion');
-Route::get('createQuestion/ajax/{id}', 'QuestionController@loadChapter');//checked
-Route::get('/confirm',function(){
-	return view('Question.confirmQuestion');
-});
+Route::get('createQuestion/ajax/{id}', 'QuestionController@loadChapter');
+Route::get('/manageQuestion', 'QuestionController@index');
+ 
 //Login
 Route::post('Login', 'LoginController@checkLogin');//checked
 Route::get('/logout','LogoutController@logout');//checked
@@ -44,9 +43,9 @@ Route::get('/feedback','FeedbackController@index');//Manage Feedback
 Route::get('/feedback/get_datatable', 'FeedbackController@get_datatable');//ajax
 Route::get('/feedback/get_datatableDuplicate', 'FeedbackController@get_datatableDuplicate');//ajax
 Route::get('/feedback/get_datatableSearch/{id}', 'FeedbackController@get_datatableSearch');//ajax
-//Feeback of Wrong Answer
+
+//Feeback of Wrong Answer + Duplicate
 Route::get('/feedback/{id}','FeedbackController@detailWrongAnswer');//for Wrong Answer
-//Feeback of Duplicate Question
 Route::get('/feedbackDuplicateDetail/{id}','FeedbackController@duplicateDetail');//for duplicate Question
 
 Route::post('/editQuestionFeedback','FeedbackController@getDetail');

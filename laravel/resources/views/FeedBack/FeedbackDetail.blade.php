@@ -9,6 +9,7 @@
       </h1>
    <!--Header  -->
     </section>
+ 
     <section class="content">
     <!-- body -->
     <!-- hàng 1 -->
@@ -66,12 +67,15 @@
               <div style="padding-bottom: 20px;padding-left: 20px"><lable  id="real_term"></lable></div>
                 
                 <div id="radio_group"></div>
+                <div id= "flashCard">
+                Answer :  <lable id="FlashDefinition"></lable>
+                </div>
                 <div id="TF_group" style="display: none;padding-left: 20px;background-color: white" >
                        <input type="radio" name="TF" value="0" checked="checked" class="bg-gray"> True<br>
                        <input type="radio" name="TF" value="1" class="bg-silver"> False<br>
                 </div>
              <div class="form-group">
-                 <div class="col-md-12 text-center"><button class="btn btn-success center-block" id="create_question" type="button" hidden="true">Create question</button>  </div> 
+                 <div class="col-md-12 text-center"><button class="btn btn-success center-block" id="create_question" type="button" hidden="true">Edit question</button>  </div> 
               </div>
 
               </div>
@@ -123,10 +127,18 @@
  <script>  
 
       $(document).ready(function(){
+        <?php if (Session::has('success')): ?>
+          alert("Edit Question successed");
+        <?php endif ?>
+
+
+
+
+         var Type = {{$Type}};alert(Type);
          var arrA = ['X','A. ','B. ','C. ','D. ','E. ','F. '];
          var chapterId = {{$id}};
          var SubjectBegin = {{$SubjectSelected}};
-          alert("DKM"+ SubjectBegin);
+          
          //first time load Data
          $.ajax({
           type: 'GET',
@@ -169,40 +181,89 @@
         $("#TF_group").hide();   
         $("#btn_process").click(function(){
             $("#DDD").show();
+         if(type==0){
+          $("#radio_group").hide();
+          $("#TF_group").hide(); 
+            var termF =  $.trim($('#term').val());
+            var arrF = termF.split("|");
+            if(termF.length == 0){
+              alert("Please input term ");
+                $('#DDD').hide();
+              return false;
+            }else{
+                if(arrF.length==2){
+                  for (var i = 0; i <arrF.length; i++) {
+                  if(arrF[i].trim().length==0){
+                    alert("Question or The answer can't null.");
+                    $('#DDD').hide();
+                    return false;
+                  }
+                  }
+                 $('#DDD').show();
+                 $("#real_term").text(arrF[0]);
+                 $("#FlashDefinition").text(arrF[1]);
+                 $("#create_question").click(function(){
+                document.getElementById('editQuestionFeedback').submit();
+                });
 
+                }else{
+                  alert("Flash Card Type Term :  question|answer ");
+                  $('#DDD').hide();
+                }
+            }
+
+         }
          if(type==1){
             $("#TF_group").show();
             $("#radio_group").hide();
+            $("#flashCard").hide();
             var termTF =  $.trim($('#term').val());
+            if(termTF.length==0){
+               alert("Please input term ");
+                $('#DDD').hide();
+              return false;
+            }
             var arrTF = termTF.split("|");
             if(arrTF.length == 0){
               alert("Please input term ");
-               $('#TF_group').hide();
+                $('#DDD').hide();
               return false;
             }else{
                 if(arrTF.length!= 1){
                 alert("True false quesion just need question");
-                    $('#TF_group').hide();
+                    $('#DDD').hide();
                     return false;
-                }else if(arr.length== 1){
-                    // document.getElementById('table2').style.display = 'block'; 
+                }else if(arrTF.length== 1){
+                    $('#DDD').show();
                     $('#TrueFalseX').show();
-                    document.getElementById("field_name").innerHTML =$.trim($('#term').val()) ;
-                 return false;
+                    
+                    $("#real_term").text(arrTF[0]);
+                    
+                           $("#create_question").click(function(){
+ document.getElementById('editQuestionFeedback').submit();
+                            });
                 } 
-            }   
+            }    
          }
          if(type==2){
             $("#radio_group").show();   
             $("#TF_group").hide(); 
+            $("#flashCard").hide();
             var term = $("#term").val();
             var arr = term.split("|");
-            alert(arr);     
+               
              if(arr.length > 3 && arr.length < 8){
                 $("#radio_group").empty();
                 $("#real_term").text(arr[0]);
                 $("#create_question").show();
                 $("#real_term").show();
+                 for (var i = 0; i <arr.length; i++) {
+                  if(arr[i].trim().length==0){
+                    alert("The answer can't null.");
+                    $('#DDD').hide();
+                    return false;
+                  }
+                }
                  for(i = 1; i < arr.length; i++){
                         if(i==1 || i== 3 || i ==5 || i==7){
                             var div = document.createElement("Div");
