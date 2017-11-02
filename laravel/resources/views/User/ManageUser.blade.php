@@ -1,6 +1,6 @@
 
 @extends('adminlte.layout')
-@section('title', 'Dashboard')
+@section('title', 'Manage Users')
 @section('content')
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href="https://datatables.yajrabox.com/css/datatables.bootstrap.css" rel="stylesheet">
@@ -20,7 +20,7 @@
 
             <div class="info-box-content">
               <span class="info-box-text">Total Users</span>
-              <span class="info-box-number">{{$countUser}}</span>
+              <span class="info-box-number"> </span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -32,8 +32,8 @@
             <span class="info-box-icon bg-blue"><i class="fa fa-flag-o" aria-hidden="true" style="padding-top: 20%"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Total Feedback</span>
-              <span class="info-box-number">{{$countFeedback}}</span>
+              <span class="info-box-text">Total have been block</span>
+              <span class="info-box-number"> </span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -46,7 +46,7 @@
 
             <div class="info-box-content">
               <span class="info-box-text">Total Subject</span>
-              <span class="info-box-number">{{$countSubject}}</span>
+              <span class="info-box-number"> </span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -59,7 +59,7 @@
 
             <div class="info-box-content">
               <span class="info-box-text">Total Question</span>
-              <span class="info-box-number">{{$countQuestion}}</span>
+              <span class="info-box-number"> </span>
             </div>
             <!-- /.info-box-content -->
           </div>

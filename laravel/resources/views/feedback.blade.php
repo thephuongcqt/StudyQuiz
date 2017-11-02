@@ -109,6 +109,7 @@
          <?php if (Session::has('deleteError')): ?>
            alert("Question isn't exist");
         <?php endif ?>
+      });
     $(function() {
         $('#users-table').DataTable({
         processing: true,

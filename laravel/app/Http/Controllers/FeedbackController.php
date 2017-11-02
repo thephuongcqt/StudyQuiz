@@ -145,9 +145,11 @@ class FeedbackController extends Controller
 					return redirect('/admin');
 			}
 			$Type=1;
-			 $value = $request->session()->get('User');
-
-			return view('welcome',['Type'=>$Type,'x'=>$value->Email]);
+			$countFeedback = DB::table('Feedback')->count();
+			$countQuestion = DB::table('Question')->where('IsEnable','=','1')->count();
+			$countUser = DB::table('User')->count();
+			$countSubject = DB::table('Subject')->count();
+			return view('welcome',['countFeedback'=>$countFeedback,'countQuestion'=>$countQuestion,'countUser'=>$countUser,'countSubject'=>$countSubject]);
 		}
 		//load table 1 for view(feedback)
 		public function get_datatable(){

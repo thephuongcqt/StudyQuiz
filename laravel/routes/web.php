@@ -58,11 +58,14 @@ Route::get('/createSubject','SubjectController@create');
 Route::get('/createSubject/get_datatable', 'SubjectController@get_datatable');
 Route::post('/createSubject','SubjectController@created');
 
-Route::get('/users','UserController@getAllUser');
+ 
 Route::get('/createUser','UserController@create');
 Route::post('/createUser','UserController@created');
 Route::get('/edit/{id}','UserController@edit');
 Route::get('/delete/{id}','UserController@delete');
+
+//User
+Route::get('/users','UserController@index');
 
 
 
