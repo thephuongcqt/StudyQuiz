@@ -82,14 +82,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="tags">
-      <EntityTypeMapping TypeName="StudyQuizModel.tag">
-        <MappingFragment StoreEntitySet="tags">
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="GET_CHAPTERS_CARD" FunctionName="StudyQuizModel.Store.GET_CHAPTERS_CARD">
       <ResultMapping>
         <ComplexTypeMapping TypeName="StudyQuizModel.GET_CHAPTERS_CARD_Result">

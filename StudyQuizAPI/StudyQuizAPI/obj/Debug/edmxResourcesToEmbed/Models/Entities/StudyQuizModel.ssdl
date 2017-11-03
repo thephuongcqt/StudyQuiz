@@ -63,13 +63,6 @@
     <Property Name="Name" Type="nvarchar" MaxLength="250" />
     <Property Name="CreatedDate" Type="datetime" />
   </EntityType>
-  <EntityType Name="tags">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="name" Type="nvarchar" MaxLength="255" Nullable="false" />
-  </EntityType>
   <EntityType Name="User">
     <Key>
       <PropertyRef Name="UserId" />
@@ -194,7 +187,6 @@
     <EntitySet Name="Question" EntityType="Self.Question" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="StudiedQuestions" EntityType="Self.StudiedQuestions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Subject" EntityType="Self.Subject" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="tags" EntityType="Self.tags" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Chapter_Subject" Association="Self.FK_Chapter_Subject">
       <End Role="Subject" EntitySet="Subject" />

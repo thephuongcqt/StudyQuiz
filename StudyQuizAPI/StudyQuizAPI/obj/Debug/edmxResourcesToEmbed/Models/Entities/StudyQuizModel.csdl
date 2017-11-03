@@ -209,7 +209,6 @@
       <End Role="User" EntitySet="Users" />
       <End Role="StudiedQuestions" EntitySet="StudiedQuestions" />
     </AssociationSet>
-    <EntitySet Name="tags" EntityType="StudyQuizModel.tag" />
     <FunctionImport Name="GET_CHAPTERS_CARD" ReturnType="Collection(StudyQuizModel.GET_CHAPTERS_CARD_Result)">
       <Parameter Name="SubjectId" Mode="In" Type="Int64" />
     </FunctionImport>
@@ -232,13 +231,6 @@
       <Parameter Name="TypeId" Mode="In" Type="Int32" />
     </FunctionImport>
   </EntityContainer>
-  <EntityType Name="tag">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-  </EntityType>
   <ComplexType Name="GET_CHAPTERS_CARD_Result">
     <Property Type="Int64" Name="ChapterId" Nullable="true" />
     <Property Type="Int32" Name="QuestionCount" Nullable="true" />
