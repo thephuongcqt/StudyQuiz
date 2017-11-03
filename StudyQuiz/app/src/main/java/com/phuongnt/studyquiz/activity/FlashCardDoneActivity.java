@@ -24,7 +24,7 @@ public class FlashCardDoneActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flash_card_done);
-        saveStudiedQuestion();
+//        saveStudiedQuestion();
         getComponent();
         initComponent();
     }
