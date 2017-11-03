@@ -40,7 +40,8 @@ namespace StudyQuizAPI.Models.DAO
                     Name = user.Name,
                     Username = user.Username,
                     Email = user.Email,
-                    Password = user.Password
+                    Password = user.Password,
+                    CreatedDate = DateTime.Now
                 };
 
                 result = db.Users.Add(newUser);

@@ -20,6 +20,7 @@ namespace StudyQuizAPI.Models.Entities
         public StudyQuizEntities()
             : base("name=StudyQuizEntities")
         {
+            Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -34,9 +35,6 @@ namespace StudyQuizAPI.Models.Entities
         public virtual DbSet<StudiedQuestion> StudiedQuestions { get; set; }
         public virtual DbSet<Subject> Subjects { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<country> countries { get; set; }
-        public virtual DbSet<migration> migrations { get; set; }
-        public virtual DbSet<tag> tags { get; set; }
     
         public virtual ObjectResult<GET_CHAPTERS_CARD_Result> GET_CHAPTERS_CARD(Nullable<long> subjectId)
         {
