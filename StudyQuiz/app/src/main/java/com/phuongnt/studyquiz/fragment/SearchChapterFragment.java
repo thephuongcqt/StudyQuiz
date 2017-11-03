@@ -37,6 +37,10 @@ public class SearchChapterFragment extends Fragment{
     private SearchAdapter<SearchChapterResponse> mAdapter;
     private SearchActivity.IButtonLoadMoreListener iButtonLoadMoreListener;
 
+    public Button getBtnLoadMore() {
+        return btnLoadMore;
+    }
+
     public void setiButtonLoadMoreListener(SearchActivity.IButtonLoadMoreListener iButtonLoadMoreListener) {
         this.iButtonLoadMoreListener = iButtonLoadMoreListener;
     }

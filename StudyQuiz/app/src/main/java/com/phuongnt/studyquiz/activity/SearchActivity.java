@@ -147,8 +147,6 @@ public class SearchActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-//        chapterFragment =
-//        subjectFragment = new SearchSubjectFragment();
         adapter.addFragment(subjectFragment, "Subject");
         adapter.addFragment(chapterFragment, "Chapter");
         viewPager.setAdapter(adapter);
@@ -187,8 +185,10 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void resetSearch(){
-        chapters = null;
-        subjects = null;
+        if(chapters != null)
+            chapters.clear();
+        if(subjects != null)
+            subjects.clear();
         subjectOffset = 0;
         chapterOffset = 0;
     }
@@ -266,7 +266,8 @@ public class SearchActivity extends AppCompatActivity {
             subjects = new ArrayList<>();
         }
         if(subjectsResponse == null || subjectsResponse.isEmpty()){
-            Toast.makeText(this, "Not item available to fetch", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Not item available to fetch", Toast.LENGTH_SHORT).show();
+            subjectFragment.getBtnLoadMore().setVisibility(View.GONE);
         }
         subjects.addAll(subjectsResponse);
         subjectOffset = subjects.size();
@@ -284,7 +285,8 @@ public class SearchActivity extends AppCompatActivity {
             chapters = new ArrayList<>();
         }
         if(chaptersResponse == null || chaptersResponse.isEmpty()){
-            Toast.makeText(this, "Not item available to fetch", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Not item available to fetch", Toast.LENGTH_SHORT).show();
+            chapterFragment.getBtnLoadMore().setVisibility(View.GONE);
         }
         chapters.addAll(chaptersResponse);
         chapterOffset = chapters.size();

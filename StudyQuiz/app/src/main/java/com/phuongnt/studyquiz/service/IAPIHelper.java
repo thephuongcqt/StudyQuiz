@@ -1,6 +1,7 @@
 package com.phuongnt.studyquiz.service;
 
 import com.phuongnt.studyquiz.model.apimodel.CommonResponse;
+import com.phuongnt.studyquiz.model.apimodel.feedbackservice.FeedbackRequest;
 import com.phuongnt.studyquiz.model.apimodel.loginservice.LoginRequest;
 import com.phuongnt.studyquiz.model.apimodel.loginservice.LoginResponse;
 import com.phuongnt.studyquiz.model.apimodel.questionservice.QuestionResponse;
@@ -41,4 +42,6 @@ public interface IAPIHelper {
     Call<CommonResponse<List<QuestionResponse>>> getChapterCards(@QueryMap Map<String, String> params);
     @POST("StudiedQuestion/PostQuestion")
     Call<CommonResponse> saveStudiedQuestions(@Body StudiedQuestions questions);
+    @POST("Feedback/PostNewFeedback")
+    Call<CommonResponse> feedbackQuestion(@Body FeedbackRequest request);
 }

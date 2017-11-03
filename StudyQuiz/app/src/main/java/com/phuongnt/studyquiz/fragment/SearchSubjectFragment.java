@@ -64,6 +64,10 @@ public class SearchSubjectFragment extends Fragment {
         return rootView;
     }
 
+    public Button getBtnLoadMore() {
+        return btnLoadMore;
+    }
+
     public void setupListView(List<SearchSubjectResponse> list){
         srcList = list;
         if(mAdapter == null){

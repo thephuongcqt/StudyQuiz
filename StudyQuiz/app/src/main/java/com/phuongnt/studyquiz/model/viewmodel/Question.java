@@ -2,6 +2,7 @@ package com.phuongnt.studyquiz.model.viewmodel;
 
 import com.phuongnt.studyquiz.model.apimodel.questionservice.QuestionResponse;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  * Created by PhuongNT on 10/24/17.
  */
 
-public class Question {
+public class Question implements Serializable{
     private QuestionResponse value;
     private Boolean correct;
     private Integer selectedAnswer;
