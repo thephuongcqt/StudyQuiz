@@ -24,9 +24,10 @@
     <string name="login_label_signup">Sign up now</string>
     <string name="button_load_more_text">Load more</string>
     <string name="feedback_rbt_duplication">This question is duplication</string>
-    <string name="feedback_rbt_wrong_answer">This question is wrong answer</string>
+    <string name="feedback_rbt_wrong_answer">The answer to this question is wrong</string>
     <string name="feedback_rbt_other">Other</string>
     <string name="feedback_title">Feedback for question</string>
+    <string name="fragment_subject_btn_load">Load subjects</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.phuongnt.studyquiz.fragment.ThirdFragment">
+    tools:context="com.phuongnt.studyquiz.fragment.ProfileFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout

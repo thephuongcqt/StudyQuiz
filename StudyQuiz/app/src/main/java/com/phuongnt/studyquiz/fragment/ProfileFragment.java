@@ -1,7 +1,6 @@
 package com.phuongnt.studyquiz.fragment;
 
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,12 +16,10 @@ import com.phuongnt.studyquiz.activity.LoginActivity;
 import com.phuongnt.studyquiz.database.UserDB;
 import com.phuongnt.studyquiz.model.viewmodel.User;
 
-import org.w3c.dom.Text;
-
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ThirdFragment extends Fragment {
+public class ProfileFragment extends Fragment {
     private Button mbuttonLogout;
     private User currentUser;
     private TextView tvUsername;
@@ -31,7 +28,7 @@ public class ThirdFragment extends Fragment {
     private TextView tvPassword;
 
 
-    public ThirdFragment() {
+    public ProfileFragment() {
         // Required empty public constructor
     }
 
@@ -44,7 +41,7 @@ public class ThirdFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_third, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
         getComponent(rootView);
         initComponent();
         return rootView;

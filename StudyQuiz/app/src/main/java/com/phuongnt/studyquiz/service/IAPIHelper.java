@@ -44,4 +44,6 @@ public interface IAPIHelper {
     Call<CommonResponse> saveStudiedQuestions(@Body StudiedQuestions questions);
     @POST("Feedback/PostNewFeedback")
     Call<CommonResponse> feedbackQuestion(@Body FeedbackRequest request);
+    @GET("Subject/FetchSubject")
+    Call<CommonResponse<List<SearchSubjectResponse>>> fetchSubject(@QueryMap Map<String, String> params);
 }
