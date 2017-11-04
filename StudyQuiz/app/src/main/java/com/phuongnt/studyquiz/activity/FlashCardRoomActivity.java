@@ -22,6 +22,7 @@ import com.phuongnt.studyquiz.model.viewmodel.Question;
 import com.phuongnt.studyquiz.model.viewmodel.TestData;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -218,7 +219,10 @@ public class FlashCardRoomActivity extends AppCompatActivity{
         } else{
             isSpeaking = true;
             String text = questionFragment.getTextToSpeech();
-            textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+            Bundle params = new Bundle();
+            params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID,"UniqueID");
+            textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, params, "UniqueID");
+//            textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
         }
     }
 
@@ -229,7 +233,10 @@ public class FlashCardRoomActivity extends AppCompatActivity{
         } else{
             isSpeaking = true;
             String text = answerFragment.getTextToSpeech();
-            textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+
+            Bundle params = new Bundle();
+            params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID,"UniqueID");
+            textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, params, "UniqueID");
         }
     }
 
