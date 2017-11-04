@@ -1,6 +1,7 @@
 package com.phuongnt.studyquiz.activity;
 
 import android.content.Intent;
+import android.media.Image;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.phuongnt.studyquiz.AppConst;
@@ -22,7 +24,6 @@ import com.phuongnt.studyquiz.model.viewmodel.Question;
 import com.phuongnt.studyquiz.model.viewmodel.TestData;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -70,19 +71,16 @@ public class FlashCardRoomActivity extends AppCompatActivity{
                     textToSpeech.setOnUtteranceProgressListener(new UtteranceProgressListener() {
                         @Override
                         public void onStart(String utteranceId) {
-                            Log.e("onStart", "done");
                         }
 
                         @Override
                         public void onDone(String utteranceId) {
-                            Log.e("onDone", "done");
                             stopSpeaking();
                         }
 
                         @Override
                         public void onError(String utteranceId) {
-                            Log.e("onError", "done");
-                            stopSpeaking();
+//                            stopSpeaking();
                         }
                     });
                 }
@@ -109,7 +107,6 @@ public class FlashCardRoomActivity extends AppCompatActivity{
             onBackPressed();
         }
         Collections.shuffle(data);
-//        TestData.resetAnswer();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -214,24 +211,23 @@ public class FlashCardRoomActivity extends AppCompatActivity{
 
     public void onVolumeQuestionSelected(View v){
         if(isSpeaking){
-            isSpeaking = false;
-            textToSpeech.stop();
+            stopSpeaking();
         } else{
             isSpeaking = true;
+            questionFragment.turnOnVolume();
             String text = questionFragment.getTextToSpeech();
             Bundle params = new Bundle();
             params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID,"UniqueID");
             textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, params, "UniqueID");
-//            textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
         }
     }
 
     public void onVolumeAnswerSelected(View v){
         if(isSpeaking){
-            isSpeaking = false;
-            textToSpeech.stop();
+            stopSpeaking();
         } else{
             isSpeaking = true;
+            answerFragment.turnOnVolume();
             String text = answerFragment.getTextToSpeech();
 
             Bundle params = new Bundle();
@@ -242,7 +238,11 @@ public class FlashCardRoomActivity extends AppCompatActivity{
 
     private void stopSpeaking(){
         isSpeaking = false;
-        textToSpeech.stop();
+        answerFragment.turnOffVolume();
+        questionFragment.turnOffVolume();
+        if(textToSpeech.isSpeaking()){
+            textToSpeech.stop();
+        }
     }
 
     public void onPause(){
@@ -252,31 +252,4 @@ public class FlashCardRoomActivity extends AppCompatActivity{
         }
         super.onPause();
     }
-
-//    @Override
-//    public void onInit(int status) {
-//        if(status == TextToSpeech.SUCCESS) {
-//            textToSpeech.setLanguage(Locale.UK);
-//            textToSpeech.setOnUtteranceProgressListener(new UtteranceProgressListener() {
-//                @Override
-//                public void onStart(String utteranceId) {
-//                    // Speaking started.
-//                    Log.e("onstart", "done");
-//                }
-//
-//                @Override
-//                public void onDone(String utteranceId) {
-//                    // Speaking stopped.
-//                    Log.e("onDone", "done");
-//                    stopSpeaking();
-//                }
-//
-//                @Override
-//                public void onError(String utteranceId) {
-//                    // There was an error.
-//                }
-//
-//            } );
-//        }
-//    }
 }
