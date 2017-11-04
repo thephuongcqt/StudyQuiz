@@ -87,6 +87,7 @@
     <NavigationProperty Name="Feedbacks" Relationship="Self.FK_Feedback_User" FromRole="User" ToRole="Feedback" />
     <NavigationProperty Name="MonthlyReports" Relationship="Self.FK_MonthlyReport_User" FromRole="User" ToRole="MonthlyReport" />
     <NavigationProperty Name="StudiedQuestions" Relationship="Self.FK_StudiedQuestions_User" FromRole="User" ToRole="StudiedQuestions" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
   </EntityType>
   <Association Name="FK_Chapter_Subject">
     <End Role="Subject" Type="Self.Subject" Multiplicity="0..1" />
@@ -208,9 +209,6 @@
       <End Role="User" EntitySet="Users" />
       <End Role="StudiedQuestions" EntitySet="StudiedQuestions" />
     </AssociationSet>
-    <EntitySet Name="countries" EntityType="StudyQuizModel.country" />
-    <EntitySet Name="migrations" EntityType="StudyQuizModel.migration" />
-    <EntitySet Name="tags" EntityType="StudyQuizModel.tag" />
     <FunctionImport Name="GET_CHAPTERS_CARD" ReturnType="Collection(StudyQuizModel.GET_CHAPTERS_CARD_Result)">
       <Parameter Name="SubjectId" Mode="In" Type="Int64" />
     </FunctionImport>
@@ -233,30 +231,6 @@
       <Parameter Name="TypeId" Mode="In" Type="Int32" />
     </FunctionImport>
   </EntityContainer>
-  <EntityType Name="country">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="created_at" Type="DateTime" Precision="3" />
-    <Property Name="updated_at" Type="DateTime" Precision="3" />
-  </EntityType>
-  <EntityType Name="migration">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="migration1" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="batch" Type="Int32" Nullable="false" />
-  </EntityType>
-  <EntityType Name="tag">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-  </EntityType>
   <ComplexType Name="GET_CHAPTERS_CARD_Result">
     <Property Type="Int64" Name="ChapterId" Nullable="true" />
     <Property Type="Int32" Name="QuestionCount" Nullable="true" />
