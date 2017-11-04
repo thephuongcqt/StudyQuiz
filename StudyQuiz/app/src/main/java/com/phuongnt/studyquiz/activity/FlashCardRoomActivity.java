@@ -239,14 +239,14 @@ public class FlashCardRoomActivity extends AppCompatActivity{
     private void stopSpeaking(){
         isSpeaking = false;
         try{
+            if(textToSpeech.isSpeaking()){
+                textToSpeech.stop();
+            }
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     answerFragment.turnOffVolume();
                     questionFragment.turnOffVolume();
-                    if(textToSpeech.isSpeaking()){
-                        textToSpeech.stop();
-                    }
                 }
             });
         } catch(Exception e){
@@ -255,7 +255,7 @@ public class FlashCardRoomActivity extends AppCompatActivity{
     }
 
     public void onPause(){
-        if(textToSpeech !=null){
+        if(textToSpeech != null){
             textToSpeech.stop();
             textToSpeech.shutdown();
         }
