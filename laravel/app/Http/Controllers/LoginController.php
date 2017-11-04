@@ -40,9 +40,9 @@ class LoginController extends Controller
 
     }
     function getProfile(Request $request){
-         if(Session::get("Username")==null){
+          if(!session::has('User')){
           return redirect('/admin');
-        }else{
+      }else{
           $UserId = Session::get("UserId");
            $id = (int)$UserId;
                 $SubjectLearnedByUser = DB::table('User')

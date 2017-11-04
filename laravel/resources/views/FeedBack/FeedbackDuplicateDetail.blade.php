@@ -5,7 +5,7 @@
     <link href="https://datatables.yajrabox.com/css/datatables.bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-<div class="wrapper-content bg-silver">
+<div class="wrapper-content bg-silver" style="height: 1000px">
    <section class="content-header">
       <h1>
       Edit Question
@@ -49,9 +49,12 @@
                   </div>
               </div>
               <div class="form-group" style="padding-bottom: 20px">
-                    <div class="text-center"> <button class="btn btn-success" id="btn_process" type="button">Process</button>
-                      <a class="btn btn-danger" href="/deleteQuestion/1"><i class="fa fa-trash-o fa-lg"></i> Delete</a>
+                    <div class="text-center">
+                    <!-- <button class="btn btn-success" id="btn_process" type="button">Process</button> -->
+                      <a class="btn btn-danger" href="/deleteQuestion/1"><i class="fa fa-trash-o fa-lg"></i> Delete Question</a>
+                       <a class="btn btn-info" href="/feedback">Feedback Manage</a>
                     </div>
+
                       
             
               </div>    
@@ -79,23 +82,19 @@
           <div class="box box-info" style="border-top-color:#07f907">
             <div class="box-header with-border ">
                 <h3 class="box-title">Comment For This Question </h3>
+                <a class="btn btn-danger pull-right" href="/deleteFeedbackDuplicate/{{$Question->QuestionId}}"><i class="fa fa-trash-o fa-lg"></i> Delete All Feedback</a>
             </div>
             <div class="box-body">
-                <table class="table table-bordered">
-                    <thead>
-                    <th class="col-md-2">FeedbackId</th>
-                    <th class="col-md-9">Comment</th>
-                    </thead>
-                    <tbody>
-                    @foreach ($Comments as $cmt)
-                    <tr>
-                      <th>{{$cmt->FeedbackId}}</th>
-                      <th>{{$cmt->Comment}}</th>
-                    </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-          <div class="text-center">{{$Comments->links()}}</div>
+               <table id="users-table" class="table">
+                  <thead>
+                  <tr>
+                  <td class="col-md-2">FeedbackID</td>
+                  <td class="col-md-8">Comment</td>
+                 
+                  </tr>
+                  </thead>
+                  </table>
+          
             </div>
           </div>
       </div>
@@ -103,13 +102,13 @@
     <!-- comment -->
     <div class="col-md-12">
      <div class="info-box" style="padding-left: 20px">
-      <div class="text-center page-header">Feedback of Question was duplicated</div>
+      <div class="text-center page-header">Question have same Term with this QUestion</div>
       <table id="dup-table" class="table text-center">
       <thead>
       <tr>
-      <td class="col-md-5">Term</td>
-      <td class="col-md-5">Definition </td>
-      <td class="col-md-2">Chapter </td>
+      <td class="col-md-5">Question ID</td>
+      <td class="col-md-5">Term </td>
+ 
       </tr>
       </thead>
       </table> 
@@ -131,9 +130,26 @@
   $(document).ready(function(){
         <?php if (Session::has('success')): ?>
           alert("Edit Question successed");
-        <?php endif ?>});
+        <?php endif ?>
+     
  var QuestionId = {{$QuestionId}};
-             
+alert(QuestionId);
+$(function() {
+        $('#users-table').DataTable({
+        processing: true,
+        serverSide: true,
+        order: [[ 0, "desc" ]],
+        bLengthChange:false,
+        pageLength: 10,
+        searching:false,
+        ajax: 'http://127.0.0.1:8000/feedback/FeedbackDuplicateAnswer/{{$Question->QuestionId}}',
+        columns : [
+          
+              {data: 'FeedbackId'},
+              {data: 'Comment'},
+            ],
+        });
+    });
  $(function() {
         $('#dup-table').DataTable({
         processing: true,
@@ -141,20 +157,17 @@
         order: [[ 0, "desc" ]],
         bLengthChange:false,
         pageLength: 10,
-        ajax: 'http://127.0.0.1:8000/feedback/get_datatableSearch'.QuestionId,
+        ajax: 'http://127.0.0.1:8000/feedback/get_datatableSearch/'+QuestionId,
         columns : [
           
-              {data: 'count'},
               {data: 'QuestionId'},
-              {
-                  
-                  data: 'action'
-              },
+              {data: 'Term'},
+               
             ],
         });
     });
        
-
+ });
        
     </script>
  

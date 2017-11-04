@@ -20,7 +20,8 @@
               <li class="treeview">
                 <a href="javascript:void(0);"><i class="fa fa-list-alt"></i> <span>Users</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                 <ul class="treeview-menu">
-                            <li><a href="/Users">Manage User</a></li>
+                            <li><a href="/users">Manage User</a></li>
+                            
                 </ul>
             </li>
 
