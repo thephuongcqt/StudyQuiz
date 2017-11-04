@@ -238,10 +238,19 @@ public class FlashCardRoomActivity extends AppCompatActivity{
 
     private void stopSpeaking(){
         isSpeaking = false;
-        answerFragment.turnOffVolume();
-        questionFragment.turnOffVolume();
-        if(textToSpeech.isSpeaking()){
-            textToSpeech.stop();
+        try{
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    answerFragment.turnOffVolume();
+                    questionFragment.turnOffVolume();
+                    if(textToSpeech.isSpeaking()){
+                        textToSpeech.stop();
+                    }
+                }
+            });
+        } catch(Exception e){
+            Log.e("stop", e.getMessage());
         }
     }
 

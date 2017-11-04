@@ -16,6 +16,7 @@ import com.phuongnt.studyquiz.model.viewmodel.Question;
 import org.w3c.dom.Text;
 
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -100,6 +101,12 @@ public class CardQuestionFragment extends Fragment {
     public String getTextToSpeech(){
         String text = tvQuestion.getText().toString();
         text += "\n" + tvAnswers.getText().toString();
-        return text;
+
+        String result = "";
+        Scanner scanner = new Scanner(text);
+        while (scanner.hasNextLine()){
+            result += scanner.nextLine() + ".";
+        }
+        return result.isEmpty() ? text : result;
     }
 }
