@@ -7,11 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.phuongnt.studyquiz.AppConst;
 import com.phuongnt.studyquiz.R;
+import com.phuongnt.studyquiz.activity.ReviewAnswersActivity;
 import com.phuongnt.studyquiz.model.viewmodel.Question;
 
 import org.w3c.dom.Text;
@@ -27,11 +29,12 @@ public class AnswerAdapter extends BaseAdapter {
     private List<Question> srcList;
     private LayoutInflater layoutInflater;
     private Context context;
-
-    public AnswerAdapter(List<Question> srcList, Context context) {
+    private ReviewAnswersActivity.IClickListener ivClickListener;
+    public AnswerAdapter(List<Question> srcList, Context context, ReviewAnswersActivity.IClickListener ivClickListener) {
         this.srcList = srcList;
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
+        this.ivClickListener = ivClickListener;
     }
 
     @Override
@@ -50,7 +53,7 @@ public class AnswerAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         TextView tvQuestion;
         TextView tvCorrectAnswer;
         LinearLayout llWrongAnswer;
@@ -58,6 +61,7 @@ public class AnswerAdapter extends BaseAdapter {
         LinearLayout llFooter;
         LinearLayout llIcon;
         TextView tvResult;
+        ImageView ivFeedback;
 
         Question question = getItem(position);
 
@@ -72,6 +76,7 @@ public class AnswerAdapter extends BaseAdapter {
         llFooter = (LinearLayout) convertView.findViewById(R.id.ll_footer);
         llIcon = (LinearLayout) convertView.findViewById(R.id.ll_icon_result);
         tvResult = (TextView) convertView.findViewById(R.id.tv_result);
+        ivFeedback = (ImageView) convertView.findViewById(R.id.icon_feedback);
         //binding control
 
         //setup footer
@@ -113,6 +118,13 @@ public class AnswerAdapter extends BaseAdapter {
             tvWrongAnswer.setText(R.string.review_answer_not_selected);
             tvWrongAnswer.setTextColor(Color.parseColor(AppConst.COLOR_GRAY));
         }
+
+        ivFeedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ivClickListener.onImageFeedbackSelected(srcList.get(position));
+            }
+        });
 
         convertView.getLayoutParams().height = parent.getHeight();
         convertView.requestLayout();

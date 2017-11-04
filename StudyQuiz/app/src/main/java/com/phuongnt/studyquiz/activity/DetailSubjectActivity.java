@@ -116,8 +116,6 @@ public class DetailSubjectActivity extends AppCompatActivity {
         if(user == null){
             return;
         }
-//        Intent intent = new Intent(this, FlashCardRoomActivity.class);
-//        startActivity(intent);
         MyProgressBar.show(this);
 
         Map<String, String> params = new HashMap<>();

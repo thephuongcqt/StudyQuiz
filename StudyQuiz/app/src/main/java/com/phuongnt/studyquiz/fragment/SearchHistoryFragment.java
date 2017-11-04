@@ -25,13 +25,13 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SecondFragment extends Fragment {
+public class SearchHistoryFragment extends Fragment {
     private List<SearchHistory> histories;
     private List<String> srcHistories = new ArrayList<>();
     private User user;
     private ListView lvSearch;
     private ArrayAdapter<String> mAdapter;
-    public SecondFragment() {
+    public SearchHistoryFragment() {
         // Required empty public constructor
     }
 
@@ -44,7 +44,7 @@ public class SecondFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_second, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_search_history, container, false);
         lvSearch = (ListView) rootView.findViewById(R.id.lv_search);
         lvSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -56,6 +56,9 @@ public class SecondFragment extends Fragment {
             }
         });
         updateList();
+        if(mAdapter != null){
+            lvSearch.setAdapter(mAdapter);
+        }
         return rootView;
     }
 

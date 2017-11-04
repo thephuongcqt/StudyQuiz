@@ -35,7 +35,6 @@ namespace StudyQuizAPI.Controllers
             {
                 return new Response(false, null, e.Message);
             }
-
         }
 
         //public object GetChapter(string searchValue)

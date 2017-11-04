@@ -31,7 +31,8 @@
         <activity android:name=".activity.FlashCardRoomActivity" />
         <activity android:name=".activity.FlashCardDoneActivity" />
         <activity android:name=".activity.ReviewAnswersActivity" />
-        <activity android:name=".activity.SignUpActivity"></activity>
+        <activity android:name=".activity.SignUpActivity" />
+        <activity android:name=".activity.FeedbackActivity" android:theme="@style/Theme.MyDialog"/>
     </application>
 
 </manifest>

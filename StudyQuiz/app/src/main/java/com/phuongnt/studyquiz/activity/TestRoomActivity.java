@@ -3,10 +3,13 @@ package com.phuongnt.studyquiz.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.UtteranceProgressListener;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -22,6 +25,7 @@ import com.phuongnt.studyquiz.model.viewmodel.TestData;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 public class TestRoomActivity extends AppCompatActivity {
 
@@ -34,6 +38,9 @@ public class TestRoomActivity extends AppCompatActivity {
     private final MCQuestionFragment mcQuestionFragment = new MCQuestionFragment();
     private final TFQuestionFragment tfQuestionFragment = new TFQuestionFragment();
     private Question question = null;
+
+    private TextToSpeech textToSpeech;
+    private boolean isSpeaking = false;
 
     private IFragmentLifecycleListener lifecycleListener = new IFragmentLifecycleListener() {
         @Override
@@ -51,9 +58,37 @@ public class TestRoomActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_room);
 
+        initTTS();
         getComponent();
         initComponent();
         changeQuestion();
+    }
+
+    private void initTTS(){
+        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status == TextToSpeech.SUCCESS) {
+                    textToSpeech.setLanguage(Locale.UK);
+
+                    textToSpeech.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                        @Override
+                        public void onStart(String utteranceId) {
+                        }
+
+                        @Override
+                        public void onDone(String utteranceId) {
+                            stopSpeaking();
+                        }
+
+                        @Override
+                        public void onError(String utteranceId) {
+//                            stopSpeaking();
+                        }
+                    });
+                }
+            }
+        });
     }
 
     private void getComponent(){
@@ -87,6 +122,7 @@ public class TestRoomActivity extends AppCompatActivity {
     }
 
     public void onNextButtonSelected(View v){
+        stopSpeaking();
         if(currentIndex < data.size()){
             currentIndex++;
         } else{
@@ -98,6 +134,7 @@ public class TestRoomActivity extends AppCompatActivity {
     }
 
     public void onPreviousButtonSelected(View v){
+        stopSpeaking();
         if(currentIndex > 1){
             currentIndex--;
         }
@@ -177,5 +214,59 @@ public class TestRoomActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         this.onBackPressed();
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onMCQuestionVolumeClick(View v){
+        if(isSpeaking){
+            stopSpeaking();
+        } else {
+            isSpeaking = true;
+            mcQuestionFragment.turnOnVolume();
+            String text = mcQuestionFragment.getTextToSpeech();
+
+            Bundle params = new Bundle();
+            params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID,"UniqueID");
+            textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, params, "UniqueID");
+        }
+    }
+
+    public void onTFQuestionVolumeClick(View v){
+        if(isSpeaking){
+            stopSpeaking();
+        } else{
+            isSpeaking = true;
+            tfQuestionFragment.turnOnVolume();
+            String text = tfQuestionFragment.getTextToSpeech();
+
+            Bundle params = new Bundle();
+            params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID,"UniqueID");
+            textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, params, "UniqueID");
+        }
+    }
+
+    private void stopSpeaking(){
+        isSpeaking = false;
+        try{
+            if(textToSpeech.isSpeaking()){
+                textToSpeech.stop();
+            }
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mcQuestionFragment.turnOffVolume();
+                    tfQuestionFragment.turnOffVolume();
+                }
+            });
+        } catch(Exception e){
+            Log.e("stop", e.getMessage());
+        }
+    }
+
+    public void onPause(){
+        if(textToSpeech != null){
+            textToSpeech.stop();
+            textToSpeech.shutdown();
+        }
+        super.onPause();
     }
 }

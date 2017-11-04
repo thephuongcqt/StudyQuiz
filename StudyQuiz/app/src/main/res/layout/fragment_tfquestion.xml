@@ -6,19 +6,28 @@
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
-        android:background="@color/white"
         android:orientation="vertical"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <ImageView
+            android:onClick="onTFQuestionVolumeClick"
+            android:id="@+id/iv_volume"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_gravity="end"
+            android:src="@drawable/ic_volume_up_black"
+            android:layout_width="35dp"
+            android:layout_height="35dp"/>
         <TextView
-            android:background="@color/light_gray"
+
             android:textColor="@color/black"
             android:id="@+id/tv_question_title"
             style="@style/CommonTitle"
             android:gravity="center"
             android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:text="" />
         <LinearLayout
             android:background="@color/white"

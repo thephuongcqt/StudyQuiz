@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ public class MCQuestionFragment extends Fragment {
     private LinearLayout answerContainer;
     private List<TextView> tvAnswers;
     private TextView tvQuestionTitle;
+    private ImageView ivVolume;
 
     private TestRoomActivity.IFragmentLifecycleListener lifecycleListener;
 
@@ -40,6 +42,7 @@ public class MCQuestionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_multiple_choice, container, false);
+        ivVolume = (ImageView) rootView.findViewById(R.id.iv_volume);
         tvQuestionTitle = (TextView) rootView.findViewById(R.id.tv_question_title);
         answerContainer = (LinearLayout) rootView.findViewById(R.id.ll_container);
         TextView textView0 = (TextView) rootView.findViewById(R.id.answer_item0);
@@ -140,5 +143,27 @@ public class MCQuestionFragment extends Fragment {
                 break;
             }
         }
+    }
+
+    public void turnOffVolume(){
+        if(getActivity() == null){
+            return;
+        }
+        if(ivVolume != null){
+            ivVolume.setImageResource(R.drawable.ic_volume_up_black);
+        }
+    }
+
+    public void turnOnVolume(){
+        if(getActivity() == null){
+            return;
+        }
+        if(ivVolume != null){
+            ivVolume.setImageResource(R.drawable.ic_volume_up_yellow);
+        }
+    }
+
+    public String getTextToSpeech(){
+        return question.getValue().getTerm();
     }
 }

@@ -72,39 +72,13 @@
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="StudyQuizModel.User">
         <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="Username" ColumnName="Username" />
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Role" ColumnName="Role" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="countries">
-      <EntityTypeMapping TypeName="StudyQuizModel.country">
-        <MappingFragment StoreEntitySet="countries">
-          <ScalarProperty Name="updated_at" ColumnName="updated_at" />
-          <ScalarProperty Name="created_at" ColumnName="created_at" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="migrations">
-      <EntityTypeMapping TypeName="StudyQuizModel.migration">
-        <MappingFragment StoreEntitySet="migrations">
-          <ScalarProperty Name="batch" ColumnName="batch" />
-          <ScalarProperty Name="migration1" ColumnName="migration" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tags">
-      <EntityTypeMapping TypeName="StudyQuizModel.tag">
-        <MappingFragment StoreEntitySet="tags">
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -62,8 +62,9 @@ public class SearchHistoryDB {
         String[] columns = {"*"};
         String where = COLUMN_USERID + " = ?";
         String[] args = {userId + ""};
+        String orderBy = COLUMN_DATE + " DESC";
         SQLiteDatabase db = DatabaseManager.getInstance().openReadableDatabase();
-        Cursor cursor = db.query(TABLE_SEARCH_HISTORY, columns, where, args, null, null, null);
+        Cursor cursor = db.query(TABLE_SEARCH_HISTORY, columns, where, args, null, null, orderBy);
         List<SearchHistory> list = new ArrayList<>();
         if(cursor.moveToFirst()){
             while (!cursor.isAfterLast()){

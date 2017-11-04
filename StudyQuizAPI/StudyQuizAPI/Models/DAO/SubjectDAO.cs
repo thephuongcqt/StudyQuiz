@@ -38,5 +38,24 @@ namespace StudyQuizAPI.Models.DAO
                 return list;
             }
         }
+
+        public List<Subject> FetchSubject(long offset, long number)
+        {
+            string sql = "SELECT * FROM Subject"
+                + " ORDER BY Name"
+                + " OFFSET @offset ROWS"
+                + " FETCH NEXT @number ROWS ONLY";
+            var offsetParam = new SqlParameter("@offset", offset);
+            var numberParam = new SqlParameter("@number", number);
+            using (var db = new StudyQuizEntities())
+            {
+                var list = db.Subjects.SqlQuery(sql, offsetParam, numberParam).ToList();
+                foreach (var item in list)
+                {
+                    item.Chapters = db.Chapters.Where(i => i.SubjectId == item.SubjectId).ToList<Chapter>();
+                }
+                return list;
+            }
+        }
     }
 }

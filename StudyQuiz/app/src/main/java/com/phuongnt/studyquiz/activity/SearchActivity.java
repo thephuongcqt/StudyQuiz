@@ -50,13 +50,32 @@ public class SearchActivity extends AppCompatActivity {
     private EditText edtSearch;
     private List<SearchChapterResponse> chapters = null;
     private List<SearchSubjectResponse> subjects = null;
-    private SearchChapterFragment chapterFragment = null;
-    private SearchSubjectFragment subjectFragment = null;
+    private SearchChapterFragment chapterFragment = new SearchChapterFragment();
+    private SearchSubjectFragment subjectFragment = new SearchSubjectFragment();
     private String searchValue = null;
     private int progressCount;
     private int chapterOffset = 0;
     private int subjectOffset = 0;
 
+    private IButtonLoadMoreListener subjectButtonLoadMoreListener = new IButtonLoadMoreListener() {
+        @Override
+        public void onButtonLoadMoreSelected() {
+//            Toast.makeText(SearchActivity.this, "Hello from load more", Toast.LENGTH_SHORT).show();
+            MyProgressBar.show(SearchActivity.this);
+            progressCount = 1;
+            searchSubject();
+        }
+    };
+
+    private IButtonLoadMoreListener chapterButtonLoadMoreListener = new IButtonLoadMoreListener() {
+        @Override
+        public void onButtonLoadMoreSelected() {
+//            Toast.makeText(SearchActivity.this, "Hello from load more", Toast.LENGTH_SHORT).show();
+            MyProgressBar.show(SearchActivity.this);
+            progressCount = 1;
+            searchChapter();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,26 +83,6 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
 
         getComponent();
-        edtSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    if(v != null){
-                        dismissKeyboard();
-                    }
-                    searchValue = (edtSearch).getText().toString().trim();
-                    if(searchValue.isEmpty()){
-                        return false;
-                    }
-                    MyProgressBar.show(SearchActivity.this);
-                    progressCount = 2;
-                    searchChapter();
-                    searchSubject();
-                }
-                return false;
-
-            }
-        });
         initComponent();
     }
 
@@ -109,6 +108,28 @@ public class SearchActivity extends AppCompatActivity {
                 imageSearchSelected(null);
             }
         }
+
+        edtSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    if(v != null){
+                        dismissKeyboard();
+                    }
+                    searchValue = (edtSearch).getText().toString().trim();
+                    if(searchValue.isEmpty()){
+                        return false;
+                    }
+                    resetSearch();
+                    MyProgressBar.show(SearchActivity.this);
+                    progressCount = 2;
+                    searchChapter();
+                    searchSubject();
+                }
+                return false;
+
+            }
+        });
     }
 
     private void dismissKeyboard(){
@@ -126,8 +147,6 @@ public class SearchActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        chapterFragment = new SearchChapterFragment();
-        subjectFragment = new SearchSubjectFragment();
         adapter.addFragment(subjectFragment, "Subject");
         adapter.addFragment(chapterFragment, "Chapter");
         viewPager.setAdapter(adapter);
@@ -135,19 +154,19 @@ public class SearchActivity extends AppCompatActivity {
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
             public void onPageSelected(int position) {
-
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
+
+        subjectFragment.setiButtonLoadMoreListener(subjectButtonLoadMoreListener);
+        chapterFragment.setiButtonLoadMoreListener(chapterButtonLoadMoreListener);
     }
 
     public void imageSearchSelected(View v){
@@ -158,10 +177,20 @@ public class SearchActivity extends AppCompatActivity {
         if(searchValue.isEmpty()){
             return;
         }
+        resetSearch();
         MyProgressBar.show(this);
         progressCount = 2;
         searchChapter();
         searchSubject();
+    }
+
+    private void resetSearch(){
+        if(chapters != null)
+            chapters.clear();
+        if(subjects != null)
+            subjects.clear();
+        subjectOffset = 0;
+        chapterOffset = 0;
     }
 
     private void searchChapter(){
@@ -236,7 +265,12 @@ public class SearchActivity extends AppCompatActivity {
         if(subjects == null){
             subjects = new ArrayList<>();
         }
+        if(subjectsResponse == null || subjectsResponse.isEmpty()){
+//            Toast.makeText(this, "Not item available to fetch", Toast.LENGTH_SHORT).show();
+            subjectFragment.getBtnLoadMore().setVisibility(View.GONE);
+        }
         subjects.addAll(subjectsResponse);
+        subjectOffset = subjects.size();
         subjectFragment.setupListView(subjects);
         whenProgressDone();
     }
@@ -250,7 +284,12 @@ public class SearchActivity extends AppCompatActivity {
         if(chapters == null){
             chapters = new ArrayList<>();
         }
+        if(chaptersResponse == null || chaptersResponse.isEmpty()){
+//            Toast.makeText(this, "Not item available to fetch", Toast.LENGTH_SHORT).show();
+            chapterFragment.getBtnLoadMore().setVisibility(View.GONE);
+        }
         chapters.addAll(chaptersResponse);
+        chapterOffset = chapters.size();
         chapterFragment.setupListView(chapters);
         whenProgressDone();
     }
@@ -287,5 +326,9 @@ public class SearchActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         onBackPressed();
         return super.onOptionsItemSelected(item);
+    }
+
+    public interface IButtonLoadMoreListener{
+        void onButtonLoadMoreSelected();
     }
 }

@@ -14,18 +14,16 @@ import com.phuongnt.studyquiz.AppConst;
 import com.phuongnt.studyquiz.R;
 import com.phuongnt.studyquiz.activity.DetailChapterActivity;
 import com.phuongnt.studyquiz.activity.DetailSubjectActivity;
-import com.phuongnt.studyquiz.activity.LoginActivity;
-import com.phuongnt.studyquiz.activity.MenuActivity;
 import com.phuongnt.studyquiz.adapter.ActivityAdapter;
 import com.phuongnt.studyquiz.model.viewmodel.Activity;
 
 import java.util.List;
 
-public class FirstFragment extends Fragment {
+public class ActivityFragment extends Fragment {
     private ListView lvActivities;
     private List<Activity> list;
     private ActivityAdapter mAdapter;
-    public FirstFragment() {
+    public ActivityFragment() {
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,7 +34,7 @@ public class FirstFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_first, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_activity, container, false);
         lvActivities = (ListView) rootView.findViewById(R.id.lv_activities);
         lvActivities.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -54,6 +52,9 @@ public class FirstFragment extends Fragment {
             }
         });
         updateList();
+        if(mAdapter != null){
+            lvActivities.setAdapter(mAdapter);
+        }
         return rootView;
     }
 
@@ -68,6 +69,6 @@ public class FirstFragment extends Fragment {
         list = Activity.getAll();
         mAdapter = new ActivityAdapter(list, getActivity());
         lvActivities.setAdapter(mAdapter);
-        Log.e(FirstFragment.class + "", list.size() + "");
+        Log.e(ActivityFragment.class + "", list.size() + "");
     }
 }

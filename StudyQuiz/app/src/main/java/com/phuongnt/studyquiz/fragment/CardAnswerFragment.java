@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.phuongnt.studyquiz.R;
@@ -20,6 +21,8 @@ import java.util.List;
 public class CardAnswerFragment extends Fragment {
     private TextView tvAnswer;
     private Question question;
+    private ImageView ivVolume;
+
     private TestRoomActivity.IFragmentLifecycleListener lifecycleListener;
 
     public void setLyfecycleListener(TestRoomActivity.IFragmentLifecycleListener lifecycleListener) {
@@ -37,6 +40,7 @@ public class CardAnswerFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_card_answer, container, false);
         tvAnswer = (TextView)rootView.findViewById(R.id.tv_card_answer);
+        ivVolume = (ImageView) rootView.findViewById(R.id.iv_volume);
         lifecycleListener.onCreateViewDone();
         return rootView;
     }
@@ -66,6 +70,29 @@ public class CardAnswerFragment extends Fragment {
             tvAnswer.setText("True");
         }
     }
+    public String getTextToSpeech(){
+        String text = tvAnswer.getText().toString();
+        return text;
+    }
+
+    public void turnOffVolume(){
+        if(getActivity() == null){
+            return;
+        }
+        if(ivVolume != null){
+            ivVolume.setImageResource(R.drawable.ic_volume_up_black);
+        }
+    }
+
+    public void turnOnVolume(){
+        if(getActivity() == null){
+            return;
+        }
+        if(ivVolume != null){
+            ivVolume.setImageResource(R.drawable.ic_volume_up_yellow);
+        }
+    }
+
     public void setupFlashCardquestion(){
         tvAnswer.setText(question.getValue().getDefinition());
     }

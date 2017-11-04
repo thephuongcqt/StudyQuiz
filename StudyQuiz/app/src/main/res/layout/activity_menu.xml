@@ -44,6 +44,10 @@
         </android.support.v7.widget.Toolbar>
 
         <android.support.design.widget.TabLayout
+            app:tabPaddingBottom="-1dp"
+            app:tabPaddingEnd="-1dp"
+            app:tabPaddingStart="-1dp"
+            app:tabPaddingTop="-1dp"
             style="@style/MyCustomTabLayout"
             android:id="@+id/tabs"
             android:layout_width="match_parent"

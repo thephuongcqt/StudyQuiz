@@ -3,36 +3,50 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.phuongnt.studyquiz.fragment.CardQuestionFragment">
-
     <LinearLayout
-        android:padding="5dp"
-        android:orientation="vertical"
         android:background="@color/light_gray"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:onClick="onFragentQuestionSelected">
-        <TextView
-            android:layout_marginBottom="10dp"
-            android:id="@+id/tv_card_question"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:textSize="26sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Answer" />
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/iv_volume"
+            android:onClick="onVolumeQuestionSelected"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_gravity="end"
+            android:src="@drawable/ic_volume_up_black"
+            android:layout_width="35dp"
+            android:layout_height="35dp"/>
         <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:padding="5dp"
+            android:orientation="vertical"
+
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:onClick="onFragentQuestionSelected">
             <TextView
-                android:id="@+id/tv_card_answers"
+                android:layout_marginBottom="10dp"
+                android:id="@+id/tv_card_question"
                 android:textColor="@color/black"
+                android:gravity="center"
                 android:textSize="26sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Answer" />
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tv_card_answers"
+                    android:textColor="@color/black"
+                    android:textSize="26sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Answer" />
+            </LinearLayout>
         </LinearLayout>
-
     </LinearLayout>
 </FrameLayout>
