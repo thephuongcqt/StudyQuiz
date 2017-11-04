@@ -7,21 +7,35 @@
     <!-- TODO: Update blank fragment layout -->
 
     <LinearLayout
-
-        android:padding="5dp"
         android:background="@color/light_gray"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:onClick="onFragmentAnswerSelected">
-        <TextView
-            android:id="@+id/tv_card_answer"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:textSize="26sp"
+        android:layout_height="match_parent">
+        <ImageView
+            android:onClick="onVolumeAnswerSelected"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_gravity="end"
+            android:src="@drawable/ic_feedback"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            tools:ignore="OnClick" />
+        <LinearLayout
+            android:padding="5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Answer" />
+            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:onClick="onFragmentAnswerSelected">
+            <TextView
+                android:id="@+id/tv_card_answer"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textSize="26sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Answer" />
+        </LinearLayout>
     </LinearLayout>
 
 </FrameLayout>

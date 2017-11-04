@@ -74,4 +74,10 @@ public class CardQuestionFragment extends Fragment {
         tvQuestion.setText(question.getValue().getTerm());
         tvAnswers.setText("");
     }
+
+    public String getTextToSpeech(){
+        String text = tvQuestion.getText().toString();
+        text += "\n" + tvAnswers.getText().toString();
+        return text;
+    }
 }

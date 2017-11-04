@@ -66,6 +66,10 @@ public class CardAnswerFragment extends Fragment {
             tvAnswer.setText("True");
         }
     }
+    public String getTextToSpeech(){
+        String text = tvAnswer.getText().toString();
+        return text;
+    }
     public void setupFlashCardquestion(){
         tvAnswer.setText(question.getValue().getDefinition());
     }
