@@ -15,8 +15,13 @@ namespace StudyQuizAPI.Models.DAO
             using (var db = new StudyQuizEntities())
             {
                 var remainingNumber = number;
-                var typeNumber = 2;
+                var typeNumber = 0;
                 var types = db.GET_TYPE_COUNT(chapterId).ToList();
+                foreach (var item in types)
+                    if (item.TypeId != 0)
+                    {
+                        typeNumber++;
+                    }
                 var questions = new List<Question>();
                 foreach(var item in types)
                     if(item.TypeId != 0)
@@ -60,9 +65,9 @@ namespace StudyQuizAPI.Models.DAO
         {
             using (var db = new StudyQuizEntities())
             {
-                var remainingNumber = number;
-                var typeNumber = 3;
+                var remainingNumber = number;               
                 var types = db.GET_TYPE_COUNT(chapterId).ToList();
+                var typeNumber = types.Count;
                 var questions = new List<Question>();
                 foreach (var item in types)
                 {
