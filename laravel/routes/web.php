@@ -24,6 +24,7 @@ Route::get('/createQuestion', 'QuestionController@loadDetailQuestion');
 Route::post('/createQuestion', 'QuestionController@createQuestion');
 Route::get('createQuestion/ajax/{id}', 'QuestionController@loadChapter');
 Route::get('/manageQuestion', 'QuestionController@index');
+Route::get('/questionDetail/{id}/{st}','QuestionController@questionDetail');
  
 //Login
 Route::post('Login', 'LoginController@checkLogin');//checked
@@ -46,10 +47,15 @@ Route::get('/feedback/get_datatableSearch/{id}', 'FeedbackController@get_datatab
 
 //Feeback of Wrong Answer + Duplicate
 Route::get('/feedback/{id}','FeedbackController@detailWrongAnswer');//for Wrong Answer
+Route::get('/feedback/FeedbackWrongAnswer/{id}','FeedbackController@get_feedbackForWrongQuestion');
+Route::get('/feedback/FeedbackDuplicateAnswer/{id}','FeedbackController@get_feedbackForDuplicateQuestion');
+
 Route::get('/feedbackDuplicateDetail/{id}','FeedbackController@duplicateDetail');//for duplicate Question
 
 Route::post('/editQuestionFeedback','FeedbackController@getDetail');
 Route::get('/deleteQuestion/{id}','QuestionController@deleteQuestion');//delete Question
+Route::get('/deleteFeedbackWrong/{id}','FeedbackController@deleteFeedbackOfQuestionWrong');
+Route::get('/deleteFeedbackDuplicate/{id}','FeedbackController@deleteFeedbackOfQuestionDuplicate');
 
 
 
@@ -66,6 +72,9 @@ Route::get('/delete/{id}','UserController@delete');
 
 //User
 Route::get('/users','UserController@index');
+Route::get('/users/get_AllUser', 'UserController@loadAllUser');//ajax
+Route::get('/userInformation/{id}','UserController@userDetails');
+Route::get('/deleteUser/{id}','UserController@deleteUser');
 
 
 

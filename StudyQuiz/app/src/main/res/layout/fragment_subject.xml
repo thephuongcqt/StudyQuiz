@@ -11,6 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <Button
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:id="@+id/btn_load_data"
             android:text="@string/fragment_subject_btn_load"
             style="@style/CommonButtonBorder"

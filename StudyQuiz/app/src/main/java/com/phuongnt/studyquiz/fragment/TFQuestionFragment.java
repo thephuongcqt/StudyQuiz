@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.phuongnt.studyquiz.R;
@@ -16,6 +17,7 @@ public class TFQuestionFragment extends Fragment {
     private Question question;
     private TextView tvTrue;
     private TextView tvFalse;
+    private ImageView ivVolume;
     public TFQuestionFragment() {
         // Required empty public constructor
     }
@@ -33,6 +35,7 @@ public class TFQuestionFragment extends Fragment {
         tvQuestionTitle = (TextView)rootView.findViewById(R.id.tv_question_title);
         tvTrue = (TextView) rootView.findViewById(R.id.tv_True);
         tvFalse = (TextView) rootView.findViewById(R.id.tv_False);
+        ivVolume = (ImageView) rootView.findViewById(R.id.iv_volume);
         tvTrue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {;
@@ -94,5 +97,27 @@ public class TFQuestionFragment extends Fragment {
         if(question.getSelectedAnswer() != null){
             selectAnswer(question.getSelectedAnswer());
         }
+    }
+
+    public void turnOffVolume(){
+        if(getActivity() == null){
+            return;
+        }
+        if(ivVolume != null){
+            ivVolume.setImageResource(R.drawable.ic_volume_up_black);
+        }
+    }
+
+    public void turnOnVolume(){
+        if(getActivity() == null){
+            return;
+        }
+        if(ivVolume != null){
+            ivVolume.setImageResource(R.drawable.ic_volume_up_yellow);
+        }
+    }
+
+    public String getTextToSpeech(){
+        return question.getValue().getTerm();
     }
 }

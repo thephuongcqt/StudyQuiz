@@ -4,7 +4,7 @@
         <span class="logo-lg">PP QUiz</span>
     </a>
       <nav class="navbar navbar-static-top">
-       <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+       <a href="/welcome" class="sidebar-toggle" data-toggle="push-menu" role="button">
             <span class="sr-only">PP Quiz</span>
         </a>
       <div class="container">
