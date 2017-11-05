@@ -69,7 +69,8 @@
                         </tr>
                   </table>
                     <div class="box-footer" style="background: none">
-                        <button type="button" class="col-md-3 btn btn-default btn-md" onclick="validateQuestion(event,this)"  >Confirm</button>
+                         
+                        <a class="btn btn-success" onclick="validateQuestion(event,this)"  >Confirm Question Before Create</a>
                     </div>
                     </div>
 

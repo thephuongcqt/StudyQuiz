@@ -19,6 +19,7 @@
     <script src="{{asset("/bootstrap/js/bootstrap.min.js")}}"></script>
     <script src="{{asset("/js/validation.js")}}"></script>
     <script src="{{asset("/js/adminlte.min.js")}}"></script>
+    
 </head>
 <body class="hold-transition skin-green-light sidebar-mini">
 <div class="wrapper">
