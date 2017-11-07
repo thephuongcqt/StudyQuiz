@@ -6,10 +6,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   
-<div class="wrapper-content bg-silver" style="height: 1000px">
+<div class="wrapper-content bg-silver" style="height: 800px">
    <section class="content-header">
       <h1>
-      Feedback Detail of Question have wrong information
+      Edit Question
       </h1>
    <!--Header  -->
     </section>
@@ -18,7 +18,7 @@
     <!-- body -->
     <!-- hàng 1 -->
     <div class="col-md-12 bg-silver"  >
-       <div class="col-md-6" id="DIS" >
+       <div class="col-md-12" id="DIS" >
         
           <div class="box box-info" style="border-top-color:#07f907;">
            
@@ -69,36 +69,19 @@
               </div>
               <div class="form-group">
                   <label for="email" class="col-md-3 control-label">Definition</label>
-                  <?php if ($Question->TypeId==0): ?>
-                    <div class="col-md-8">
-                        <input id="definition" type="text" class="form-control" name="definition" value="{{$Question->Definition}}">
-                    </div>
-                  <?php elseif($Question->TypeId==1): ?>
-                  <input type="radio" name="ATF" id="ATF1" value="0" class="bg-gray" <?php if ($Question->Definition==0): ?>
-                        checked="checked"   
-                       <?php endif ?>
-                       > True<br>
-                         <input type="radio" name="ATF" id="ATF2" value="1" class="bg-silver" <?php if ($Question->Definition==1): ?>
-                             checked="checked" 
+                  <?php if ($Question->TypeId==1): ?>
+
+                     <input type="radio" name="ATF" id="ATF1" value="0" class="bg-gray" <?php if ($Question->Definition==0): ?>
+                      checked="checked"   
+                     <?php endif ?>
+                     > True<br>
+                       <input type="radio" name="ATF" id="ATF2" value="1" class="bg-silver" <?php if ($Question->Definition==1): ?>
+                           checked="checked" 
                        <?php endif ?>> False<br>
                   <?php else: ?>
-                     <div class="col-md-8">
-                     <input id="definition" type="text" class="form-control" name="definition" disabled 
-                      <?php if ($Question->Definition==0): ?>
-                       value="A"
-                     <?php elseif($Question->Definition==1): ?>
-                       value="B"
-                     <?php elseif($Question->Definition==2): ?>
-                       value="C"
-                     <?php elseif($Question->Definition==3): ?>
-                       value="D"
-                     <?php elseif($Question->Definition==4): ?>  
-                        value="E"
-                     <?php else: ?>  
-                        value="F"
-                     <?php endif ?> >
-                     <small>Click process to see new question</small>
-                    </div>
+                    <div class="col-md-8">
+                      <input id="definition" type="text" class="form-control" name="definition" value="{{$Question->Definition}}">
+                  </div>
                   <?php endif ?>
                   
               </div>
@@ -135,25 +118,7 @@
           <!-- ll -->
         </div>
       <!-- commnent -->
-      <div class="col-md-6 " style="padding-right: 15px;padding-left: 15px;">
-          <div class="box box-info" style="border-top-color:#07f907">
-            <div class="box-header with-border ">
-                <h3 class="box-title">Comment For This Question </h3>
-                <a class="btn btn-danger pull-right" href="/deleteFeedbackWrong/{{$Question->QuestionId}}"><i class="fa fa-trash-o fa-lg"></i> Delete All Feedback</a>
-            </div>
-            <div class="box-body" >
-               <table id="users-table" class="table">
-                <thead>
-                <tr>
-                <td class="col-md-2">FeedbackID</td>
-                <td class="col-md-8">Comment</td>
-               
-                </tr>
-                </thead>
-                </table> 
-            </div>
-          </div>
-      </div>
+      
     </div>
     <!-- comment -->
     </section>
@@ -165,7 +130,6 @@
 
 <script src="https://datatables.yajrabox.com/js/jquery.dataTables.min.js"></script>
 <script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script> 
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
       var QuestionId = {{$Question->QuestionId}}
        $(function() {
@@ -186,9 +150,7 @@
     });
       $(document).ready(function(){
         <?php if (Session::has('success')): ?>
-           swal("Question has been edited!", "If Question was fine. Click delete feedback to close feedbacks of this question", {
-      icon: "success",
-    });
+          alert("Edit Question successed");
         <?php endif ?>
         //ajax
         
@@ -215,7 +177,7 @@
                
             });
         }).fail(function (jqXHR, textStatus, errorThrown) {
-               swal ( "Oops" ,  "Error Chapter Loading" ,  "error" );  
+            alert('Error Chapter Loading');
         });
          //end firsttiemloaddata
          //Chapter load data
@@ -232,8 +194,7 @@
                 $('#MyChapter').append('<option value="'+val+'">'+'Chapter '+val+' : '+ i+'</option>');
             });
         }).fail(function (jqXHR, textStatus, errorThrown) {
-            
-            swal ( "Oops" ,  "Error Chapter Loading" ,  "error" );
+            alert('Error Chapter Loading');
         });
       });
      //endchapterLoaddata
@@ -249,15 +210,14 @@
             var termF =  $.trim($('#term').val());
             var arrF = termF.split("|");
             if(termF.length == 0){
-               swal ( "Oops" ,  "Please input term" ,  "error" );
-               
+              alert("Please input term ");
                 $('#DDD').hide();
               return false;
             }else{
                 if(arrF.length==2){
                   for (var i = 0; i <arrF.length; i++) {
                   if(arrF[i].trim().length==0){
-                     swal ( "Oops" ,  "Question or The answer can't null." ,  "error" );
+                    alert("Question or The answer can't null.");
                     $('#DDD').hide();
                     return false;
                   }
@@ -268,8 +228,9 @@
                  $("#create_question").click(function(){
                 document.getElementById('editQuestionFeedback').submit();
                 });
+
                 }else{
-                   swal ( "Oops" ,  "Flash Card Type Term :  question|answer" ,  "error" );
+                  alert("Flash Card Type Term :  question|answer ");
                   $('#DDD').hide();
                 }
             }
@@ -281,19 +242,18 @@
             $("#flashCard").hide();
             var termTF =  $.trim($('#term').val());
             if(termTF.length==0){
-               swal ( "Oops" ,  "Please input term" ,  "error" );
-              
+               alert("Please input term ");
                 $('#DDD').hide();
               return false;
             }
             var arrTF = termTF.split("|");
             if(arrTF.length == 0){
-              swal ( "Oops" ,  "Please input term" ,  "error" );
+              alert("Please input term ");
                 $('#DDD').hide();
               return false;
             }else{
                 if(arrTF.length!= 1){
-                   swal ( "Oops" ,  "True false quesion just need question" ,  "error" );
+                alert("True false quesion just need question");
                     $('#DDD').hide();
                     return false;
                 }else if(arrTF.length== 1){
@@ -326,7 +286,7 @@
                 $("#real_term").show();
                  for (var i = 0; i <arr.length; i++) {
                   if(arr[i].trim().length==0){
-                       swal ( "Oops" ,  "The answer can't null." ,  "error" );  
+                    alert("The answer can't null.");
                     $('#DDD').hide();
                     return false;
                   }
@@ -363,7 +323,7 @@
                 document.getElementById('editQuestionFeedback').submit();
                 });
              }else{
-                    swal ( "Oops" ,  "Term need 3 to 6 answer.Please input more option" ,  "error" );     
+                alert("Term need 3 to 5 answer.Please input enought");
                 $("#radio_group").empty();
                 $("#create_question").hide();
                 $("#real_term").hide();

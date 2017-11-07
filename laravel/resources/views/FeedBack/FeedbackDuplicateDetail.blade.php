@@ -51,7 +51,7 @@
               <div class="form-group" style="padding-bottom: 20px">
                     <div class="text-center">
                     <!-- <button class="btn btn-success" id="btn_process" type="button">Process</button> -->
-                      <a class="btn btn-danger" href="/deleteQuestion/1"><i class="fa fa-trash-o fa-lg"></i> Delete Question</a>
+                      <a class="btn btn-danger" href="/deleteQuestion/{{$Question->QuestionId}}"><i class="fa fa-trash-o fa-lg"></i> Delete Question</a>
                        <a class="btn btn-info" href="/feedback">Feedback Manage</a>
                     </div>
 
@@ -125,15 +125,13 @@
 
 <script src="https://datatables.yajrabox.com/js/jquery.dataTables.min.js"></script>
 <script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script> 
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
  <script>   
   $(document).ready(function(){
-        <?php if (Session::has('success')): ?>
-          alert("Edit Question successed");
-        <?php endif ?>
+         
      
  var QuestionId = {{$QuestionId}};
-alert(QuestionId);
+ 
 $(function() {
         $('#users-table').DataTable({
         processing: true,

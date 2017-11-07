@@ -1,5 +1,5 @@
 <header class="main-header">
-    <a href="/" class="logo">
+    <a href="/welcome" class="logo">
         <span class="logo-mini">PP</span>
         <span class="logo-lg">PP QUiz</span>
     </a>

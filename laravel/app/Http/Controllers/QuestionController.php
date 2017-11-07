@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Yajra\Datatables\Facades\Datatables;
 use Illuminate\Http\Request;
 use App\Question;
 use App\Subject;
@@ -13,7 +13,31 @@ use App\Feedback;
 class QuestionController extends Controller
 {
     function index(Request $request){
-      return view('Question.ManageQuestion');
+      $countQuestion = DB::table('Question')->count();
+      $countSubject  = DB::table('Subject')->count();
+      $countFlash = DB::table('Question')->where('TypeId','=',0)->count();
+      $countTF = DB::table('Question')->where('TypeId','=',1)->count();
+      $countMul = DB::table('Question')->where('TypeId','=',2)->count();
+      $Subjects = DB::table('Subject')->get();
+
+      
+      return view('Question.ManageQuestion',['countQ'=>$countQuestion,'countMul'=>$countMul,'countTF'=>$countTF,'countFlash'=>$countFlash,'Subjects'=>$Subjects]);
+    }
+    function getQuestion(Request $request,$idC,$idT){
+      if($idT == 2){
+        $Question = DB::table('Question')->where('ChapterId','=',$idC)->where('TypeId','=',2)->select('QuestionId','Term')->get();
+      return $Question->toJson();
+      }else if($idT == 0){
+        $Question = DB::table('Question')->where('ChapterId','=',$idC)->where('TypeId','=',0)->select('QuestionId','Term')->get();
+      return $Question->toJson();
+      }else if($idT == 1){
+        $Question = DB::table('Question')->where('ChapterId','=',$idC)->where('TypeId','=',1)->select('QuestionId','Term')->get();
+        return $Question->toJson();
+      }else{
+        $Question = DB::table('Question')->where('ChapterId','=',$idC)->select('QuestionId','Term')->get();
+      return $Question->toJson();
+      }
+      
     }
     function loadDetailQuestion(Request $request){
         // if(Session::get("User")!=null){
@@ -133,10 +157,6 @@ class QuestionController extends Controller
        
     }
     function deleteQuestion($id){
-      //delete question  and delete feedback of question
-      //  if(!session::has('User')){
-      //     return redirect('/admin');
-      // }
         $QuestionId = $id;
         
         $Question = DB::table('Question')->where('QuestionId', '=', $QuestionId);
@@ -157,12 +177,60 @@ class QuestionController extends Controller
           $Question = DB::table('Question')->where('QuestionId', '=', $QuestionId)->update(['IsEnable' => 0]);
           
           session::flash('delete','Delete  Question successed');
-           return redirect('/feedback');
-       
-         
+          return redirect('/feedback');
         }
-      
-      
+    }
+       
+  function deleteQuestion2($id){
+      //delete question  and delete feedback of question
+      //  if(!session::has('User')){
+      //     return redirect('/admin');
+      // }
+        $QuestionId = $id;
+        $Question = DB::table('Question')->where('QuestionId', '=', $QuestionId);
+        if($Question == null){
+          session::flash('error','Question is not exist');
+           return redirect('/feedbackxx');
+        }else{
+          // delete all feedback of Question
+          $feedbackOfQuestion = DB::table('Feedback')
+            ->where('QuestionId', '=', $QuestionId)->delete();
+
+          $feedbackOfQuestionXXX = DB::table('Feedback')
+            ->where('QuestionId', '=', $QuestionId)->get();
+          if($feedbackOfQuestionXXX){
+               $feedbackOfQuestion = DB::table('Feedback')
+            ->where('QuestionId', '=', $QuestionId)->delete();
+          } 
+          $Question = DB::table('Question')->where('QuestionId', '=', $QuestionId)->update(['IsEnable' => 0]);
+          
+          session::flash('delete','Delete  Question successed');
+          return redirect('/manageQuestionxx');
+        }
+    }
+    function questionInformation($id){
+       $QuestionId= $id ;
+       $Question = DB::table('Question')->where('QuestionId', '=', $QuestionId)->first();
+       $Chapterxd =$Question->ChapterId;
+       $Chapter = DB::table('Chapter')
+                ->where('Chapter.ChapterId','=',$Chapterxd)->first();
+        $SubjectId = $Chapter->SubjectId;
+        $Subject = DB::table('Subject')->where('SubjectId','=',$SubjectId)->first();  
+
+        $Type = $Question->TypeId;
+        if($Type==0){
+          $Type ='Flash Card';
+return view('Question.editFlashQuestion',['Question'=>$Question,'Subject'=>$Subject,'Chapter'=>$Chapter,'Type'=>$Type]);
+        }
+        if($Type==1){
+           $Type ='True False';
+return view('Question.editTFQuestion',['Question'=>$Question,'Subject'=>$Subject,'Chapter'=>$Chapter,'Type'=>$Type]);
+        }if($Type==2){
+           $Type ='Multichoice';
+return view('Question.editMulQuestion',['Question'=>$Question,'Subject'=>$Subject,'Chapter'=>$Chapter,'Type'=>$Type]);
+        }      
+       
+
     }
      
 }

@@ -101,13 +101,26 @@
 
 <script src="https://datatables.yajrabox.com/js/jquery.dataTables.min.js"></script>
 <script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script> 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
    $(document).ready(function(){
         <?php if (Session::has('success')): ?>
-          alert("Edit Question successed");
+        swal("Edit Question successed", {
+      icon: "success",
+      });
+        <?php endif ?>
+        <?php if (Session::has('deleteFeedback')): ?>
+        swal("Feeback is resolved", {
+      icon: "success",
+      });
+        <?php endif ?>
+                <?php if (Session::has('delete')): ?>
+        swal("Question and thier feedback have been deleted", {
+      icon: "success",
+      });
         <?php endif ?>
          <?php if (Session::has('deleteError')): ?>
-           alert("Question isn't exist");
+         swal ( "Oops" ,  "Question isn't exist!" ,  "error" )
         <?php endif ?>
       });
     $(function() {
@@ -142,7 +155,6 @@
               {data: 'count'},
               {data: 'QuestionId'},
               {
-                  
                   data: 'action'
               },
             ],

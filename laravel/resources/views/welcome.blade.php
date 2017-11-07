@@ -71,33 +71,31 @@
     <!-- hàng 2 -->
       <div class="col-md-12">
         <!-- top question -->
-        <div class="col-md-6">
-          <div class="info-box" style="padding-left: 20px">
-         <div class="text-center page-header">Top 5 Question have Hightest Practicing</div>
-      <table id="users-table" class="table ">
-      <thead>
-      <tr>
-      <td class="col-md-1">Question ID</td>
-      <td class="col-md-8">Term</td>
-      <td class="col-md-2">Action</td>
-      </tr>
-      </thead>
-      <tbody>
-        @foreach ($HostQA as $QA =>$value)
-        <tr>
-      <td class="col-md-1">{{$value->QuestionId}}</td>
-      <td class="col-md-8"><?php echo substr(($value->Term),0,60).'  ...' ?></td>
-      <td class="col-md-2"> <a class="btn btn-success" href="/questionDetail/{{$value->QuestionId}}/{{$QA}}">Question Detail</a></td>
-      </tr>
-      @endforeach
-      </tbody>
-
-
-      </table> 
-      </div>
+        <div class="col-md-7">
+              <div class="box box-success" style="padding-left: 20px">
+                   <div class="text-center page-header">Top 5 Question have Hightest Practicing</div>
+                <table id="users-table" class="table ">
+                <thead>
+                <tr>
+                <td class="col-md-1">Question ID</td>
+                <td class="col-md-8">Term</td>
+                <td class="col-md-2">Action</td>
+                </tr>
+                </thead>
+                <tbody>
+                  @foreach ($HostQA as $QA =>$value)
+                  <tr>
+                <td class="col-md-1">{{$value->QuestionId}}</td>
+                <td class="col-md-8"><?php echo substr(($value->Term),0,60).'  ...' ?></td>
+                <td class="col-md-2"> <a class="btn btn-success" href="/questionDetail/{{$value->QuestionId}}/{{$QA}}">Question Detail</a></td>
+                </tr>
+                @endforeach
+                </tbody>
+                </table> 
+              </div>
         </div>
         <!-- chart User -->
-        <div class="col-md-6 pull-right" >
+        <div class="col-md-5 pull-right" >
        <div class="box box-success">
               <h3 style="text-align: center;"> User in 2017 </h3>
              <div class="container1 center-block" style="width: 95%;background-color: white">

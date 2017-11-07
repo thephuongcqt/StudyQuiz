@@ -24,7 +24,11 @@ Route::get('/createQuestion', 'QuestionController@loadDetailQuestion');
 Route::post('/createQuestion', 'QuestionController@createQuestion');
 Route::get('createQuestion/ajax/{id}', 'QuestionController@loadChapter');
 Route::get('/manageQuestion', 'QuestionController@index');
-Route::get('/questionDetail/{id}/{st}','QuestionController@questionDetail');
+Route::get('/questionInformation/{id}', 'QuestionController@questionInformation');//detail question by Id
+Route::get('/questionDetail/{id}/{st}','QuestionController@questionDetail');//detail Top Question
+Route::get('/quesiton/getQuestion/{idC}/{idT}', 'QuestionController@getQuestion');//ajax
+Route::get('/deleteQuestion/{id}','QuestionController@deleteQuestion');//delete Question
+Route::get('/deleteQuestionM/{id}','QuestionController@deleteQuestion2');//delete Question
  
 //Login
 Route::post('Login', 'LoginController@checkLogin');//checked
@@ -53,7 +57,7 @@ Route::get('/feedback/FeedbackDuplicateAnswer/{id}','FeedbackController@get_feed
 Route::get('/feedbackDuplicateDetail/{id}','FeedbackController@duplicateDetail');//for duplicate Question
 
 Route::post('/editQuestionFeedback','FeedbackController@getDetail');
-Route::get('/deleteQuestion/{id}','QuestionController@deleteQuestion');//delete Question
+
 Route::get('/deleteFeedbackWrong/{id}','FeedbackController@deleteFeedbackOfQuestionWrong');
 Route::get('/deleteFeedbackDuplicate/{id}','FeedbackController@deleteFeedbackOfQuestionDuplicate');
 
@@ -64,17 +68,16 @@ Route::get('/createSubject','SubjectController@create');
 Route::get('/createSubject/get_datatable', 'SubjectController@get_datatable');
 Route::post('/createSubject','SubjectController@created');
 
- 
-Route::get('/createUser','UserController@create');
-Route::post('/createUser','UserController@created');
-Route::get('/edit/{id}','UserController@edit');
-Route::get('/delete/{id}','UserController@delete');
+
 
 //User
 Route::get('/users','UserController@index');
 Route::get('/users/get_AllUser', 'UserController@loadAllUser');//ajax
 Route::get('/userInformation/{id}','UserController@userDetails');
+Route::post('/editUser/{id}','UserController@editUser');
 Route::get('/deleteUser/{id}','UserController@deleteUser');
+Route::get('/createUser','UserController@createUser');
+Route::post('/createUser','UserController@createUserDone');
 
 
 

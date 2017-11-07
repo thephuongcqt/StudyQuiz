@@ -8,7 +8,7 @@
     </section>
    
     <section class="content container-fluid">
-     <div class="container">
+     <div class="container box">
              <form method ="post" class="form-horizontal" action="/createQuestion" id="createQForm">
                  <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                 
@@ -20,7 +20,7 @@
                             <td>
                                 <div class="form-group col-md-5">
                                 <select name="MySubject" id="MySubject"  class="form-control" onchange="getChap()">
-                                   
+                                   <option value="" selected="selected">--Choose subject--</option>
                                      @foreach($subject as $key => $val)
                                    <option value="{{$val->SubjectId}}" >
                                    {{$val->Name}}
@@ -61,7 +61,7 @@
                             <td>
                                 <div class="form-group no-padding no-margin">
                                     <div class="input-group col-md-8">
-                                    <textarea rows="4" cols="100"  name="term" id="term" maxlength="300" required="required" >
+                                    <textarea rows="4" cols="80"  name="term" id="term" maxlength="800" required="required" >
                                     </textarea>
                                     </div>
                                 </div>
@@ -103,10 +103,13 @@
 @endsection
        
 <script src="{{asset("/plugins/jQuery/jquery-3.1.1.min.js")}}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
  <script type="text/javascript">
   $(document).ready(function(){
         <?php if (Session::has('success')): ?>
-          alert("Create Question successed");
+          swal("Question has been created!", {
+      icon: "success",
+    });
         <?php endif ?>});
  
  //get chapter 
@@ -126,7 +129,7 @@
           });
       }).fail(function (jqXHR, textStatus, errorThrown) {
            
-          alert('通信に失敗しました');
+           swal ( "Oops" ,  "Error Chapter Loading" ,  "error" );  
       });
  }
 function validateQuestion(evt,abc){
@@ -135,7 +138,7 @@ function validateQuestion(evt,abc){
 
     var chapterChoose = $('#MyChapter option:selected').val();
     if(chapterChoose == null){
-      alert("Please choose subject to have chapter");
+        swal ( "Oops" ,  "Please choose subject to have chapter" ,  "error" );     
        $('#DDD').hide();
       return false;
     }
@@ -146,14 +149,14 @@ function validateQuestion(evt,abc){
             var termF =  $.trim($('#term').val());
             var arrF = termF.split("|");
             if(termF.length == 0){
-              alert("Please input term ");
+                swal ( "Oops" ,  "Please input term" ,  "error" );
                 $('#DDD').hide();
               return false;
             }else{
                 if(arrF.length==2){
                   for (var i = 0; i <arrF.length; i++) {
                   if(arrF[i].trim().length==0){
-                    alert("Question or The answer can't null.");
+                      swal ( "Oops" ,  "Question or The answer can't null." ,  "error" );
                     $('#DDD').hide();
                     return false;
                   }
@@ -166,7 +169,7 @@ function validateQuestion(evt,abc){
                 });
 
                 }else{
-                  alert("Flash Card Type Term :  question|answer ");
+                   swal ( "Oops" ,  "Flash Card Type Term :  question|answer" ,  "error" );
                   $('#DDD').hide();
                 }
             }
@@ -179,18 +182,18 @@ function validateQuestion(evt,abc){
             $("#flashCard").hide();
             var termTF =  $.trim($('#term').val());
             if(termTF.length==0){
-               alert("Please input term ");
+               swal ( "Oops" ,  "Please input term" ,  "error" );
                 $('#DDD').hide();
               return false;
             }
             var arrTF = termTF.split("|");
             if(arrTF.length == 0){
-              alert("Please input term ");
+              swal ( "Oops" ,  "Please input term" ,  "error" );
                 $('#DDD').hide();
               return false;
             }else{
                 if(arrTF.length!= 1){
-                alert("True false quesion just need question");
+                 swal ( "Oops" ,  "True false quesion just need question" ,  "error" );
                     $('#DDD').hide();
                     return false;
                 }else if(arrTF.length== 1){
@@ -220,7 +223,7 @@ function validateQuestion(evt,abc){
                 $("#real_term").show();
                 for (var i = 0; i <arr.length; i++) {
                   if(arr[i].trim().length==0){
-                    alert("The answer can't null.");
+                    swal ( "Oops" ,  "The answer can't null." ,  "error" );  
                     $('#DDD').hide();
                     return false;
                   }
@@ -257,7 +260,7 @@ function validateQuestion(evt,abc){
                 document.getElementById('createQForm').submit();
                 });
              }else{
-                alert("Term need 3 to 5 answer.Please input enought");
+                 swal ( "Oops" ,  "Term need 3 to 6 answer.Please input more option" ,  "error" );     
                 $("#radio_group").empty();
                 $("#create_question").hide();
                 $("#real_term").hide();

@@ -51,9 +51,9 @@ class FeedbackController extends Controller
 			 
 		}
 		public function detailWrongAnswer($id){
-			// if(!session::has('User')){
-			// 		return redirect('/admin');
-			// }
+			if(!session::has('User')){
+					return redirect('/admin');
+			}
 			$feedbackQuestion= DB::table('Feedback')
 									->where('QuestionId','=',$id)
 									->select('Feedback.FeedbackId','Feedback.Comment')
@@ -77,9 +77,9 @@ class FeedbackController extends Controller
 								return view('Feedback.FeedbackDetail',['totalFeedback'=>$totalFeedback,'Question'=>$Question,'Comments'=>$feedbackQuestion,'Subjects'=>$ListSubject,'SubjectSelected'=>$SubjectId,'id'=>$myChapter,'Type'=>$Type]);
 		}
 		public function duplicateDetail($id){
-			// if(!session::has('User')){
-			// 		return redirect('/admin');
-			// }
+			if(!session::has('User')){
+					return redirect('/admin');
+			}
 			 $feedbackQuestion= DB::table('Feedback')
 									->where('QuestionId','=',$id)
 									->select('Feedback.FeedbackId','Feedback.Comment')
@@ -100,9 +100,9 @@ class FeedbackController extends Controller
 		 return view('Feedback.FeedbackDuplicateDetail',['Comments'=>$feedbackQuestion,'QuestionId'=>$QuestionId,'Question'=>$Question,'SubjectName'=>$SubjectName,'ChapterName'=>$ChapterName,'Term'=>$Question->Term]);
 		}
 		function getDetail(Request $request){
-			// if(!session::has('User')){
-			// 		return redirect('/admin');
-			// }
+			if(!session::has('User')){
+					return redirect('/admin');
+			}
 			$input = $request->all();
 			$TYPE  = $input['TypeId'];
 			if($TYPE==null){
@@ -141,9 +141,9 @@ class FeedbackController extends Controller
 		  
 					 
 		function test(Request $request){
-			// if(!session::has('User')){
-			// 		return redirect('/admin');
-			// }
+			if(!session::has('User')){
+					return redirect('/admin');
+			}
 			$Type=1;
 			$countFeedback = DB::table('Feedback')->count();
 			$countQuestion = DB::table('Question')->where('IsEnable','=','1')->count();
@@ -183,12 +183,12 @@ class FeedbackController extends Controller
 			//end 
 			//query TOP 5 HOT QUESTION
 			$HOTQUESTION = DB::select('select a.*, b.su 
-from question as a,
-    (Select TOP 5 S.QuestionId ,Sum(S.count) as su  
-    From StudiedQuestions as S
-    Group BY S.QuestionId
-    Order By su desc) as b
-where a.QuestionId = b.QuestionId');
+			from question as a,
+			    (Select TOP 5 S.QuestionId ,Sum(S.count) as su  
+			    From StudiedQuestions as S
+			    Group BY S.QuestionId
+			    Order By su desc) as b
+			where a.QuestionId = b.QuestionId');
 			// print_r(substr($HOTQUESTION[2]->Term,0,40));exit();
 			
 			//end 
@@ -227,13 +227,15 @@ where a.QuestionId = b.QuestionId');
             ->where('QuestionId', '=', $id)
             ->where('ErrorId','=',1)
             ->delete();
-            return redirect('/feedback/'.$id);
+            session::flash('deleteFeedback','Delete  Question successed');
+            return redirect('/feedback');
 		}
 		function deleteFeedbackOfQuestionDuplicate($id){
 			 $feedbackOfQuestion = DB::table('Feedback')
 			->where('ErrorId','=',2)
             ->where('QuestionId', '=', $id)->delete();
-            return redirect('/feedback/'.$id);
+            session::flash('deleteFeedback','Delete  Question successed');
+            return redirect('/feedback');
 		}
 
 		public function get_feedbackForWrongQuestion($id){
