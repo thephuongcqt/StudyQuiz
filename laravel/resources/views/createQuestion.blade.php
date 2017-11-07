@@ -75,19 +75,19 @@
                     </div>
 
               <div  id="DDD" style="display: none;" >
-              <br>
-              <div style="padding-bottom: 20px;padding-left: 20px"><h1><lable id="real_term"></lable></h1></div>
-                <div id= "flashCard">
-                Answer :  <lable id="FlashDefinition"></lable>
-                </div>
-                <div id="radio_group"></div>
-                <div id="TF_group" style="display: none;padding-left: 20px;background-color: white" >
-                       <input checked="checked" type="radio" name="TF" value="0"  class="bg-gray"> True<br>
-                       <input type="radio" name="TF" value="1" class="bg-silver"> False<br>
-                </div>
-             <div class="form-group">
-                 <div class="col-md-12 text-center"><button class="btn btn-success center-block" id="create_question" type="button" hidden="true">Create question</button>  </div> 
-              </div>
+                      <br>
+                      <div style="padding-bottom: 20px;padding-left: 20px"><h1><lable id="real_term"></lable></h1></div>
+                        <div id= "flashCard">
+                        Answer :  <lable id="FlashDefinition"></lable>
+                        </div>
+                        <div id="radio_group"></div>
+                        <div id="TF_group" style="display: none;padding-left: 20px;background-color: white" >
+                               <input checked="checked" type="radio" name="TF" value="0"  class="bg-gray"> True<br>
+                               <input type="radio" name="TF" value="1" class="bg-silver"> False<br>
+                        </div>
+                     <div class="form-group">
+                         <div class="col-md-12 text-center"><button class="btn btn-success center-block" id="create_question" type="button" hidden="true">Create question</button>  </div> 
+                      </div>
 
               </div>
                 <!-- question-answer -->              

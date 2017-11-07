@@ -29,6 +29,7 @@ Route::get('/questionDetail/{id}/{st}','QuestionController@questionDetail');//de
 Route::get('/quesiton/getQuestion/{idC}/{idT}', 'QuestionController@getQuestion');//ajax
 Route::get('/deleteQuestion/{id}','QuestionController@deleteQuestion');//delete Question
 Route::get('/deleteQuestionM/{id}','QuestionController@deleteQuestion2');//delete Question
+Route::post('/updateQuestion/{id}','QuestionController@updateQuestion');
  
 //Login
 Route::post('Login', 'LoginController@checkLogin');//checked

@@ -15,10 +15,10 @@
     <script src="{{asset("/bootstrap/js/bootstrap.min.js")}}"></script>
     <script src="{{asset("/js/validation.js")}}"></script>
 </head>
-<body class="hold-transition skin-yellow-light sidebar-mini">
+<body class="hold-transition skin-yellow-light sidebar-mini" background="{{asset("/xxx.jpg")}}">
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-6 col-md-offset-3" style="padding-top: 150px">
             <div class="panel panel-default">
                 <div class="panel-heading">Login</div>
 

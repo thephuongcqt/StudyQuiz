@@ -121,7 +121,9 @@
     <div class="col-md-12">
      
       <div class="info-box" style="padding-left: 20px;padding-top: 20px;">
-         <div class="text-center page-header">Questions</div>
+         <div class="box-header with-border">
+              <h3 class="box-title">Bordered Table</h3>
+            </div>
       <table id="example" class="table  ">
       <thead>
 
@@ -149,8 +151,28 @@
 
 <script src="https://datatables.yajrabox.com/js/jquery.dataTables.min.js"></script>
 <script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script> 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
-
+    $(document).ready(function(){
+        <?php if (Session::has('success')): ?>
+        swal("Edit Question successed", {
+      icon: "success",
+      });
+        <?php endif ?>
+        <?php if (Session::has('deleteFeedback')): ?>
+        swal("Feeback is resolved", {
+      icon: "success",
+      });
+        <?php endif ?>
+                <?php if (Session::has('delete')): ?>
+        swal("Question have been deleted", {
+      icon: "success",
+      });
+        <?php endif ?>
+         <?php if (Session::has('deleteError')): ?>
+         swal ( "Oops" ,  "Question isn't exist!" ,  "error" )
+        <?php endif ?>
+      });
 
   var table = $('#example').DataTable();
   $('#MySubject').on('change', function () {
@@ -190,7 +212,7 @@
       success: function(data){
           $(data).each(function(index, el) {
                   var id = el.QuestionId;
-                 var x = [el.QuestionId,el.Term,'<a href="/questionInformation/'+el.QuestionId+'" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> </a>'];
+                 var x = [el.QuestionId,el.Term,'<a href="/questionInformation/'+el.QuestionId+'" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> </a> <a href="/deleteQuestionM/'+el.QuestionId+'" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-trash"></i> </a>'];
                  dataset[index] = x;
                });
           
